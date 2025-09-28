@@ -94,12 +94,12 @@ const digitalEngagement = [
             4.0 WORKING CAPITAL ON A SINGLE CHASSIS
             </h1>
         </div>
-        <button className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 pt-5 pr-[30px] pb-5 pl-[30px] rounded-lg ">
+        <button className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 py-3 px-[30px] rounded-lg ">
             <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase">BUILD MY OWN ARCHITECTURE</span>
         </button>
         </div>
 
-      <div className="grid grid-cols-[170px_1fr_211px] gap-4">
+      <div className="grid grid-cols-[170px_1fr_211px] gap-3">
         {/* Left Sidebar - Common Capabilities */}
         <div className="w-[170px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl">
           <h3 className="text-sm font-semibold text-[#9FE779] mb-4 ">
@@ -240,18 +240,28 @@ const digitalEngagement = [
           </div>
         </div>
 
-        {/* Right Sidebar - External Systems */}
-        <div className="w-[211px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl">
-          <h3 className="text-sm font-semibold text-[#9FE779] mb-4">
-            EXTERNAL<br />SYSTEMS
-          </h3>
-          {externalSystems.map((item, idx) => (
-            <div key={idx} className="bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
-              {item}
+        {/* Right Sidebar - External Systems */} 
+        <div className="w-[211px] flex items-start gap-3 h-[100vh] min-h-[100%]">
+          <div className="flex-shrink-0 w-[1px]">
+            <LineSvg title={"System API"} tilt="khadaHai" />
+          </div>
+          <div className="min-w-[170px] flex-1 space-y-2 bg-[#111] p-3 rounded-xl h-[1000px]">
+            <h3 className="text-sm font-semibold text-[#9FE779] mb-4">
+              EXTERNAL<br />SYSTEMS
+            </h3>
+            <div className="flex flex-col justify-evenly h-[100%] sidebar-list">
+              {externalSystems.map((item, idx) => (
+                <div key={idx} className="bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
+                  {item}
+                </div>
+                ))} 
             </div>
-          ))}
+          </div>
         </div>
+
       </div>
+
+
     </div>
   );
 };
