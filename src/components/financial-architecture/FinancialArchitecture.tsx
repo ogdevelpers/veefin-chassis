@@ -2,6 +2,25 @@ import LineSvg from "../line-svg/LineSvg";
 
 const FinancialArchitecture = () => {
   const channels = ['WEB', 'MOBILE', 'API', 'H2H', 'CHATBOT', 'BRANCHES'];
+
+  const channelIcons = (channel: string) => {
+    switch (channel) {
+        case 'WEB':
+            return '/assets/web.svg';
+        case 'MOBILE':
+            return '/assets/mobile.png';
+        case 'API':
+            return '/assets/API.svg';
+        case 'H2H':
+            return '/assets/H2H.svg';
+        case 'CHATBOT':
+            return '/assets/chatbot.png';
+        case 'BRANCHES':
+            return '/assets/branches.png';
+        default:
+            return '/assets/web.svg';
+    }
+  }
   
   const digitalEngagement = [
     { title: 'CUSTOMER ONBOARDING', items: ['TWO FACTOR AUTHENTICATION'] },
@@ -74,35 +93,28 @@ const FinancialArchitecture = () => {
         </button>
         </div>
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-[170px_1fr_211px] gap-4">
         {/* Left Sidebar - Common Capabilities */}
-        <div className="col-span-2 space-y-2">
-          <h3 className="text-sm font-semibold text-teal-400 mb-4">
+        <div className="w-[170px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl">
+          <h3 className="text-sm font-semibold text-[#9FE779] mb-4 ">
             COMMON<br />OPERATIONAL<br />CAPABILITIES
           </h3>
           {commonCapabilities.map((item, idx) => (
-            <div key={idx} className="bg-gray-800 border border-gray-600 rounded px-3 py-2 text-xs">
+            <div key={idx} className="bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
               {item}
             </div>
           ))}
         </div>
 
         {/* Main Content */}
-        <div className="col-span-8 space-y-6">
+        <div className="max-w-[1440px] space-y-6">
           {/* Channels */}
-          <div>
-            <h3 className="text-sm font-semibold text-teal-400 mb-3">CHANNELS</h3>
-            <div className="grid grid-cols-6 gap-2">
+          <div className="bg-[#111] p-4 rounded-xl flex items-center justify-between space-x-4">
+            <h3 className="text-sm font-semibold text-[#9FE779] ">CHANNELS</h3>
+            <div className="flex-1 grid grid-cols-6 gap-2">
               {channels.map((channel, idx) => (
-                <div key={idx} className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-center text-sm font-semibold">
-                  <div className="w-6 h-6 bg-teal-500 rounded-full mx-auto mb-2 flex items-center justify-center">
-                    {channel === 'WEB' && '🌐'}
-                    {channel === 'MOBILE' && '📱'}
-                    {channel === 'API' && '⚡'}
-                    {channel === 'H2H' && '💻'}
-                    {channel === 'CHATBOT' && '🤖'}
-                    {channel === 'BRANCHES' && '🏢'}
-                  </div>
+                <div key={idx} className="flex items-center justify-center gap-4 bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
+                  <img  src= {channelIcons(channel)} alt={channel} className="w-6 h-6" />
                   {channel}
                 </div>
               ))}
@@ -227,7 +239,7 @@ const FinancialArchitecture = () => {
         </div>
 
         {/* Right Sidebar - External Systems */}
-        <div className="col-span-2 space-y-2">
+        <div className="w-[211px] space-y-2">
           <h3 className="text-sm font-semibold text-teal-400 mb-4">
             EXTERNAL<br />SYSTEMS
           </h3>
