@@ -85,9 +85,9 @@ const digitalEngagement = [
   ];
 
   return (
-    <div className="min-h-screen text-white p-6">
+    <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col">
       {/* Header */}
-        <div className="flex items-center justify-between mb-5">
+        <div className="flex items-center justify-between mb-5 flex-shrink-0">
         <div className="flex-1 flex items-center justify-center space-x-4 font-bold text-[40px] leading-tight tracking-[-0.25px] uppercase">
             <img src="/assets/logo.svg" alt="VeeFin" width={170} height={50} />
             <h1 className="text-4xl font-bold text-[#27A689]">
@@ -99,27 +99,27 @@ const digitalEngagement = [
         </button>
         </div>
 
-      <div className="grid grid-cols-[170px_1fr_211px] gap-3">
+      <div className="grid grid-cols-[170px_1fr_211px] gap-3 min-h-0">
         {/* Left Sidebar - Common Capabilities */}
-        <div className="w-[170px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl">
+        <div className="min-w-[170px] max-w-[170px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl max-h-[100%]">
           <h3 className="text-sm font-semibold text-[#9FE779] mb-4 ">
             COMMON<br />OPERATIONAL<br />CAPABILITIES
           </h3>
           {commonCapabilities.map((item, idx) => (
-            <div key={idx} className="bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
+            <div key={idx} className="bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-xs">
               {item}
             </div>
           ))}
         </div>
 
         {/* Main Content */}
-        <div className="max-w-[1440px] space-y-6">
+        <div className="max-w-[1440px] space-y-1 h-[100vh] min-h-[100%] overflow-y-hidden">
           {/* Channels */}
           <div className="bg-[#111] p-4 rounded-xl flex items-center justify-between space-x-4">
             <h3 className="text-sm font-semibold text-[#9FE779] ">CHANNELS</h3>
             <div className="flex-1 grid grid-cols-6 gap-2">
               {channels.map((channel, idx) => (
-                <div key={idx} className="flex items-center justify-center gap-3 bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
+                <div key={idx} className="flex items-center justify-center gap-3 bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-xs">
                   <img  src= {channelIcons(channel)} alt={channel} className="w-6 h-6" />
                   {channel}
                 </div>
@@ -134,7 +134,7 @@ const digitalEngagement = [
             </h3>
             <div className="grid grid-cols-6 gap-2">
               {digitalEngagement.map((section, idx) => (
-                <div key={idx} className="flex items-center justify-center text-center bg-[#232228] py-2 px-3 rounded-lg border-2 border-white text-[13px]">
+                <div key={idx} className="flex items-center justify-center text-center bg-[#232228] py-2 px-3 rounded-lg border-2 border-white text-xs">
                     {section.title} 
                 </div>
               ))}
@@ -193,7 +193,7 @@ const digitalEngagement = [
               <h4 className="text-sm font-semibold text-[#9FE779] mb-4">COMMON LAYER</h4>
                 <div className="flex-1 flex flex-no-wrap gap-3">
                 {commonLayerItems.map((item, idx) => (
-                    <div key={idx} className="flex items-center justify-center gap-3 text-center bg-[#111] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
+                    <div key={idx} className="flex items-center justify-center gap-3 text-center bg-[#111] py-1 px-3 rounded-lg border-2 border-white text-xs">
                     {item}
                     </div>
                 ))}
@@ -205,7 +205,7 @@ const digitalEngagement = [
               <h4 className="text-sm font-semibold text-[#9FE779] mb-4">DATA LAYER</h4>
               <div className="flex-1 flex gap-3">
                 {dataLayerItems.map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-center  bg-[#111] py-3 px-4 rounded-lg border-2 border-white text-[13px]">
+                  <div key={idx} className="flex items-center justify-center  bg-[#111] py-3 px-4 rounded-lg border-2 border-white text-xs">
                     {item}
                   </div>
                 ))}
@@ -221,7 +221,7 @@ const digitalEngagement = [
               <h3 className="text-sm font-semibold text-[#9FE779] mb-4">GROUP CORE PLATFORMS</h3>
               <div className="grid grid-cols-5 gap-2">
                 {leftPlatforms.map((platform, idx) => (
-                  <div key={idx} className="flex items-center justify-center bg-[#232228] py-2 px-3 rounded-lg border-2 border-white text-[13px]">
+                  <div key={idx} className="flex items-center justify-center bg-[#232228] py-2 px-3 rounded-lg border-2 border-white text-xs">
                     {platform}
                   </div>
                 ))}
@@ -231,7 +231,7 @@ const digitalEngagement = [
               <h3 className="text-sm font-semibold text-[#9FE779] mb-4">GROUP CORE PLATFORMS</h3>
               <div className="grid grid-cols-4 gap-2">
                 {rightPlatforms.map((platform, idx) => (
-                  <div key={idx} className="flex items-center justify-center text-center bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
+                  <div key={idx} className="flex items-center justify-center text-center bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-xs">
                     {platform}
                   </div>
                 ))}
@@ -241,21 +241,19 @@ const digitalEngagement = [
         </div>
 
         {/* Right Sidebar - External Systems */} 
-        <div className="w-[211px] flex items-start gap-3 h-[100vh] min-h-[100%]">
+        <div className="w-[211px] flex items-start gap-3 h-[100%] ">
           <div className="flex-shrink-0 w-[1px]">
             <LineSvg title={"System API"} tilt="khadaHai" />
           </div>
-          <div className="min-w-[170px] flex-1 space-y-2 bg-[#111] p-3 rounded-xl h-[1000px]">
+          <div className="min-w-[170px] max-w-[170px] space-y-2 bg-[#111] p-3 space-y-10 rounded-xl">
             <h3 className="text-sm font-semibold text-[#9FE779] mb-4">
               EXTERNAL<br />SYSTEMS
-            </h3>
-            <div className="flex flex-col justify-evenly h-[100%] sidebar-list">
+            </h3> 
               {externalSystems.map((item, idx) => (
-                <div key={idx} className="bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
+                <div key={idx} className="bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-xs">
                   {item}
                 </div>
-                ))} 
-            </div>
+                ))}  
           </div>
         </div>
 
