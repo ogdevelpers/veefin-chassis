@@ -22,14 +22,20 @@ const FinancialArchitecture = () => {
     }
   }
   
-  const digitalEngagement = [
-    { title: 'CUSTOMER ONBOARDING', items: ['TWO FACTOR AUTHENTICATION'] },
-    { title: 'PRODUCT ONBOARDING', items: ['APPLICATION FORMS'] },
-    { title: 'ENTITLEMENT SETUP', items: ['DOCUMENT UPLOADS'] },
-    { title: 'MASTER SETUP', items: ['COMMUNICATIONS'] },
-    { title: 'PRE-CHECKERS (LIMIT ETC)', items: ['REPORTS'] },
-    { title: 'FX & RATES', items: ['DASHBOARD & WIDGETS'] }
-  ];
+const digitalEngagement = [
+  { title: 'CUSTOMER ONBOARDING' },
+  { title: 'PRODUCT ONBOARDING' },
+  { title: 'ENTITLEMENT SETUP' },
+  { title: 'MASTER SETUP' },
+  { title: 'PRE-CHECKERS (LIMIT ETC)' },
+  { title: 'FX & RATES' },
+  { title: 'TWO FACTOR AUTHENTICATION' },
+  { title: 'APPLICATION FORMS' },
+  { title: 'DOCUMENT UPLOADS' },
+  { title: 'COMMUNICATIONS' },
+  { title: 'REPORTS' },
+  { title: 'DASHBOARD & WIDGETS' }
+];
 
   const tradeFinanceItems = [
     'IMPORT LC', 'EXPORT COLLECTION', 'BILLS UNDER EXPORT LC',
@@ -122,29 +128,22 @@ const FinancialArchitecture = () => {
           </div>
 
           {/* Digital Engagement Hub */}
-          <div>
-            <h3 className="text-sm font-semibold text-teal-400 mb-3">
+          <div  className="bg-[#111] p-4 rounded-xl flex items-center justify-between space-x-4">
+            <h3 className="text-sm font-semibold text-[#9FE779] ">
               DIGITAL<br />ENGAGEMENT<br />HUB
             </h3>
             <div className="grid grid-cols-6 gap-2">
               {digitalEngagement.map((section, idx) => (
-                <div key={idx} className="space-y-2">
-                  <div className="bg-gray-700 rounded px-3 py-2 text-xs font-semibold text-center">
-                    {section.title}
-                  </div>
-                  {section.items.map((item, itemIdx) => (
-                    <div key={itemIdx} className="bg-gray-800 border border-gray-600 rounded px-2 py-1 text-xs text-center">
-                      {item}
-                    </div>
-                  ))}
+                <div key={idx} className="flex items-center justify-center gap-3 bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
+                    {section.title} 
                 </div>
               ))}
             </div>
           </div>
 
           {/* APIs Section */}
-          <div className="bg-gray-800 border-2 border-gray-600 rounded-lg p-4">
-            <h3 className="text-lg font-semibold text-center mb-4">APIs</h3>
+          <div className="bg-[#111] rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-[#9FE779] mb-4">APIs</h3>
             <LineSvg title={"API Gateway"} />
             
             <div className="grid grid-cols-3 gap-4">
@@ -189,15 +188,15 @@ const FinancialArchitecture = () => {
             </div>
 
             {/* Common Layer */}
-            <div className="mt-6">
-              <h4 className="text-sm font-semibold text-teal-400 mb-2">COMMON LAYER</h4>
-              <div className="grid grid-cols-12 gap-1">
+            <div className="bg-[#232228] p-4 rounded-xl flex items-center justify-between space-x-4 mt-2">
+              <h4 className="text-sm font-semibold text-[#9FE779] mb-4">COMMON LAYER</h4>
+                <div className="flex flex-no-wrap gap-3">
                 {commonLayerItems.map((item, idx) => (
-                  <div key={idx} className="bg-gray-700 rounded px-2 py-1 text-xs text-center">
+                    <div key={idx} className="flex items-center justify-center gap-3 bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
                     {item}
-                  </div>
+                    </div>
                 ))}
-              </div>
+                </div>
             </div>
 
             {/* Data Layer */}
