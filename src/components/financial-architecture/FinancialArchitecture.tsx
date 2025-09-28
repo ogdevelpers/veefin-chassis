@@ -1,3 +1,4 @@
+import LineSvg from "../line-svg/LineSvg";
 
 const FinancialArchitecture = () => {
   const channels = ['WEB', 'MOBILE', 'API', 'H2H', 'CHATBOT', 'BRANCHES'];
@@ -59,19 +60,17 @@ const FinancialArchitecture = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
+    <div className="min-h-screen text-white p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center space-x-4">
-          <div className="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center">
- 
-          </div>
+            <img src="/assets/logo.svg" alt="VeeFin" width={170} height={50} />
           <h1 className="text-2xl font-bold text-teal-400">
             4.0 WORKING CAPITAL ON A SINGLE CHASSIS
           </h1>
         </div>
-        <button className="bg-teal-500 hover:bg-teal-600 px-6 py-2 rounded-lg font-semibold">
-          BUILD MY OWN ARCHITECTURE
+        <button className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 pt-5 pr-[30px] pb-5 pl-[30px] rounded-lg">
+          <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase">BUILD MY OWN ARCHITECTURE</span>
         </button>
       </div>
 
@@ -134,9 +133,7 @@ const FinancialArchitecture = () => {
           {/* APIs Section */}
           <div className="bg-gray-800 border-2 border-gray-600 rounded-lg p-4">
             <h3 className="text-lg font-semibold text-center mb-4">APIs</h3>
-            <div className="text-center mb-4 text-sm border-t border-b border-gray-600 py-2">
-              API GATEWAY
-            </div>
+            <LineSvg title={"API Gateway"} />
             
             <div className="grid grid-cols-3 gap-4">
               {/* Trade Finance */}
