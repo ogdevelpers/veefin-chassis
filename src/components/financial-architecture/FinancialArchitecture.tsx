@@ -62,17 +62,17 @@ const FinancialArchitecture = () => {
   return (
     <div className="min-h-screen text-white p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between mb-5">
+        <div className="flex-1 flex items-center justify-center space-x-4 font-bold text-[40px] leading-tight tracking-[-0.25px] uppercase">
             <img src="/assets/logo.svg" alt="VeeFin" width={170} height={50} />
-          <h1 className="text-2xl font-bold text-teal-400">
+            <h1 className="text-4xl font-bold text-[#27A689]">
             4.0 WORKING CAPITAL ON A SINGLE CHASSIS
-          </h1>
+            </h1>
         </div>
-        <button className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 pt-5 pr-[30px] pb-5 pl-[30px] rounded-lg">
-          <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase">BUILD MY OWN ARCHITECTURE</span>
+        <button className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 pt-5 pr-[30px] pb-5 pl-[30px] rounded-lg ">
+            <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase">BUILD MY OWN ARCHITECTURE</span>
         </button>
-      </div>
+        </div>
 
       <div className="grid grid-cols-12 gap-6">
         {/* Left Sidebar - Common Capabilities */}
