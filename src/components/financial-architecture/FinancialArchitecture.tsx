@@ -134,7 +134,7 @@ const digitalEngagement = [
             </h3>
             <div className="grid grid-cols-6 gap-2">
               {digitalEngagement.map((section, idx) => (
-                <div key={idx} className="flex items-center justify-center gap-3 bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
+                <div key={idx} className="flex items-center justify-center text-center bg-[#232228] py-2 px-3 rounded-lg border-2 border-white text-[13px]">
                     {section.title} 
                 </div>
               ))}
@@ -190,9 +190,9 @@ const digitalEngagement = [
             {/* Common Layer */}
             <div className="bg-[#232228] p-4 rounded-xl flex items-center justify-between space-x-4 mt-2">
               <h4 className="text-sm font-semibold text-[#9FE779] mb-4">COMMON LAYER</h4>
-                <div className="flex flex-no-wrap gap-3">
+                <div className="flex-1 flex flex-no-wrap gap-3">
                 {commonLayerItems.map((item, idx) => (
-                    <div key={idx} className="flex items-center justify-center gap-3 bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
+                    <div key={idx} className="flex items-center justify-center gap-3 text-center bg-[#111] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
                     {item}
                     </div>
                 ))}
@@ -200,11 +200,11 @@ const digitalEngagement = [
             </div>
 
             {/* Data Layer */}
-            <div className="mt-4">
-              <h4 className="text-sm font-semibold text-teal-400 mb-2">DATA LAYER</h4>
-              <div className="grid grid-cols-8 gap-1">
+            <div className="bg-[#232228] p-4 rounded-xl flex items-center justify-between space-x-4 mt-2">
+              <h4 className="text-sm font-semibold text-[#9FE779] mb-4">DATA LAYER</h4>
+              <div className="flex-1 flex gap-3">
                 {dataLayerItems.map((item, idx) => (
-                  <div key={idx} className="bg-gray-700 rounded px-2 py-1 text-xs text-center">
+                  <div key={idx} className="flex items-center justify-center  bg-[#111] py-3 px-4 rounded-lg border-2 border-white text-[13px]">
                     {item}
                   </div>
                 ))}
@@ -212,23 +212,25 @@ const digitalEngagement = [
             </div>
           </div>
 
+          <LineSvg title={"System API"} />
+
           {/* Core Platforms */}
           <div className="grid grid-cols-2 gap-6">
-            <div>
-              <h3 className="text-sm font-semibold text-teal-400 mb-3">GROUP CORE PLATFORMS</h3>
+            <div className="bg-[#111] p-4 rounded-xl ">
+              <h3 className="text-sm font-semibold text-[#9FE779] mb-4">GROUP CORE PLATFORMS</h3>
               <div className="grid grid-cols-5 gap-2">
                 {leftPlatforms.map((platform, idx) => (
-                  <div key={idx} className="bg-gray-800 border border-gray-600 rounded px-3 py-2 text-xs text-center">
+                  <div key={idx} className="flex items-center justify-center bg-[#232228] py-2 px-3 rounded-lg border-2 border-white text-[13px]">
                     {platform}
                   </div>
                 ))}
               </div>
             </div>
-            <div>
-              <h3 className="text-sm font-semibold text-teal-400 mb-3">GROUP CORE PLATFORMS</h3>
+            <div className="bg-[#111] p-4 rounded-xl ">
+              <h3 className="text-sm font-semibold text-[#9FE779] mb-4">GROUP CORE PLATFORMS</h3>
               <div className="grid grid-cols-4 gap-2">
                 {rightPlatforms.map((platform, idx) => (
-                  <div key={idx} className="bg-gray-800 border border-gray-600 rounded px-3 py-2 text-xs text-center">
+                  <div key={idx} className="flex items-center justify-center text-center bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
                     {platform}
                   </div>
                 ))}
