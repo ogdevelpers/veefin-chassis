@@ -147,13 +147,14 @@ const digitalEngagement = [
             <LineSvg title={"API Gateway"} />
             
             <div className="grid grid-cols-3 gap-4">
-              {/* Trade Finance */}
-              <div className="bg-teal-800 rounded-lg p-4">
-                <h4 className="font-semibold text-center mb-2">TRADE FINANCE</h4>
-                <p className="text-xs text-center mb-3">PRODUCT WORKFLOW & PROCESS ORCHESTRATION</p>
-                <div className="space-y-1">
+
+                {/* Trade Finance */}
+              <div className="bg-[#232228] rounded-lg p-4 gradient-border">
+                <h4 className="font-bold text-center mb-2 text-white">TRADE FINANCE</h4>
+                <p className="text-xs text-center mb-3 text-white">PRODUCT WORKFLOW & PROCESS ORCHESTRATION</p>
+                <div className="grid grid-cols-3 gap-2">
                   {tradeFinanceItems.map((item, idx) => (
-                    <div key={idx} className="bg-gray-800 rounded px-2 py-1 text-xs text-center">
+                    <div key={idx} className="bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 py-3 text-xs text-center text-white font-medium">
                       {item}
                     </div>
                   ))}
@@ -161,12 +162,12 @@ const digitalEngagement = [
               </div>
 
               {/* Cash Management */}
-              <div className="bg-teal-800 rounded-lg p-4">
-                <h4 className="font-semibold text-center mb-2">CASH MANAGEMENT SYSTEMS</h4>
-                <p className="text-xs text-center mb-3">PRODUCT WORKFLOW & PROCESS ORCHESTRATION</p>
-                <div className="space-y-1">
+              <div className="bg-[#232228] rounded-lg p-4 gradient-border">
+                <h4 className="font-bold text-center mb-2 text-white">CASH MANAGEMENT SYSTEMS</h4>
+                <p className="text-xs text-center mb-3 text-white">PRODUCT WORKFLOW & PROCESS ORCHESTRATION</p>
+                <div className="grid grid-cols-3 gap-2">
                   {cashManagementItems.map((item, idx) => (
-                    <div key={idx} className="bg-gray-800 rounded px-2 py-1 text-xs text-center">
+                    <div key={idx} className="bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 py-3 text-xs text-center text-white font-medium">
                       {item}
                     </div>
                   ))}
@@ -174,18 +175,18 @@ const digitalEngagement = [
               </div>
 
               {/* Supply Chain Finance */}
-              <div className="bg-teal-800 rounded-lg p-4">
-                <h4 className="font-semibold text-center mb-2">SUPPLY CHAIN FINANCE</h4>
-                <p className="text-xs text-center mb-3">PRODUCT FACTORY</p>
-                <div className="space-y-1">
+              <div className="bg-[#232228] rounded-lg p-4 gradient-border">
+                <h4 className="font-bold text-center mb-2 text-white">SUPPLY CHAIN FINANCE</h4>
+                <p className="text-xs text-center mb-3 text-white">PRODUCT FACTORY</p>
+                <div className="grid grid-cols-3 gap-2">
                   {supplyChainItems.map((item, idx) => (
-                    <div key={idx} className="bg-gray-800 rounded px-2 py-1 text-xs text-center">
+                    <div key={idx} className="bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 py-3 text-xs text-center text-white font-medium">
                       {item}
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
+            </div> 
 
             {/* Common Layer */}
             <div className="bg-[#232228] p-4 rounded-xl flex items-center justify-between space-x-4 mt-2">

@@ -33,3 +33,23 @@ body {
   max-width: 100vw;
   max-height: 100dvh; 
 }
+
+.gradient-border {
+  position: relative;
+  border-radius: 12px; 
+  background: linear-gradient(26.3deg, #232228 81.91%, #7FB961 100%);
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 2px; /* This is the "thickness" of the gradient border */
+  background: linear-gradient(226.49deg, #C5FFA7 -0.04%, #111111 28.25%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
