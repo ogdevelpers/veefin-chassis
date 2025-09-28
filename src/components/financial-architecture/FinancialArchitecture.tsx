@@ -113,7 +113,7 @@ const FinancialArchitecture = () => {
             <h3 className="text-sm font-semibold text-[#9FE779] ">CHANNELS</h3>
             <div className="flex-1 grid grid-cols-6 gap-2">
               {channels.map((channel, idx) => (
-                <div key={idx} className="flex items-center justify-center gap-4 bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
+                <div key={idx} className="flex items-center justify-center gap-3 bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
                   <img  src= {channelIcons(channel)} alt={channel} className="w-6 h-6" />
                   {channel}
                 </div>
@@ -239,12 +239,12 @@ const FinancialArchitecture = () => {
         </div>
 
         {/* Right Sidebar - External Systems */}
-        <div className="w-[211px] space-y-2">
-          <h3 className="text-sm font-semibold text-teal-400 mb-4">
+        <div className="w-[211px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl">
+          <h3 className="text-sm font-semibold text-[#9FE779] mb-4">
             EXTERNAL<br />SYSTEMS
           </h3>
           {externalSystems.map((item, idx) => (
-            <div key={idx} className="bg-gray-800 border border-gray-600 rounded px-3 py-2 text-xs">
+            <div key={idx} className="bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-[13px]">
               {item}
             </div>
           ))}
