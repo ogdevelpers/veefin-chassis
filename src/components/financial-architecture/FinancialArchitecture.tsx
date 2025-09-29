@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import LineSvg from "../line-svg/LineSvg";
+import ProductSection from "./ProductSection";
 import { AppState } from "@/lib/constants";
 import MyModal from "../modal/modal";
 
@@ -130,6 +131,19 @@ const FinancialArchitecture = () => {
       setAppState('selected');
     } else if(appState === 'selected'){
       setAppState('confirmed'); 
+    } else if(appState === 'confirmed'){
+      setAppState('start');
+      setSelections({
+        'CHANNELS': [],
+        'DIGITAL ENGAGEMENT HUB': [],
+        'TRADE FINANCE': [],
+        'CASH MANAGEMENT SYSTEMS': [],
+        'SUPPLY CHAIN FINANCE': [],
+        'COMMON LAYER': [],
+        'DATA LAYER': [],
+        'GROUP CORE PLATFORMS LEFT': [],
+        'GROUP CORE PLATFORMS RIGHT': []
+      });
     }
   }
 
@@ -172,6 +186,7 @@ const FinancialArchitecture = () => {
   const isSelected = (category: string, item: string) => {
     return selections[category]?.includes(item) || false;
   }; 
+
   return (
     <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col">
       <MyModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent.title || 'Veefin'}>
@@ -252,55 +267,35 @@ const FinancialArchitecture = () => {
             <div className="grid grid-cols-3 gap-4">
 
                 {/* Trade Finance */}
-              <div className="bg-[#232228] rounded-lg p-4 gradient-border">
-                <h4 className="font-bold text-center mb-2 text-white">TRADE FINANCE</h4>
-                <p className="text-xs text-center mb-3 text-white">PRODUCT WORKFLOW & PROCESS ORCHESTRATION</p>
-                <div className="grid grid-cols-3 gap-2">
-                  {tradeFinanceItems.map((item, idx) => (
-                    <div key={idx} 
-                      onClick={() => toggleSelection('TRADE FINANCE', item)}
-                    className={`bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 text-center leading-none py-3 text-xs text-center text-white font-medium ${
-                        isSelected('TRADE FINANCE', item) ? 'clicked' : ''
-                      }`}>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
+                <ProductSection
+                  title="TRADE FINANCE"
+                  subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
+                  itemsList={tradeFinanceItems}
+                  selectedItems={selections['TRADE FINANCE']}
+                  onItemClick={item => toggleSelection('TRADE FINANCE', item)}
+                  appState={appState}
 
-              {/* Cash Management */}
-              <div className="bg-[#232228] rounded-lg p-4 gradient-border">
-                <h4 className="font-bold text-center mb-2 text-white">CASH MANAGEMENT SYSTEMS</h4>
-                <p className="text-xs text-center mb-3 text-white">PRODUCT WORKFLOW & PROCESS ORCHESTRATION</p>
-                <div className="grid grid-cols-3 gap-2">
-                  {cashManagementItems.map((item, idx) => (
-                    <div key={idx} 
-                     onClick={() => toggleSelection('CASH MANAGEMENT SYSTEMS', item)}
-                    className={`bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 leading-none py-3 text-xs text-center leading-none text-white font-medium ${
-                        isSelected('CASH MANAGEMENT SYSTEMS', item) ? 'clicked' : ''
-                      }`}>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
+                />
 
-              {/* Supply Chain Finance */}
-              <div className="bg-[#232228] rounded-lg p-4 gradient-border">
-                <h4 className="font-bold text-center mb-2 text-white">SUPPLY CHAIN FINANCE</h4>
-                <p className="text-xs text-center mb-3 text-white">PRODUCT FACTORY</p>
-                <div className="grid grid-cols-3 gap-2">
-                  {supplyChainItems.map((item, idx) => (
-                    <div key={idx} 
-                    onClick={() => toggleSelection('SUPPLY CHAIN FINANCE', item)}
-                    className={`bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 leading-none py-3 text-xs text-center leading-none text-white font-medium ${
-                      isSelected('SUPPLY CHAIN FINANCE', item) ? 'clicked' : ''
-                    }`}>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
+                {/* Cash Management */}
+                <ProductSection
+                  title="CASH MANAGEMENT SYSTEMS"
+                  subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
+                  itemsList={cashManagementItems}
+                  selectedItems={selections['CASH MANAGEMENT SYSTEMS']}
+                  onItemClick={item => toggleSelection('CASH MANAGEMENT SYSTEMS', item)}
+                  appState={appState}
+                />
+
+                {/* Supply Chain Finance */}
+                <ProductSection
+                  title="SUPPLY CHAIN FINANCE"
+                  subheading="PRODUCT FACTORY"
+                  itemsList={supplyChainItems}
+                  selectedItems={selections['SUPPLY CHAIN FINANCE']}
+                  onItemClick={item => toggleSelection('SUPPLY CHAIN FINANCE', item)}
+                  appState={appState}
+                />
             </div> 
 
             {/* Common Layer */}
