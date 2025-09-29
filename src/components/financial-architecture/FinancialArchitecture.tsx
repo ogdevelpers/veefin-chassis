@@ -193,6 +193,11 @@ const FinancialArchitecture = () => {
       }));
       return;
     }
+
+    // now we know its not channels
+    if(selections['CHANNELS'].length === 0){
+      return;
+    }
     setSelections(prev => {
       const currentSelections = prev[category] || [];
       const isSelected = currentSelections.includes(item);
