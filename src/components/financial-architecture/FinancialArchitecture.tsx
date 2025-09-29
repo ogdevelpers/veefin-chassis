@@ -2,6 +2,7 @@
 import { useState } from "react";
 import LineSvg from "../line-svg/LineSvg";
 import { AppState } from "@/lib/constants";
+import MyModal from "../modal/modal";
 
 const channelIcons = (channel: string) => {
   switch (channel) {
@@ -88,6 +89,11 @@ const digitalEngagement = [
 const FinancialArchitecture = () => {
   const channels = ['WEB', 'MOBILE', 'API', 'H2H', 'CHATBOT', 'BRANCHES'];
   const [appState, setAppState] = useState<AppState>('start');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<{title: string; content: string}>({title: '', content: ''});
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
  const [selections, setSelections] = useState<Record<string, string[]>>({
     'CHANNELS': [],
@@ -114,6 +120,15 @@ const FinancialArchitecture = () => {
 
   const toggleSelection = (category: string, item: string) => {
     console.log('Toggling selection for', category, item, selections);
+    if(appState === 'start'){
+      // Open modal with details
+      setModalContent({
+        title: item,
+        content: `Detailed information about ${item} will be displayed here.`
+      });
+      handleOpenModal();
+      return;
+    }
     if(appState !== 'picking'){
       return;
     }
@@ -135,6 +150,11 @@ const FinancialArchitecture = () => {
   }; 
   return (
     <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col">
+      <MyModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent.title || 'Veefin'}>
+        <p className="text-gray-300">
+          {modalContent.content || 'Detailed information about the selected item will be displayed here.'}
+        </p>
+      </MyModal>
       {/* Header */}
         <div className="flex items-center justify-between mb-5 flex-shrink-0">
         <div className="flex-1 flex items-center justify-center space-x-4 font-bold text-[40px] leading-tight tracking-[-0.25px] uppercase">
