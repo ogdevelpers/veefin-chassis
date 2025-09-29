@@ -1,27 +1,27 @@
+"use client";
+import { useState } from "react";
 import LineSvg from "../line-svg/LineSvg";
+import { AppState } from "@/lib/constants";
 
-const FinancialArchitecture = () => {
-  const channels = ['WEB', 'MOBILE', 'API', 'H2H', 'CHATBOT', 'BRANCHES'];
-
-  const channelIcons = (channel: string) => {
-    switch (channel) {
-        case 'WEB':
-            return '/assets/web.svg';
-        case 'MOBILE':
-            return '/assets/mobile.png';
-        case 'API':
-            return '/assets/API.svg';
-        case 'H2H':
-            return '/assets/H2H.svg';
-        case 'CHATBOT':
-            return '/assets/chatbot.png';
-        case 'BRANCHES':
-            return '/assets/branches.png';
-        default:
-            return '/assets/web.svg';
-    }
+const channelIcons = (channel: string) => {
+  switch (channel) {
+      case 'WEB':
+          return '/assets/web.svg';
+      case 'MOBILE':
+          return '/assets/mobile.png';
+      case 'API':
+          return '/assets/API.svg';
+      case 'H2H':
+          return '/assets/H2H.svg';
+      case 'CHATBOT':
+          return '/assets/chatbot.png';
+      case 'BRANCHES':
+          return '/assets/branches.png';
+      default:
+          return '/assets/web.svg';
   }
-  
+}
+
 const digitalEngagement = [
   { title: 'CUSTOMER ONBOARDING' },
   { title: 'PRODUCT ONBOARDING' },
@@ -84,6 +84,55 @@ const digitalEngagement = [
     'INVOICING', 'CREDIT BUREAU', 'MARKET PLACE', 'SIGNATURE VERIFICATION'
   ];
 
+
+const FinancialArchitecture = () => {
+  const channels = ['WEB', 'MOBILE', 'API', 'H2H', 'CHATBOT', 'BRANCHES'];
+  const [appState, setAppState] = useState<AppState>('start');
+
+ const [selections, setSelections] = useState<Record<string, string[]>>({
+    'CHANNELS': [],
+    'DIGITAL ENGAGEMENT HUB': [],
+    'TRADE FINANCE': [],
+    'CASH MANAGEMENT SYSTEMS': [],
+    'SUPPLY CHAIN FINANCE': [],
+    'COMMON LAYER': [],
+    'DATA LAYER': [],
+    'GROUP CORE PLATFORMS LEFT': [],
+    'GROUP CORE PLATFORMS RIGHT': []
+  });
+
+  const handleButtonClick = () => {
+    if(appState === 'start'){
+      setAppState('picking');
+    }
+    else if(appState === 'picking'){
+      setAppState('selected');
+    } else if(appState === 'selected'){
+      setAppState('confirmed'); 
+    }
+  }
+
+  const toggleSelection = (category: string, item: string) => {
+    console.log('Toggling selection for', category, item, selections);
+    if(appState !== 'picking'){
+      return;
+    }
+    setSelections(prev => {
+      const currentSelections = prev[category] || [];
+      const isSelected = currentSelections.includes(item);
+      
+      return {
+        ...prev,
+        [category]: isSelected
+          ? currentSelections.filter(i => i !== item)
+          : [...currentSelections, item]
+      };
+    });
+  };
+
+  const isSelected = (category: string, item: string) => {
+    return selections[category]?.includes(item) || false;
+  }; 
   return (
     <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col">
       {/* Header */}
@@ -94,7 +143,8 @@ const digitalEngagement = [
             4.0 WORKING CAPITAL ON A SINGLE CHASSIS
             </h1>
         </div>
-        <button className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 py-3 px-[30px] rounded-lg ">
+        <button className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 py-3 px-[30px] rounded-lg "
+        onClick={handleButtonClick}>
             <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase">BUILD MY OWN ARCHITECTURE</span>
         </button>
         </div>
@@ -119,7 +169,10 @@ const digitalEngagement = [
             <h3 className="text-sm font-semibold text-[#9FE779] ">CHANNELS</h3>
             <div className="flex-1 grid grid-cols-6 gap-2">
               {channels.map((channel, idx) => (
-                <div key={idx} className="flex items-center justify-center gap-3 bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-xs">
+                <div key={idx} className={`flex items-center justify-center gap-3 bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-xs  ${
+                isSelected('COMMON OPERATIONAL CAPABILITIES', channel) ? 'clicked' : ''}`}
+                  onClick={() => toggleSelection('COMMON OPERATIONAL CAPABILITIES', channel)}
+                >
                   <img  src= {channelIcons(channel)} alt={channel} className="w-6 h-6" />
                   {channel}
                 </div>
@@ -134,7 +187,11 @@ const digitalEngagement = [
             </h3>
             <div className="grid grid-cols-6 gap-2">
               {digitalEngagement.map((section, idx) => (
-                <div key={idx} className="flex items-center justify-center text-center bg-[#232228] py-2 px-3 rounded-lg border-2 border-white text-xs">
+                <div key={idx} className={`flex items-center justify-center text-center bg-[#232228] py-2 px-3 rounded-lg border-2 border-white text-xs ${
+                      isSelected('DIGITAL ENGAGEMENT HUB', section.title) ? 'clicked' : ''
+                    }`}
+                 onClick={() => toggleSelection('DIGITAL ENGAGEMENT HUB', section.title)}
+                >
                     {section.title} 
                 </div>
               ))}
@@ -154,7 +211,11 @@ const digitalEngagement = [
                 <p className="text-xs text-center mb-3 text-white">PRODUCT WORKFLOW & PROCESS ORCHESTRATION</p>
                 <div className="grid grid-cols-3 gap-2">
                   {tradeFinanceItems.map((item, idx) => (
-                    <div key={idx} className="bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 py-3 text-xs text-center text-white font-medium">
+                    <div key={idx} 
+                      onClick={() => toggleSelection('TRADE FINANCE', item)}
+                    className={`bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 py-3 text-xs text-center text-white font-medium ${
+                        isSelected('TRADE FINANCE', item) ? 'clicked' : ''
+                      }`}>
                       {item}
                     </div>
                   ))}
@@ -167,7 +228,11 @@ const digitalEngagement = [
                 <p className="text-xs text-center mb-3 text-white">PRODUCT WORKFLOW & PROCESS ORCHESTRATION</p>
                 <div className="grid grid-cols-3 gap-2">
                   {cashManagementItems.map((item, idx) => (
-                    <div key={idx} className="bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 py-3 text-xs text-center text-white font-medium">
+                    <div key={idx} 
+                     onClick={() => toggleSelection('CASH MANAGEMENT SYSTEMS', item)}
+                    className={`bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 py-3 text-xs text-center text-white font-medium ${
+                        isSelected('CASH MANAGEMENT SYSTEMS', item) ? 'clicked' : ''
+                      }`}>
                       {item}
                     </div>
                   ))}
@@ -180,7 +245,11 @@ const digitalEngagement = [
                 <p className="text-xs text-center mb-3 text-white">PRODUCT FACTORY</p>
                 <div className="grid grid-cols-3 gap-2">
                   {supplyChainItems.map((item, idx) => (
-                    <div key={idx} className="bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 py-3 text-xs text-center text-white font-medium">
+                    <div key={idx} 
+                    onClick={() => toggleSelection('SUPPLY CHAIN FINANCE', item)}
+                    className={`bg-[#111] rounded-lg border-2 border-white flex items-center justify-between px-1 py-3 text-xs text-center text-white font-medium ${
+                      isSelected('SUPPLY CHAIN FINANCE', item) ? 'clicked' : ''
+                    }`}>
                       {item}
                     </div>
                   ))}
@@ -193,7 +262,11 @@ const digitalEngagement = [
               <h4 className="text-sm font-semibold text-[#9FE779] mb-4">COMMON LAYER</h4>
                 <div className="flex-1 flex flex-no-wrap gap-3">
                 {commonLayerItems.map((item, idx) => (
-                    <div key={idx} className="flex items-center justify-center gap-3 text-center bg-[#111] py-1 px-3 rounded-lg border-2 border-white text-xs">
+                    <div key={idx} 
+                      onClick={() => toggleSelection('COMMON LAYER', item)}
+                    className={`flex items-center justify-center gap-3 text-center bg-[#111] py-1 px-3 rounded-lg border-2 border-white text-xs ${
+                      isSelected('COMMON LAYER', item) ? 'clicked' : ''
+                    }`}>
                     {item}
                     </div>
                 ))}
@@ -205,7 +278,11 @@ const digitalEngagement = [
               <h4 className="text-sm font-semibold text-[#9FE779] mb-4">DATA LAYER</h4>
               <div className="flex-1 flex gap-3">
                 {dataLayerItems.map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-center  bg-[#111] py-3 px-4 rounded-lg border-2 border-white text-xs">
+                  <div key={idx} 
+                    onClick={() => toggleSelection('DATA LAYER', item)}
+                    className={`flex items-center justify-center  bg-[#111] py-3 px-4 rounded-lg border-2 border-white text-xs ${
+                      isSelected('DATA LAYER', item) ? 'clicked' : ''
+                    }`}>
                     {item}
                   </div>
                 ))}
@@ -221,7 +298,11 @@ const digitalEngagement = [
               <h3 className="text-sm font-semibold text-[#9FE779] mb-4">GROUP CORE PLATFORMS</h3>
               <div className="grid grid-cols-5 gap-2">
                 {leftPlatforms.map((platform, idx) => (
-                  <div key={idx} className="flex items-center justify-center bg-[#232228] py-2 px-3 rounded-lg border-2 border-white text-xs">
+                  <div key={idx} 
+                  onClick={() => toggleSelection('GROUP CORE PLATFORMS', platform)}
+                  className={`flex items-center justify-center bg-[#232228] py-2 px-3 rounded-lg border-2 border-white text-xs ${
+                    isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
+                  }`}>
                     {platform}
                   </div>
                 ))}
@@ -231,7 +312,11 @@ const digitalEngagement = [
               <h3 className="text-sm font-semibold text-[#9FE779] mb-4">GROUP CORE PLATFORMS</h3>
               <div className="grid grid-cols-4 gap-2">
                 {rightPlatforms.map((platform, idx) => (
-                  <div key={idx} className="flex items-center justify-center text-center bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-xs">
+                  <div key={idx} 
+                    onClick={() => toggleSelection('GROUP CORE PLATFORMS', platform)}
+                    className={`flex items-center justify-center text-center bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-xs ${
+                      isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
+                    }`}>
                     {platform}
                   </div>
                 ))}

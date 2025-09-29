@@ -1,0 +1,1 @@
+export type AppState = 'start' | 'picking' | 'selected' | 'confirmed';

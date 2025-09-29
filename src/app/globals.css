@@ -47,12 +47,19 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 12px;
-  padding: 2px; /* This is the "thickness" of the gradient border */
+  padding: 2px;  
   background: linear-gradient(226.49deg, #C5FFA7 -0.04%, #111111 28.25%);
   -webkit-mask: 
     linear-gradient(#fff 0 0) content-box, 
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
+  pointer-events: none;
 }
   
+.clicked {
+  background: linear-gradient(0deg, #9FE779, #9FE779), 
+              linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  color: #111;
+  border-color: #9FE779;
+}
