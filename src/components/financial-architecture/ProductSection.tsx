@@ -37,7 +37,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
             <div
                 className={
                     (appState === "selected" || appState === "confirmed")
-                        ? "grid grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-2"
+                        ? "grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-2"
                         : "grid grid-cols-3 gap-2"
                 }
             >
@@ -57,6 +57,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                     </div>
                 ))}
             </div>
+
         </div>
     );
 };
