@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import LineSvg from "../line-svg/LineSvg";
 import ProductSection from "./ProductSection";
 import { AppState } from "@/lib/constants";
 import MyModal from "../modal/modal";
 import EmailFormModal from "../email-form/EmailForm";
+import html2canvas from "html2canvas-pro";
 
 const channelIcons = (channel: string) => {
   switch (channel) {
@@ -112,6 +113,8 @@ const FinancialArchitecture = () => {
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
+  const targetRef = useRef<HTMLDivElement | null>(null);
+
   const [selections, setSelections] = useState<Record<string, string[]>>({
     'CHANNELS': [],
     'DIGITAL ENGAGEMENT HUB': [],
@@ -124,6 +127,7 @@ const FinancialArchitecture = () => {
     'GROUP CORE PLATFORMS RIGHT': []
   });
 
+
   const handleButtonClick = () => {
     if (appState === 'start') {
       setAppState('picking');
@@ -134,7 +138,7 @@ const FinancialArchitecture = () => {
       setModalContent({
         title: 'Please Enter Your Details',
         content: 'Please enter your details to receive the architecture via email.'
-      });
+      }); 
       setIsModalOpen(true);
       setAppState('confirmed');
     } else if (appState === 'confirmed') {
@@ -216,7 +220,7 @@ const FinancialArchitecture = () => {
   };
 
   return (
-    <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col">
+    <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col" ref={targetRef}>
       <MyModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent.title || 'Veefin'}>
         {appState === 'selected' || appState === 'confirmed' ?
           (<EmailFormModal selections={selections} handleReset={handleReset} />) :
@@ -250,7 +254,7 @@ const FinancialArchitecture = () => {
             COMMON<br />OPERATIONAL<br />CAPABILITIES
           </h3>
           {commonCapabilities.map((item, idx) => (
-            <div key={idx} className="bg-[#232228] py-1 px-3 rounded-lg border-2 border-white text-xs">
+            <div key={idx} className="bg-[#232228] py-3 px-4 rounded-lg border-2 border-white text-xs">
               {item}
             </div>
           ))}
@@ -403,7 +407,7 @@ const FinancialArchitecture = () => {
               EXTERNAL<br />SYSTEMS
             </h3>
             {externalSystems.map((item, idx) => (
-              <div key={idx} className="bg-[#232228] py-1 px-3 rounded-lg border-2 border-white leading-none text-xs">
+              <div key={idx} className="bg-[#232228] py-3 px-4 rounded-lg border-2 border-white leading-none text-xs">
                 {item}
               </div>
             ))}

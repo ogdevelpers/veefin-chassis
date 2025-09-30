@@ -46,8 +46,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                         key={idx}
                         onClick={() => onItemClick(item)}
                         className={`
-        rounded-lg border-2 border-white flex items-center justify-center px-1 py-3
-        text-xs text-white font-medium leading-none
+        rounded-lg border-2 border-white flex items-center justify-center px-2 py-2
+        text-[13px] text-bold text-white font-medium leading-none text-center
         ${(appState === "selected" || appState === "confirmed")
                                 ? `${isSelected(item) ? "clicked" : ""}`
                                 : `bg-[#111] justify-between ${isSelected(item) ? "clicked" : ""}`}
