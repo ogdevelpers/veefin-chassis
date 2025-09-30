@@ -254,7 +254,7 @@ const FinancialArchitecture = () => {
             COMMON<br />OPERATIONAL<br />CAPABILITIES
           </h3>
           {commonCapabilities.map((item, idx) => (
-            <div key={idx} className="bg-[#232228] py-3 px-4 rounded-lg border-2 border-white text-xs">
+            <div key={idx} className="bg-[#232228] px-4 rounded-lg border-2 border-white text-xs min-h-[40px] flex items-center">
               {item}
             </div>
           ))}
@@ -267,7 +267,7 @@ const FinancialArchitecture = () => {
             <h3 className="text-sm font-semibold text-[#9FE779] ">CHANNELS</h3>
             <div className="flex-1 grid grid-cols-6 gap-2">
               {channels.map((channel, idx) => (
-                <div key={idx} className={`flex items-center justify-center gap-3 bg-[#232228] py-1 px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight  ${isSelected('CHANNELS', channel) ? 'clicked' : ''}`}
+                <div key={idx} className={`flex items-center justify-center gap-3 bg-[#232228] px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] ${isSelected('CHANNELS', channel) ? 'clicked' : ''}`}
                   onClick={() => toggleSelection('CHANNELS', channel)}
                 >
                   <img src={channelIcons(channel)} alt={channel} className="w-6 h-6" />
@@ -284,8 +284,8 @@ const FinancialArchitecture = () => {
             </h3>
             <div className="grid grid-cols-6 gap-2">
               {digitalEngagement.map((section, idx) => (
-                <div key={idx} className={`flex items-center justify-center text-center bg-[#232228] py-2 px-3 leading-none rounded-lg border-2 border-white text-xs ${isSelected('DIGITAL ENGAGEMENT HUB', section.title) ? 'clicked' : ''
-                  }`}
+                <div key={idx} className={`flex items-center justify-center text-center bg-[#232228] px-3 leading-none rounded-lg border-2 border-white text-xs min-h-[40px] ${isSelected('DIGITAL ENGAGEMENT HUB', section.title) ? 'clicked' : ''}
+                  `}
                   onClick={() => toggleSelection('DIGITAL ENGAGEMENT HUB', section.title)}
                 >
                   {section.title}
@@ -340,7 +340,7 @@ const FinancialArchitecture = () => {
                 {commonLayerItems.map((item, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('COMMON LAYER', item)}
-                    className={`flex items-center justify-center gap-3 text-center bg-[#111] py-1 px-3 rounded-lg leading-none border-2 border-white text-xs ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
+                    className={`flex items-center justify-center gap-3 text-center bg-[#111] px-3 rounded-lg leading-none border-2 border-white text-xs min-h-[40px] ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
                       }`}>
                     {item}
                   </div>
@@ -355,7 +355,7 @@ const FinancialArchitecture = () => {
                 {dataLayerItems.map((item, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('DATA LAYER', item)}
-                    className={`flex items-center justify-center  bg-[#111] py-3 px-4 rounded-lg border-2 border-white leading-none text-xs ${isSelected('DATA LAYER', item) ? 'clicked' : ''
+                    className={`flex items-center justify-center  bg-[#111] px-4 rounded-lg border-2 border-white leading-none text-xs min-h-[40px] ${isSelected('DATA LAYER', item) ? 'clicked' : ''
                       }`}>
                     {item}
                   </div>
@@ -374,7 +374,7 @@ const FinancialArchitecture = () => {
                 {leftPlatforms.map((platform, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('GROUP CORE PLATFORMS', platform)}
-                    className={`flex items-center justify-center bg-[#232228] py-2 px-3 rounded-lg border-2 border-white leading-none text-xs ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
+                    className={`flex items-center justify-center bg-[#232228] px-3 rounded-lg border-2 border-white leading-none text-xs min-h-[40px] ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
                       }`}>
                     {platform}
                   </div>
@@ -387,7 +387,7 @@ const FinancialArchitecture = () => {
                 {rightPlatforms.map((platform, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('GROUP CORE PLATFORMS', platform)}
-                    className={`flex items-center justify-center text-center bg-[#232228] py-1 px-3 rounded-lg border-2 leading-none border-white text-xs ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
+                    className={`flex items-center justify-center text-center bg-[#232228] px-3 rounded-lg border-2 leading-none border-white text-xs min-h-[40px] ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
                       }`}>
                     {platform}
                   </div>
@@ -407,7 +407,7 @@ const FinancialArchitecture = () => {
               EXTERNAL<br />SYSTEMS
             </h3>
             {externalSystems.map((item, idx) => (
-              <div key={idx} className="bg-[#232228] py-3 px-4 rounded-lg border-2 border-white leading-none text-xs">
+              <div key={idx} className="bg-[#232228] px-4 rounded-lg border-2 border-white leading-none text-xs min-h-[40px] flex items-center">
                 {item}
               </div>
             ))}
