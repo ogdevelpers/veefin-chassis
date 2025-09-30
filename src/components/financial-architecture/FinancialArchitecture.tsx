@@ -4,8 +4,7 @@ import LineSvg from "../line-svg/LineSvg";
 import ProductSection from "./ProductSection";
 import { AppState } from "@/lib/constants";
 import MyModal from "../modal/modal";
-import EmailFormModal from "../email-form/EmailForm";
-import html2canvas from "html2canvas-pro";
+import EmailFormModal from "../email-form/EmailForm"; 
 
 const channelIcons = (channel: string) => {
   switch (channel) {
