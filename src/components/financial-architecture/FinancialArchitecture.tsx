@@ -252,7 +252,7 @@ const FinancialArchitecture = () => {
             4.0 WORKING CAPITAL ON A SINGLE CHASSIS
           </h1>
         </div>
-        <button className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 py-3 px-[30px] rounded-lg "
+        <button className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 py-3 px-[30px] rounded-lg mr-4 max-w-[330px]"
           onClick={handleButtonClick}>
           <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase">
             {resolveButtonText(appState)}
@@ -418,6 +418,10 @@ const FinancialArchitecture = () => {
         </div>
 
         {/* Right Sidebar - External Systems */}
+        <div className="w-[211px] flex items-start gap-3 h-[100%]">
+          <div className="flex-shrink-0 w-[1px]">
+            <LineSvg title={"System API"} tilt="khadaHai" />
+          </div>
         <div className="min-w-[170px] max-w-[170px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl max-h-[100%]">
           <h3 className="text-sm font-semibold text-[#9FE779] mb-4 ">
             EXTERNAL<br />SYSTEMS
@@ -427,6 +431,7 @@ const FinancialArchitecture = () => {
               {item}
             </div>
           ))}
+        </div>
         </div>
 
       </div>
