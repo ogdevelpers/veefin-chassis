@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { veefinSchema } from "@/lib/constants";
+import { sendEmail } from './sendmail';
 
 export async function POST(request: NextRequest) {
 	try {
@@ -31,6 +32,15 @@ export async function POST(request: NextRequest) {
 			.eq('email', body.email)
 			.single();
 
+
+		// send email
+		await sendEmail({
+		  email: body.email,
+		  companyname: body.companyname,
+		  pdfUrl: (body as any).pdfUrl,
+		  name: body.username,
+		  message: (body as any).message
+		});
 		if (checkError && checkError.code !== 'PGRST116') {
 			// PGRST116 is "not found" error, which is expected
 			console.error('Error checking existing user:', checkError);
