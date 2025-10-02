@@ -5,6 +5,9 @@ import ProductSection from "./ProductSection";
 import { AppState } from "@/lib/constants";
 import MyModal from "../modal/modal";
 import EmailFormModal from "../email-form/EmailForm"; 
+import { toPng } from 'html-to-image';
+
+
 
 const channelIcons = (channel: string) => {
   switch (channel) {
@@ -127,13 +130,24 @@ const FinancialArchitecture = () => {
   });
 
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (appState === 'start') {
       setAppState('picking');
     }
     else if (appState === 'picking') {
       setAppState('selected');
-    } else if (appState === 'selected') {
+ 
+      const png = await toPng(targetRef.current as HTMLElement, {
+        backgroundColor: "#232228",
+        width: 1920,
+        height:1080,
+
+      });
+      const link = document.createElement("a");
+      link.href = png;
+      link.download = "financial-architecture.png";
+      link.click();
+    } else if (appState === 'selected') { 
       setModalContent({
         title: 'Please Enter Your Details',
         content: 'Please enter your details to receive the architecture via email.'
@@ -265,7 +279,14 @@ const FinancialArchitecture = () => {
           <div className="bg-[#111] p-4 rounded-xl flex items-center justify-between space-x-4">
             <h3 className="text-sm font-semibold text-[#9FE779] ">CHANNELS</h3>
             <div className="flex-1 grid grid-cols-6 gap-2">
-              {channels.map((channel, idx) => (
+              {(appState === 'selected' || appState === 'confirmed') &&  
+                <div className="flex items-center justify-center gap-3 clicked px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px]">
+                  <img src={channelIcons(selections['CHANNELS'][0])} alt={selections['CHANNELS'][0]} className="w-6 h-6" />
+                  {selections['CHANNELS'][0]}
+                </div>
+              }
+              { (appState === 'picking' || appState === 'start') &&
+              channels.map((channel, idx) => (
                 <div key={idx} className={`flex items-center justify-center gap-3 bg-[#232228] px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] ${isSelected('CHANNELS', channel) ? 'clicked' : ''}`}
                   onClick={() => toggleSelection('CHANNELS', channel)}
                 >
