@@ -267,7 +267,7 @@ const FinancialArchitecture = () => {
             COMMON<br />OPERATIONAL<br />CAPABILITIES
           </h3>
           {commonCapabilities.map((item, idx) => (
-            <div key={idx} className="bg-[#232228] px-4 rounded-lg border-2 border-white text-xs min-h-[40px] flex items-center">
+            <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center`}>
               {item}
             </div>
           ))}
@@ -304,7 +304,7 @@ const FinancialArchitecture = () => {
             </h3>
             <div className="grid grid-cols-6 gap-2">
               {digitalEngagement.map((section, idx) => (
-                <div key={idx} className={`flex items-center justify-center text-center bg-[#232228] px-3 leading-none rounded-lg border-2 border-white text-xs min-h-[40px] ${isSelected('DIGITAL ENGAGEMENT HUB', section.title) ? 'clicked' : ''}
+                <div key={idx} className={`flex items-center justify-center text-center  px-3 leading-none rounded-lg border-2 ${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} text-xs min-h-[40px] ${isSelected('DIGITAL ENGAGEMENT HUB', section.title) ? 'clicked' : ''}
                   `}
                   onClick={() => toggleSelection('DIGITAL ENGAGEMENT HUB', section.title)}
                 >
@@ -360,7 +360,7 @@ const FinancialArchitecture = () => {
                 {commonLayerItems.map((item, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('COMMON LAYER', item)}
-                    className={`flex items-center justify-center gap-3 text-center bg-[#111] px-3 rounded-lg leading-none border-2 border-white text-xs min-h-[40px] ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
+                    className={`flex items-center justify-center gap-3 text-center ${appState === 'start' ? `bg-[#111] border-white` : `bg-[#181818] border-transparent`} px-3 rounded-lg leading-none border-2 text-xs min-h-[40px] ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
                       }`}>
                     {item}
                   </div>
@@ -375,7 +375,7 @@ const FinancialArchitecture = () => {
                 {dataLayerItems.map((item, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('DATA LAYER', item)}
-                    className={`flex items-center justify-center  bg-[#111] px-4 rounded-lg border-2 border-white leading-none text-xs min-h-[40px] ${isSelected('DATA LAYER', item) ? 'clicked' : ''
+                    className={`flex items-center justify-center  ${appState === 'start' ? `bg-[#111] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2 leading-none text-xs min-h-[40px] ${isSelected('DATA LAYER', item) ? 'clicked' : ''
                       }`}>
                     {item}
                   </div>
@@ -394,7 +394,7 @@ const FinancialArchitecture = () => {
                 {leftPlatforms.map((platform, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('GROUP CORE PLATFORMS', platform)}
-                    className={`flex items-center justify-center bg-[#232228] px-3 rounded-lg border-2 border-white leading-none text-xs min-h-[40px] ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
+                    className={`flex items-center justify-center ${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-3 rounded-lg border-2 leading-none text-xs min-h-[40px] ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
                       }`}>
                     {platform}
                   </div>
@@ -407,7 +407,7 @@ const FinancialArchitecture = () => {
                 {rightPlatforms.map((platform, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('GROUP CORE PLATFORMS', platform)}
-                    className={`flex items-center justify-center text-center bg-[#232228] px-3 rounded-lg border-2 leading-none border-white text-xs min-h-[40px] ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
+                    className={`flex items-center justify-center text-center ${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-3 rounded-lg border-2 leading-none text-xs min-h-[40px] ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
                       }`}>
                     {platform}
                   </div>
@@ -423,7 +423,7 @@ const FinancialArchitecture = () => {
             EXTERNAL<br />SYSTEMS
           </h3>
           {externalSystems.map((item, idx) => (
-            <div key={idx} className="bg-[#232228] px-4 rounded-lg border-2 border-white text-xs min-h-[40px] flex items-center">
+            <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center`}>
               {item}
             </div>
           ))}
