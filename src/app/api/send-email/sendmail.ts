@@ -41,8 +41,7 @@ export async function sendEmail({ email, companyname, pdfUrl, name, message }: {
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
             ${companyname ? `<p><strong>Company:</strong> ${companyname}</p>` : ''}
-            ${message ? `<p><strong>Message:</strong> ${message}</p>` : ''}
-            ${pdfUrl ? `<a class="pdf-link" href="${pdfUrl}" target="_blank">Download Architecture PDF</a>` : ''}
+            ${message ? `<p><strong>Message:</strong> ${message}</p>` : ''} 
             <br>
             <p>This message was sent from the Veefin Chassis application.</p>
           </div>

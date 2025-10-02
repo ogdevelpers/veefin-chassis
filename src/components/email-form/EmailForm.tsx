@@ -1,43 +1,60 @@
 import { useState } from "react";
 
-const EmailFormModal  = ({selections, handleReset }:{selections: Record<string, string[]>, handleReset: ()=>void}) => {
+const EmailFormModal  = ({selections, handleReset, screenshotBlob, setScreenshotBlob }:{selections: Record<string, string[]>, handleReset: ()=>void, screenshotBlob: Blob | null, setScreenshotBlob: (blob: Blob | null) => void}) => {
   const [name, setName] = useState<string>('');
   const [company, setCompany] = useState<string>('');
   const [email, setEmail] = useState<string>('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Form Submitted:', { name, company, email, selections });
-    const formData = {
-        username: name,
-        companyname: company,
-        email,
-        selections
-    };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  console.log('Form Submitted:', { name, company, email, selections });
+  
+  // Create FormData object
+  const formData = new FormData();
+  formData.append('username', name);
+  formData.append('companyname', company);
+  formData.append('email', email);
+  formData.append('selections', JSON.stringify(selections));
+  
+  // Append the screenshot blob if it exists
+  if (screenshotBlob) {
+    formData.append('screenshot', screenshotBlob, 'architecture.png');
+    console.log('Screenshot blob added to FormData');
+  } else {
+    console.warn('No screenshot blob available');
+  }
 
-    try {
-        const response = await fetch('/api/send-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData),
-        });
+  try {
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      body: formData,
+      // Don't set Content-Type - browser will set it automatically with boundary
+    });
+
+    console.log('Response status:', response.status);
     
-        console.log('Response:', response);
-        if (response.ok) {
-            alert('Email sent successfully!');
-            setName('');
-            setCompany('');
-            setEmail('');
-            handleReset();
-        } else {
-            alert('Failed to send email. Please try again.');
-            console.log('Failed response:', await response.text());
-        }
-    } catch (error) {
-        console.error('Error sending email:', error);
-        alert('An error occurred while sending the email. Please try again later.');
-    } 
-  };
+    if (response.ok) {
+      const result = await response.json();
+      console.log('Success:', result);
+      alert('Email sent successfully!');
+      
+      // Reset form
+      setName('');
+      setCompany('');
+      setEmail('');
+      setScreenshotBlob(null);
+      handleReset();
+    } else {
+      const errorText = await response.text();
+      console.error('Failed response:', errorText);
+      alert('Failed to send email. Please try again.');
+    }
+  } catch (error) {
+    console.error('Error sending email:', error);
+    alert('An error occurred while sending the email. Please try again later.');
+  }
+};
 
   const inputClass = "w-full p-4 bg-[#232228] border-none rounded-lg text-white text-lg placeholder-gray-500 focus:outline-none";
   const labelClass = "text-white font-bold text-base uppercase mb-1";

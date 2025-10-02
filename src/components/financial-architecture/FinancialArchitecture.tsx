@@ -5,7 +5,7 @@ import ProductSection from "./ProductSection";
 import { AppState } from "@/lib/constants";
 import MyModal from "../modal/modal";
 import EmailFormModal from "../email-form/EmailForm"; 
-import { toPng } from 'html-to-image';
+import { toBlob, toPng } from 'html-to-image';
 
 
 
@@ -111,6 +111,7 @@ const FinancialArchitecture = () => {
   const [appState, setAppState] = useState<AppState>('start');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState<{ title: string; content: string }>({ title: '', content: '' });
+  const [screenshotBlob, setScreenshotBlob] = useState<Blob | null>(null);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -137,16 +138,22 @@ const FinancialArchitecture = () => {
     else if (appState === 'picking') {
       setAppState('selected');
  
-      const png = await toPng(targetRef.current as HTMLElement, {
-        backgroundColor: "#232228",
-        width: 1920,
-        height:1080,
 
-      });
-      const link = document.createElement("a");
-      link.href = png;
-      link.download = "financial-architecture.png";
-      link.click();
+    // Generate blob from HTML element
+    const blob = await toBlob(targetRef.current as HTMLElement, {
+      backgroundColor: "#232228",
+      width: 1920,
+      height: 1080,
+    });
+
+    if (blob) {
+      console.log('Generated PNG blob:', blob);
+      
+      // Store the blob in state for later use
+      setScreenshotBlob(blob);
+ 
+       
+    }      
     } else if (appState === 'selected') { 
       setModalContent({
         title: 'Please Enter Your Details',
@@ -236,7 +243,7 @@ const FinancialArchitecture = () => {
     <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col" ref={targetRef}>
       <MyModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent.title || 'Veefin'}>
         {appState === 'selected' || appState === 'confirmed' ?
-          (<EmailFormModal selections={selections} handleReset={handleReset} />) :
+          (<EmailFormModal selections={selections} handleReset={handleReset} screenshotBlob={screenshotBlob} setScreenshotBlob={setScreenshotBlob} />) :
           (
             <p className="text-gray-300">
               {modalContent.content || 'Detailed information about the selected item will be displayed here.'}
