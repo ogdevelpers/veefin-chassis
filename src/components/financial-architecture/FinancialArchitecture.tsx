@@ -418,20 +418,15 @@ const FinancialArchitecture = () => {
         </div>
 
         {/* Right Sidebar - External Systems */}
-        <div className="w-[211px] flex items-start gap-3 h-[100%] ">
-          <div className="flex-shrink-0 w-[1px]">
-            <LineSvg title={"System API"} tilt="khadaHai" />
-          </div>
-          <div className="min-w-[170px] max-w-[170px] space-y-2 bg-[#111] p-3 space-y-10 rounded-xl">
-            <h3 className="text-sm font-semibold text-[#9FE779] mb-4">
-              EXTERNAL<br />SYSTEMS
-            </h3>
-            {externalSystems.map((item, idx) => (
-              <div key={idx} className="bg-[#232228] px-4 rounded-lg border-2 border-white leading-none text-xs min-h-[40px] flex items-center">
-                {item}
-              </div>
-            ))}
-          </div>
+        <div className="min-w-[170px] max-w-[170px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl max-h-[100%]">
+          <h3 className="text-sm font-semibold text-[#9FE779] mb-4 ">
+            EXTERNAL<br />SYSTEMS
+          </h3>
+          {externalSystems.map((item, idx) => (
+            <div key={idx} className="bg-[#232228] px-4 rounded-lg border-2 border-white text-xs min-h-[40px] flex items-center">
+              {item}
+            </div>
+          ))}
         </div>
 
       </div>
