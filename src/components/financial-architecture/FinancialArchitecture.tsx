@@ -316,8 +316,10 @@ const FinancialArchitecture = () => {
 
           {/* APIs Section */}
           <div className="bg-[#111] rounded-lg p-4">
-            <h3 className="text-sm font-semibold text-[#9FE779] mb-4">APIs</h3>
-            <LineSvg title={"API Gateway"} />
+            <h3 className="text-sm font-semibold text-[#9FE779] mb-5">APIs</h3>
+            <div className="mb-6">
+              <LineSvg title={"API Gateway"} />
+            </div>
 
             <div className="grid grid-cols-3 gap-4">
 
