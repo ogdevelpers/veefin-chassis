@@ -64,3 +64,8 @@ body {
   color: #111;
   border-color: #9FE779;
 }
+
+body{
+  overscroll-behavior: none;
+  overflow: hidden;
+}

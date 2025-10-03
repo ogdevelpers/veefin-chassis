@@ -1,9 +1,37 @@
-import FinancialArchitecture from "@/components/financial-architecture/FinancialArchitecture";
+"use client";
 import Image from "next/image";
 
 export default function Home() {
   return (
-
-    <FinancialArchitecture /> 
-  )
+    <div style={{ position: "relative", width: "1920px", height: "1080px" }}>
+      <iframe
+        src="https://player.cloudinary.com/embed/?cloud_name=dzyg5bubn&public_id=Veefin_Intro_Screen_t9fbf5&profile=cld-looping&autoplay=true&controls=false"
+        width="1920"
+        height="1080"
+        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+        style={{ border: "none" }}
+      ></iframe>
+      <button
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          width: "400px",
+          height: "400px",
+          transform: "translate(-50%, -50%)",
+          opacity: 0,
+          zIndex: 2,
+          cursor: "pointer",
+          border: "20px solid red"
+        }}
+        onClick={() => {
+          // Your onClick logic here
+          alert("Invisible button clicked!");
+        }}
+        aria-label="Invisible Center Button"
+      >
+        Center Button
+      </button>
+    </div>
+  );
 }
