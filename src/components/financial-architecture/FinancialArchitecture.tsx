@@ -140,20 +140,17 @@ const FinancialArchitecture = () => {
  
 
     // Generate blob from HTML element
-    const blob = await toBlob(targetRef.current as HTMLElement, {
+    const blob = await toPng(targetRef.current as HTMLElement, {
       backgroundColor: "#232228",
       width: 1920,
       height: 1080,
     });
+    
+    const link = document.createElement('a');
+    link.download = 'architecture.png';
+    link.href = blob
+    link.click();
 
-    if (blob) {
-      console.log('Generated PNG blob:', blob);
-      
-      // Store the blob in state for later use
-      setScreenshotBlob(blob);
- 
-       
-    }      
     } else if (appState === 'selected') { 
       setModalContent({
         title: 'Please Enter Your Details',
