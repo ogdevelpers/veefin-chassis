@@ -65,7 +65,98 @@ body {
   border-color: #9FE779;
 }
 
+
+/* Blue Clicked */
+.clicked-blue {
+  background: linear-gradient(0deg, #6893FE, #6893FE), 
+              linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  color: #111;
+  border-color: #6893FE;
+}
+
+/* Brown Clicked */
+.clicked-brown {
+  background: linear-gradient(0deg, #F68763, #F68763), 
+              linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  color: #111;
+  border-color: #F68763;
+}
+
+/* Green Clicked */
+.clicked-green {
+  background: linear-gradient(0deg, #20A889, #20A889), 
+              linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  color: #111;
+  border-color: #20A889;
+}
+
 body{
   overscroll-behavior: none;
   overflow: hidden;
+}
+
+/* Blue Theme */
+.gradient-blue {
+  position: relative;
+  border-radius: 12px; 
+  background: linear-gradient(26.3deg, #232228 81.91%, #6893FE 100%);
+}
+
+.gradient-blue::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 2px;  
+  background: linear-gradient(226.49deg, #A7C5FF -0.04%, #111111 28.25%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Brown Theme */
+.gradient-brown {
+  position: relative;
+  border-radius: 12px; 
+  background: linear-gradient(26.3deg, #232228 81.91%, #F68763 100%);
+}
+
+.gradient-brown::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 2px;  
+  background: linear-gradient(226.49deg, #FFC5A7 -0.04%, #111111 28.25%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Green Theme */
+.gradient-green {
+  position: relative;
+  border-radius: 12px; 
+  background: linear-gradient(26.3deg, #232228 81.91%, #20A889 100%);
+}
+
+.gradient-green::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 2px;  
+  background: linear-gradient(226.49deg, #A7FFE1 -0.04%, #111111 28.25%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }

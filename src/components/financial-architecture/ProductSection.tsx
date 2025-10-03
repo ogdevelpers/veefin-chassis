@@ -8,6 +8,7 @@ interface ProductSectionProps {
     selectedItems: string[];
     appState: AppState;
     onItemClick: (item: string) => void;
+    color: 'blue' | 'brown' | 'green';
 }
 
 const ProductSection: React.FC<ProductSectionProps> = ({
@@ -16,9 +17,15 @@ const ProductSection: React.FC<ProductSectionProps> = ({
     itemsList,
     selectedItems,
     onItemClick,
-    appState
+    appState,
+    color='blue'
 }) => {
 
+    const borderConfig = {
+        blue: '#6893FE',
+        brown: '#F68763',
+        green: '#20A889'
+    }
 
     const isSelected = (item: string) => {
         return selectedItems.includes(item) || false;
@@ -31,7 +38,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
 
 
     return (
-        <div className="bg-[#232228] rounded-lg p-4 gradient-border min-h-[312px]">
+        <div className={`bg-[#232228] rounded-lg p-4 gradient-${color} min-h-[312px] ${appState === 'selected' ? `border-4 border-[${borderConfig[color]}]` : ''}  `}>
             <h4 className="font-bold text-center mb-2 text-white">{title}</h4>
             <p className="text-xs text-center mb-3 text-white">{subheading}</p>
             <div
@@ -49,8 +56,8 @@ const ProductSection: React.FC<ProductSectionProps> = ({
         rounded-lg border-2 border-white flex items-center justify-center px-2 py-2
         text-[13px] text-bold text-white font-medium leading-none text-center
         ${(appState === "selected" || appState === "confirmed")
-                                ? `${isSelected(item) ? "clicked" : ""}`
-                                : `bg-[#111] justify-between ${isSelected(item) ? "clicked" : ""}`}
+                                ? `${isSelected(item) ? `clicked-${color}` : ""}`
+                                : `bg-[#111] justify-between ${isSelected(item) ? `clicked-${color}` : ""}`}
       `}
                     >
                         {item}

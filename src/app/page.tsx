@@ -1,5 +1,6 @@
-"use client";
+
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -11,27 +12,24 @@ export default function Home() {
         allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
         style={{ border: "none" }}
       ></iframe>
-      <button
+      <Link
         style={{
           position: "absolute",
           left: "50%",
           top: "50%",
-          width: "400px",
-          height: "400px",
+          width: "1920px",
+          height: "1080px",
           transform: "translate(-50%, -50%)",
           opacity: 0,
           zIndex: 2,
           cursor: "pointer",
           border: "20px solid red"
         }}
-        onClick={() => {
-          // Your onClick logic here
-          alert("Invisible button clicked!");
-        }}
-        aria-label="Invisible Center Button"
+        href="/ar"
+        aria-label="Invisible Center Link"
       >
-        Center Button
-      </button>
+        Center Link
+      </Link>
     </div>
   );
 }

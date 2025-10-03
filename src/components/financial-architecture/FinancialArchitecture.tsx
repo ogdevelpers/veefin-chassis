@@ -331,7 +331,7 @@ const FinancialArchitecture = () => {
                 selectedItems={selections['TRADE FINANCE']}
                 onItemClick={item => toggleSelection('TRADE FINANCE', item)}
                 appState={appState}
-
+                color="blue"
               />
 
               {/* Cash Management */}
@@ -342,6 +342,7 @@ const FinancialArchitecture = () => {
                 selectedItems={selections['CASH MANAGEMENT SYSTEMS']}
                 onItemClick={item => toggleSelection('CASH MANAGEMENT SYSTEMS', item)}
                 appState={appState}
+                color="brown"
               />
 
               {/* Supply Chain Finance */}
@@ -352,6 +353,7 @@ const FinancialArchitecture = () => {
                 selectedItems={selections['SUPPLY CHAIN FINANCE']}
                 onItemClick={item => toggleSelection('SUPPLY CHAIN FINANCE', item)}
                 appState={appState}
+                color="green"
               />
             </div>
 
