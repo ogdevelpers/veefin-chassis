@@ -38,7 +38,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
 
 
     return (
-        <div className={`bg-[#232228] rounded-lg p-4 gradient-${color} min-h-[312px] ${appState === 'selected' ? `border-4 border-[${borderConfig[color]}]` : ''}  `}>
+        <div className={`bg-[#232228] rounded-lg p-4 gradient-${color} max-w-[460px] min-h-[312px] ${appState === 'selected' ? `border-4 border-[${borderConfig[color]}]` : ''}  `}>
             <h4 className="font-bold text-center mb-2 text-white">{title}</h4>
             <p className="text-xs text-center mb-3 text-white">{subheading}</p>
             <div

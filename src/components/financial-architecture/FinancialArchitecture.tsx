@@ -232,6 +232,13 @@ const FinancialArchitecture = () => {
     return selections[category]?.includes(item) || false;
   };
 
+  // Before the return statement, compute which sections are visible
+  const isTradeFinanceVisible = ((appState === 'selected' || appState === 'confirmed') && selections['TRADE FINANCE'].length > 0) || (appState === 'picking' || appState === 'start');
+  const isCashManagementVisible = ((appState === 'selected' || appState === 'confirmed') && selections['CASH MANAGEMENT SYSTEMS'].length > 0) || (appState === 'picking' || appState === 'start');
+  const isSupplyChainVisible = ((appState === 'selected' || appState === 'confirmed') && selections['SUPPLY CHAIN FINANCE'].length > 0) || (appState === 'picking' || appState === 'start');
+  const visibleCount = [isTradeFinanceVisible, isCashManagementVisible, isSupplyChainVisible].filter(Boolean).length;
+
+
   return (
     <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col" ref={targetRef}>
       <MyModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent.title || 'Veefin'}>
@@ -321,7 +328,11 @@ const FinancialArchitecture = () => {
               <LineSvg title={"API Gateway"} />
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className={`w-full grid gap-4 ${
+              visibleCount === 3 ? 'grid-cols-3' : 
+              visibleCount === 2 ? 'grid-cols-2 justify-center' : 
+              'grid-cols-1 justify-center max-w-md mx-auto'
+            }`}>
 
               {/* Trade Finance */}
               {
