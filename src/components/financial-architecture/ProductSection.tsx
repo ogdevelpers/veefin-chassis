@@ -22,9 +22,9 @@ const ProductSection: React.FC<ProductSectionProps> = ({
 }) => {
 
     const borderConfig = {
-        blue: '#6893FE',
-        brown: '#F68763',
-        green: '#20A889'
+        blue: 'outline-[#6893FE]',
+        brown: 'outline-[#F68763]',
+        green: 'outline-[#20A889]'
     }
 
     const isSelected = (item: string) => {
@@ -36,9 +36,10 @@ const ProductSection: React.FC<ProductSectionProps> = ({
         ? itemsList.filter(item => isSelected(item))
         : itemsList;
 
+        console.log(`border-[${borderConfig[color]}]`)
 
     return (
-        <div className={`bg-[#232228] rounded-lg p-4 gradient-${color} max-w-[460px] min-h-[312px] ${appState === 'selected' ? `border-4 border-[${borderConfig[color]}]` : ''}  `}>
+        <div className={`bg-[#232228] rounded-lg p-4 gradient-${color} max-w-[460px] min-h-[312px]   ${(appState === 'selected' || appState === 'confirmed' || (appState === 'picking' && selectedItems.length > 0)) ? ` outline-4 ${borderConfig[color]}` : ''}`}>
             <h4 className="font-bold text-center mb-2 text-white">{title}</h4>
             <p className="text-xs text-center mb-3 text-white">{subheading}</p>
             <div

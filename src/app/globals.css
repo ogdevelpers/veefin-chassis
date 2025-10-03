@@ -105,13 +105,13 @@ body{
 .gradient-blue::before {
   content: '';
   position: absolute;
-  inset: 0;
-  border-radius: 12px;
+  border-radius: 12px; 
+  inset: 0; 
   padding: 2px;  
   background: linear-gradient(226.49deg, #A7C5FF -0.04%, #111111 28.25%);
   -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
+  linear-gradient(#fff 0 0) content-box, 
+  linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -127,13 +127,13 @@ body{
 .gradient-brown::before {
   content: '';
   position: absolute;
-  inset: 0;
-  border-radius: 12px;
+  border-radius: 12px; 
+  inset: 0; 
   padding: 2px;  
   background: linear-gradient(226.49deg, #FFC5A7 -0.04%, #111111 28.25%);
   -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
+  linear-gradient(#fff 0 0) content-box, 
+  linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -149,8 +149,8 @@ body{
 .gradient-green::before {
   content: '';
   position: absolute;
-  inset: 0;
-  border-radius: 12px;
+  border-radius: 12px; 
+  inset: 0; 
   padding: 2px;  
   background: linear-gradient(226.49deg, #A7FFE1 -0.04%, #111111 28.25%);
   -webkit-mask: 
