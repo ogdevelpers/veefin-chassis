@@ -187,6 +187,10 @@ const FinancialArchitecture = () => {
     handleCloseModal();
   }
 
+  const handleBackButtonClick = () =>{
+    setAppState('picking');
+  }
+
   const toggleSelection = (category: string, item: string) => {
     console.log('Toggling selection for', category, item, selections);
     if (appState === 'start') {
@@ -252,19 +256,33 @@ const FinancialArchitecture = () => {
         }
       </MyModal>
       {/* Header */}
-      <div className="flex items-center justify-between mb-5 flex-shrink-0">
+      <div className="flex items-center justify-between mb-8 flex-shrink-0">
+        <div className="max-w-[330px] w-[330px] flex justify-start">
+          {
+            (appState === 'selected' || appState === 'confirmed') && (
+              <button className="bg-[#27A689] ml-4 gap-2.5 rotate-0 opacity-100 py-3 px-[30px] h-[64px] min-h-[64px] rounded-lg mr-4 "
+                onClick={handleBackButtonClick}>
+                <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase">
+                 <img src="/assets/back.svg" alt="Go Back" className="inline-block mr-2" /> Go Back
+                </span>
+              </button>
+            )
+          }
+        </div>
         <div className="flex-1 flex items-center justify-center space-x-4 font-bold text-[40px] leading-tight tracking-[-0.25px] uppercase">
           <img src="/assets/logo.svg" alt="VeeFin" width={170} height={50} />
           <h1 className="text-4xl font-bold text-[#27A689]">
             4.0 WORKING CAPITAL ON A SINGLE CHASSIS
           </h1>
         </div>
-        <button className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 py-3 px-[30px] rounded-lg mr-4 max-w-[330px]"
-          onClick={handleButtonClick}>
-          <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase">
-            {resolveButtonText(appState)}
-          </span>
-        </button>
+        <div className="max-w-[330px] w-[330px] flex justify-end">
+          <button className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 py-3 px-[30px] h-[64px] min-h-[64px] rounded-lg mr-4 "
+            onClick={handleButtonClick}>
+            <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase">
+              {resolveButtonText(appState)}
+            </span>
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-[170px_1fr_211px] gap-3 min-h-0">
