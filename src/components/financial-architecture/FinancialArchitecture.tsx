@@ -2,10 +2,11 @@
 import { useRef, useState } from "react";
 import LineSvg from "../line-svg/LineSvg";
 import ProductSection from "./ProductSection";
-import { AppState } from "@/lib/constants";
+import { AppState, sidebarContentMapper } from "@/lib/constants";
 import MyModal from "../modal/modal";
 import EmailFormModal from "../email-form/EmailForm";
 import { toPng } from 'html-to-image';
+import Sidebar from "../sidebar/sidebar";
 
 
 
@@ -111,6 +112,8 @@ const FinancialArchitecture = () => {
   const [appState, setAppState] = useState<AppState>('start');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState<{ title: string; content: string }>({ title: '', content: '' });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sidebarContent, setSidebarContent] = useState<{ title: string; content: string }>({ title: '', content: '' });
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -191,15 +194,15 @@ const FinancialArchitecture = () => {
     setAppState('picking');
   }
 
-  const toggleSelection = (category: string, item: string) => {
-    console.log('Toggling selection for', category, item, selections);
+  const toggleSelection = (category: string, item: string) => { 
     if (appState === 'start') {
       // Open modal with details
-      setModalContent({
+      const content:string = sidebarContentMapper?.[item]?.content || sidebarContentMapper["default"].content;
+      setSidebarContent({
         title: item,
-        content: `Detailed information about ${item} will be displayed here.`
+        content: content  
       });
-      handleOpenModal();
+      setIsSidebarOpen(true);
       return;
     }
     if (appState !== 'picking') {
@@ -255,6 +258,13 @@ const FinancialArchitecture = () => {
           )
         }
       </MyModal>
+      <Sidebar 
+      title={sidebarContent.title || 'Veefin'}
+      content={sidebarContent.content || <p>Sidebar Content</p>}
+      isOpen={isSidebarOpen}
+      onClose={() => setIsSidebarOpen(false)}
+      />
+        
       {/* Header */}
       <div className="flex items-center justify-between mb-8 flex-shrink-0">
         <div className="max-w-[330px] w-[330px] flex justify-start">
