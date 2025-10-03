@@ -4,7 +4,7 @@ import LineSvg from "../line-svg/LineSvg";
 import ProductSection from "./ProductSection";
 import { AppState } from "@/lib/constants";
 import MyModal from "../modal/modal";
-import EmailFormModal from "../email-form/EmailForm"; 
+import EmailFormModal from "../email-form/EmailForm";
 import { toPng } from 'html-to-image';
 
 
@@ -136,22 +136,22 @@ const FinancialArchitecture = () => {
     }
     else if (appState === 'picking') {
       setAppState('selected');
- 
+
       const png = await toPng(targetRef.current as HTMLElement, {
         backgroundColor: "#232228",
         width: 1920,
-        height:1080,
+        height: 1080,
 
       });
       const link = document.createElement("a");
       link.href = png;
       link.download = "financial-architecture.png";
       link.click();
-    } else if (appState === 'selected') { 
+    } else if (appState === 'selected') {
       setModalContent({
         title: 'Please Enter Your Details',
         content: 'Please enter your details to receive the architecture via email.'
-      }); 
+      });
       setIsModalOpen(true);
       setAppState('confirmed');
     } else if (appState === 'confirmed') {
@@ -212,7 +212,7 @@ const FinancialArchitecture = () => {
     }
 
     // now we know its not channels
-    if(selections['CHANNELS'].length === 0){
+    if (selections['CHANNELS'].length === 0) {
       return;
     }
     setSelections(prev => {
@@ -279,21 +279,21 @@ const FinancialArchitecture = () => {
           <div className="bg-[#111] p-4 rounded-xl flex items-center justify-between space-x-4">
             <h3 className="text-sm font-semibold text-[#9FE779] ">CHANNELS</h3>
             <div className="flex-1 grid grid-cols-6 gap-2">
-              {(appState === 'selected' || appState === 'confirmed') &&  
+              {(appState === 'selected' || appState === 'confirmed') &&
                 <div className="flex items-center justify-center gap-3 clicked px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px]">
                   <img src={channelIcons(selections['CHANNELS'][0])} alt={selections['CHANNELS'][0]} className="w-6 h-6" />
                   {selections['CHANNELS'][0]}
                 </div>
               }
-              { (appState === 'picking' || appState === 'start') &&
-              channels.map((channel, idx) => (
-                <div key={idx} className={`flex items-center justify-center gap-3 bg-[#232228] px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] ${isSelected('CHANNELS', channel) ? 'clicked' : ''}`}
-                  onClick={() => toggleSelection('CHANNELS', channel)}
-                >
-                  <img src={channelIcons(channel)} alt={channel} className="w-6 h-6" />
-                  {channel}
-                </div>
-              ))}
+              {(appState === 'picking' || appState === 'start') &&
+                channels.map((channel, idx) => (
+                  <div key={idx} className={`flex items-center justify-center gap-3 bg-[#232228] px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] ${isSelected('CHANNELS', channel) ? 'clicked' : ''}`}
+                    onClick={() => toggleSelection('CHANNELS', channel)}
+                  >
+                    <img src={channelIcons(channel)} alt={channel} className="w-6 h-6" />
+                    {channel}
+                  </div>
+                ))}
             </div>
           </div>
 
@@ -324,37 +324,44 @@ const FinancialArchitecture = () => {
             <div className="grid grid-cols-3 gap-4">
 
               {/* Trade Finance */}
-              <ProductSection
-                title="TRADE FINANCE"
-                subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
-                itemsList={tradeFinanceItems}
-                selectedItems={selections['TRADE FINANCE']}
-                onItemClick={item => toggleSelection('TRADE FINANCE', item)}
-                appState={appState}
-                color="blue"
-              />
+              {
+                (((appState === 'selected' || appState === 'confirmed') && selections['TRADE FINANCE'].length > 0) || (appState === 'picking' ||  appState === 'start')) &&
+                <ProductSection
+                  title="TRADE FINANCE"
+                  subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
+                  itemsList={tradeFinanceItems}
+                  selectedItems={selections['TRADE FINANCE']}
+                  onItemClick={item => toggleSelection('TRADE FINANCE', item)}
+                  appState={appState}
+                  color="blue"
+                />}
 
               {/* Cash Management */}
-              <ProductSection
-                title="CASH MANAGEMENT SYSTEMS"
-                subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
-                itemsList={cashManagementItems}
-                selectedItems={selections['CASH MANAGEMENT SYSTEMS']}
-                onItemClick={item => toggleSelection('CASH MANAGEMENT SYSTEMS', item)}
-                appState={appState}
-                color="brown"
-              />
-
+              {
+                (((appState === 'selected' || appState === 'confirmed') && selections['CASH MANAGEMENT SYSTEMS'].length > 0) || (appState === 'picking' ||  appState === 'start')) &&
+                <ProductSection
+                  title="CASH MANAGEMENT SYSTEMS"
+                  subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
+                  itemsList={cashManagementItems}
+                  selectedItems={selections['CASH MANAGEMENT SYSTEMS']}
+                  onItemClick={item => toggleSelection('CASH MANAGEMENT SYSTEMS', item)}
+                  appState={appState}
+                  color="brown"
+                />
+              }
               {/* Supply Chain Finance */}
-              <ProductSection
-                title="SUPPLY CHAIN FINANCE"
-                subheading="PRODUCT FACTORY"
-                itemsList={supplyChainItems}
-                selectedItems={selections['SUPPLY CHAIN FINANCE']}
-                onItemClick={item => toggleSelection('SUPPLY CHAIN FINANCE', item)}
-                appState={appState}
-                color="green"
-              />
+              {
+                (((appState === 'selected' || appState === 'confirmed') && selections['SUPPLY CHAIN FINANCE'].length > 0) || (appState === 'picking' ||  appState === 'start')) &&
+                <ProductSection
+                  title="SUPPLY CHAIN FINANCE"
+                  subheading="PRODUCT FACTORY"
+                  itemsList={supplyChainItems}
+                  selectedItems={selections['SUPPLY CHAIN FINANCE']}
+                  onItemClick={item => toggleSelection('SUPPLY CHAIN FINANCE', item)}
+                  appState={appState}
+                  color="green"
+                />
+              }
             </div>
 
             {/* Common Layer */}
@@ -426,16 +433,16 @@ const FinancialArchitecture = () => {
           <div className="flex-shrink-0 w-[1px]">
             <LineSvg title={"System API"} tilt="khadaHai" />
           </div>
-        <div className="min-w-[170px] max-w-[170px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl max-h-[100%]">
-          <h3 className="text-sm font-semibold text-[#9FE779] mb-4 ">
-            EXTERNAL<br />SYSTEMS
-          </h3>
-          {externalSystems.map((item, idx) => (
-            <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center`}>
-              {item}
-            </div>
-          ))}
-        </div>
+          <div className="min-w-[170px] max-w-[170px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl max-h-[100%]">
+            <h3 className="text-sm font-semibold text-[#9FE779] mb-4 ">
+              EXTERNAL<br />SYSTEMS
+            </h3>
+            {externalSystems.map((item, idx) => (
+              <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center`}>
+                {item}
+              </div>
+            ))}
+          </div>
         </div>
 
       </div>
