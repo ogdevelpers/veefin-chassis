@@ -82,7 +82,7 @@ const supplyChainItems = [
 const commonLayerItems = [
   'MASTERS', 'UAM', 'NOTIFICATION', 'WORKFLOW ENGINE',
   'STORAGE', 'ACCOUNTING', 'LIMITS', 'FEES',
-  'ENTITLEMENT', 'FEE CONVERTER', 'REPORTING', 'POSTING'
+  'CUSTOMERS', 'FILE CONVERTER', 'REPORTING', 'POSTING'
 ];
 
 const dataLayerItems = [
