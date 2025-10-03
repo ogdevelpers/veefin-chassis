@@ -68,6 +68,7 @@ body {
               linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   color: #111;
   border-color: #9FE779;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
 }
 
 
@@ -77,6 +78,7 @@ body {
               linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   color: #111;
   border-color: #6893FE;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
 }
 
 /* Brown Clicked */
@@ -85,6 +87,7 @@ body {
               linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   color: #111;
   border-color: #F68763;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
 }
 
 /* Green Clicked */
@@ -93,6 +96,7 @@ body {
               linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   color: #111;
   border-color: #20A889;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
 }
 
 body{
