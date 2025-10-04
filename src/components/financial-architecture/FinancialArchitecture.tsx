@@ -285,15 +285,16 @@ const FinancialArchitecture = () => {
             4.0 WORKING CAPITAL ON A SINGLE CHASSIS
           </h1>
         </div>
-        <div className="max-w-[330px] w-[330px] flex justify-end">
+        <div className="max-w-[330px] w-[330px] min-w-[330px]">
           <button
-            className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 py-3 px-[30px] h-[64px] min-h-[64px] rounded-lg mr-4"
+            className={`bg-[#27A689] gap-2.5 py-3 px-[30px] h-[64px] min-h-[64px] rounded-lg ml-auto mr-4 block overflow-hidden
+      ${appState === 'start' ? 'w-[320px]' : 'w-[150px]'}`}
             onClick={handleButtonClick}
             style={{
-              transition: 'width 0.4s ease-in-out, background-color 0.4s ease-in-out', // Added inline transition
+              transition: 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
           >
-            <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase transition-all duration-300 ease-in-out">
+            <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase whitespace-nowrap">
               {resolveButtonText(appState)}
             </span>
           </button>
@@ -362,8 +363,8 @@ const FinancialArchitecture = () => {
             </div>
 
             <div className={`w-full grid gap-4 ${visibleCount === 3 ? 'grid-cols-3' :
-                visibleCount === 2 ? 'grid-cols-2 justify-center' :
-                  'grid-cols-1 justify-center max-w-md mx-auto'
+              visibleCount === 2 ? 'grid-cols-2 justify-center' :
+                'grid-cols-1 justify-center max-w-md mx-auto'
               }`}>
 
               {/* Trade Finance */}
