@@ -76,7 +76,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                 <div
                     className={
                         (appState === "selected" || appState === "confirmed")
-                            ? itemsToDisplay.length < 4 ? "grid grid-cols-1 gap-2" : "grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-2"
+                            ? itemsToDisplay.length < 4 ? "grid grid-cols-1 gap-2" : itemsToDisplay.length < 8 ?  "grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-2" : "grid grid-cols-3 gap-2"
                             :  "grid grid-cols-3 gap-2"
                     }
                 >
