@@ -18,7 +18,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
     selectedItems,
     onItemClick,
     appState,
-    color='blue'
+    color = 'blue'
 }) => {
     const [prevAppState, setPrevAppState] = useState<AppState>(appState);
     const [animatingOut, setAnimatingOut] = useState(false);
@@ -76,14 +76,14 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                 <div
                     className={
                         (appState === "selected" || appState === "confirmed")
-                            ? itemsToDisplay.length < 4 ? "grid grid-cols-1 gap-2" : itemsToDisplay.length < 8 ?  "grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-2" : "grid grid-cols-3 gap-2"
-                            :  "grid grid-cols-3 gap-2"
+                            ? itemsToDisplay.length < 4 ? "grid grid-cols-1 gap-2" : itemsToDisplay.length < 8 ? "grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-2" : "grid grid-cols-3 gap-2"
+                            : "grid grid-cols-3 gap-2"
                     }
                 >
                     {itemsToDisplay.map((item, idx) => {
                         const selected = isSelected(item);
                         const shouldAnimateOut = animatingOut && !selected;
-                        
+
                         return (
                             <div
                                 key={idx}
