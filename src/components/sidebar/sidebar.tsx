@@ -19,9 +19,9 @@ export default function Sidebar({ title, content, isOpen, onClose }: SidebarProp
       
       {/* Sidebar */}
       <div 
-        className={`fixed top-0 right-0 h-full w-full sm:w-[35vw] sm:min-w-[400px] bg-[#232228] z-50 transform transition-transform duration-300 ease-in-out ${
+          className={`fixed top-0 right-0 h-full w-full sm:w-[35vw] sm:min-w-[400px] bg-[#232228] z-50 transform transition-transform duration-500 ease-[cubic-bezier(.175,.885,.32,1.275)] ${ // <- PUNCHY STYLE APPLIED HERE
           isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        }`} 
         style={{
           boxShadow: '-10px 0px 24px 0px rgba(127, 185, 97, 0.2)'
         }}
