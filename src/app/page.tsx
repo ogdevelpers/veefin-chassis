@@ -25,7 +25,7 @@ export default function Home() {
           cursor: "pointer",
           border: "20px solid red"
         }}
-        href="/ar"
+        href="/architecture"
         aria-label="Invisible Center Link"
       >
         Center Link

@@ -190,17 +190,17 @@ const FinancialArchitecture = () => {
     handleCloseModal();
   }
 
-  const handleBackButtonClick = () =>{
+  const handleBackButtonClick = () => {
     setAppState('picking');
   }
 
-  const toggleSelection = (category: string, item: string) => { 
+  const toggleSelection = (category: string, item: string) => {
     if (appState === 'start') {
       // Open modal with details
-      const content:string = sidebarContentMapper?.[item]?.content || sidebarContentMapper["default"].content;
+      const content: string = sidebarContentMapper?.[item]?.content || sidebarContentMapper["default"].content;
       setSidebarContent({
         title: item,
-        content: content  
+        content: content
       });
       setIsSidebarOpen(true);
       return;
@@ -258,13 +258,13 @@ const FinancialArchitecture = () => {
           )
         }
       </MyModal>
-      <Sidebar 
-      title={sidebarContent.title || 'Veefin'}
-      content={sidebarContent.content || <p>Sidebar Content</p>}
-      isOpen={isSidebarOpen}
-      onClose={() => setIsSidebarOpen(false)}
+      <Sidebar
+        title={sidebarContent.title || 'Veefin'}
+        content={sidebarContent.content || <p>Sidebar Content</p>}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
-        
+
       {/* Header */}
       <div className="flex items-center justify-between mb-8 flex-shrink-0">
         <div className="max-w-[330px] w-[330px] flex justify-start">
@@ -273,7 +273,7 @@ const FinancialArchitecture = () => {
               <button className="bg-[#27A689] ml-4 gap-2.5 rotate-0 opacity-100 py-3 px-[30px] h-[64px] min-h-[64px] rounded-lg mr-4 "
                 onClick={handleBackButtonClick}>
                 <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase">
-                 <img src="/assets/back.svg" alt="Go Back" className="inline-block mr-2" /> Go Back
+                  <img src="/assets/back.svg" alt="Go Back" className="inline-block mr-2" /> Go Back
                 </span>
               </button>
             )
@@ -286,17 +286,17 @@ const FinancialArchitecture = () => {
           </h1>
         </div>
         <div className="max-w-[330px] w-[330px] flex justify-end">
-<button 
-  className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 py-3 px-[30px] h-[64px] min-h-[64px] rounded-lg mr-4"
-  onClick={handleButtonClick}
-  style={{
-    transition: 'width 0.4s ease-in-out, background-color 0.4s ease-in-out', // Added inline transition
-  }}
->
-  <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase transition-all duration-300 ease-in-out">
-    {resolveButtonText(appState)}
-  </span>
-</button>
+          <button
+            className="bg-[#27A689] gap-2.5 rotate-0 opacity-100 py-3 px-[30px] h-[64px] min-h-[64px] rounded-lg mr-4"
+            onClick={handleButtonClick}
+            style={{
+              transition: 'width 0.4s ease-in-out, background-color 0.4s ease-in-out', // Added inline transition
+            }}
+          >
+            <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase transition-all duration-300 ease-in-out">
+              {resolveButtonText(appState)}
+            </span>
+          </button>
         </div>
       </div>
 
@@ -361,15 +361,14 @@ const FinancialArchitecture = () => {
               <LineSvg title={"API Gateway"} />
             </div>
 
-            <div className={`w-full grid gap-4 ${
-              visibleCount === 3 ? 'grid-cols-3' : 
-              visibleCount === 2 ? 'grid-cols-2 justify-center' : 
-              'grid-cols-1 justify-center max-w-md mx-auto'
-            }`}>
+            <div className={`w-full grid gap-4 ${visibleCount === 3 ? 'grid-cols-3' :
+                visibleCount === 2 ? 'grid-cols-2 justify-center' :
+                  'grid-cols-1 justify-center max-w-md mx-auto'
+              }`}>
 
               {/* Trade Finance */}
               {
-                (((appState === 'selected' || appState === 'confirmed') && selections['TRADE FINANCE'].length > 0) || (appState === 'picking' ||  appState === 'start')) &&
+                (((appState === 'selected' || appState === 'confirmed') && selections['TRADE FINANCE'].length > 0) || (appState === 'picking' || appState === 'start')) &&
                 <ProductSection
                   title="TRADE FINANCE"
                   subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
@@ -382,7 +381,7 @@ const FinancialArchitecture = () => {
 
               {/* Cash Management */}
               {
-                (((appState === 'selected' || appState === 'confirmed') && selections['CASH MANAGEMENT SYSTEMS'].length > 0) || (appState === 'picking' ||  appState === 'start')) &&
+                (((appState === 'selected' || appState === 'confirmed') && selections['CASH MANAGEMENT SYSTEMS'].length > 0) || (appState === 'picking' || appState === 'start')) &&
                 <ProductSection
                   title="CASH MANAGEMENT SYSTEMS"
                   subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
@@ -395,7 +394,7 @@ const FinancialArchitecture = () => {
               }
               {/* Supply Chain Finance */}
               {
-                (((appState === 'selected' || appState === 'confirmed') && selections['SUPPLY CHAIN FINANCE'].length > 0) || (appState === 'picking' ||  appState === 'start')) &&
+                (((appState === 'selected' || appState === 'confirmed') && selections['SUPPLY CHAIN FINANCE'].length > 0) || (appState === 'picking' || appState === 'start')) &&
                 <ProductSection
                   title="SUPPLY CHAIN FINANCE"
                   subheading="PRODUCT FACTORY"
