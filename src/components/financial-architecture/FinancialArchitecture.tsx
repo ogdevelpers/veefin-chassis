@@ -346,7 +346,8 @@ const FinancialArchitecture = () => {
             <div className="grid grid-cols-6 gap-2">
               {digitalEngagement.map((section, idx) => (
                 <div key={idx} className={`flex items-center justify-center text-center  px-3 leading-none rounded-lg border-2 ${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} text-xs min-h-[40px] ${isSelected('DIGITAL ENGAGEMENT HUB', section.title) ? 'clicked' : ''}
-                  `}
+                transition-all duration-700 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] shadow-md  
+                `}
                   onClick={() => toggleSelection('DIGITAL ENGAGEMENT HUB', section.title)}
                 >
                   {section.title}
