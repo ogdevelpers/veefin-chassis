@@ -7,12 +7,12 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * Send an email using Resend API
- * @param params Object containing email, companyname, pdfUrl, name, message
+ * @param params Object containing email, companyname, pdfData, name, message
  */
-export async function sendEmail({ email, companyname, pdfUrl, name, message }: {
+export async function sendEmail({ email, companyname, pdfData, name, message }: {
   email: string;
   companyname?: string;
-  pdfUrl?: string;
+  pdfData?: string;
   name: string;
   message?: string;
 }) {
@@ -42,7 +42,7 @@ export async function sendEmail({ email, companyname, pdfUrl, name, message }: {
             <p><strong>Email:</strong> ${email}</p>
             ${companyname ? `<p><strong>Company:</strong> ${companyname}</p>` : ''}
             ${message ? `<p><strong>Message:</strong> ${message}</p>` : ''}
-            ${pdfUrl ? `<a class="pdf-link" href="${pdfUrl}" target="_blank">Download Architecture PDF</a>` : ''}
+            ${pdfData ? `<p><strong>PDF Attachment:</strong> Financial Architecture PDF is attached to this email.</p>` : ''}
             <br>
             <p>This message was sent from the Veefin Chassis application.</p>
           </div>
@@ -50,13 +50,25 @@ export async function sendEmail({ email, companyname, pdfUrl, name, message }: {
       </html>
     `;
 
+    // Prepare attachments
+    const attachments = [];
+    if (pdfData) {
+      // Convert base64 data URL to buffer
+      const base64Data = pdfData.split(',')[1];
+      const buffer = Buffer.from(base64Data, 'base64');
+      attachments.push({
+        filename: 'financial-architecture.pdf',
+        content: buffer,
+      });
+    }
+
     const { data, error } = await resend.emails.send({
-      from: 'Veefin <onboarding@resend.dev>',
-      to: [email],
+      from: 'Acme <onboarding@resend.dev>',
+      to: ['developers506@gmail.com'],
       subject: `Veefin Architecture Submission from ${name}`,
       html: emailHtml,
-      text: `Name: ${name}\nEmail: ${email}\nCompany: ${companyname || ''}\nMessage: ${message || ''}\nPDF: ${pdfUrl || ''}`,
-      attachments: pdfUrl ? [{ path: pdfUrl, filename: 'architecture.pdf' }] : [],
+      text: `Name: ${name}\nEmail: ${email}\nCompany: ${companyname || ''}\nMessage: ${message || ''}\nPDF: ${pdfData ? 'Attached' : 'Not provided'}`,
+      attachments: attachments,
     });
 
     if (error) {

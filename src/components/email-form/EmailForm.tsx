@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const EmailFormModal  = ({selections, handleReset }:{selections: Record<string, string[]>, handleReset: ()=>void}) => {
+const EmailFormModal  = ({selections, handleReset, pdfBlob }:{selections: Record<string, string[]>, handleReset: ()=>void, pdfBlob: Blob | null}) => {
   const [name, setName] = useState<string>('');
   const [company, setCompany] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -8,11 +8,23 @@ const EmailFormModal  = ({selections, handleReset }:{selections: Record<string, 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form Submitted:', { name, company, email, selections });
+    
+    // Convert PDF blob to base64 for sending
+    let pdfBase64 = null;
+    if (pdfBlob) {
+      pdfBase64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.readAsDataURL(pdfBlob);
+      });
+    }
+
     const formData = {
         username: name,
         companyname: company,
         email,
-        selections
+        selections,
+        pdfData: pdfBase64
     };
 
     try {

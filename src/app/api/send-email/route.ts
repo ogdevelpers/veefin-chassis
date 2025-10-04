@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 		await sendEmail({
 		  email: body.email,
 		  companyname: body.companyname,
-		  pdfUrl: (body as any).pdfUrl,
+		  pdfData: (body as any).pdfData,
 		  name: body.username,
 		  message: (body as any).message
 		});
