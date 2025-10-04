@@ -7,6 +7,7 @@ import MyModal from "../modal/modal";
 import EmailFormModal from "../email-form/EmailForm";
 import { toPng } from 'html-to-image';
 import Sidebar from "../sidebar/sidebar";
+import jsPDF from 'jspdf';
 
 
 
@@ -114,6 +115,7 @@ const FinancialArchitecture = () => {
   const [modalContent, setModalContent] = useState<{ title: string; content: string }>({ title: '', content: '' });
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sidebarContent, setSidebarContent] = useState<{ title: string; content: string }>({ title: '', content: '' });
+  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -143,12 +145,38 @@ const FinancialArchitecture = () => {
       const png = await toPng(targetRef.current as HTMLElement, {
         backgroundColor: "#232228",
         width: 1920,
-        height: 1080,
-
+        height:1080,
       });
+
+      // Create PDF from PNG
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      // Convert PNG to base64
+      const imgData = png;
+      
+      // Calculate dimensions to fit the image in A4 landscape
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = pdfWidth;
+      const imgHeight = (1080 * pdfWidth) / 1920; // Maintain aspect ratio
+      
+      // Center the image vertically if it's smaller than page height
+      const yOffset = imgHeight < pdfHeight ? (pdfHeight - imgHeight) / 2 : 0;
+      
+      pdf.addImage(imgData, 'PNG', 0, yOffset, imgWidth, imgHeight);
+      
+      // Generate PDF blob
+      const pdfBlob = pdf.output('blob');
+      setPdfBlob(pdfBlob);
+
+      // Download the PDF
       const link = document.createElement("a");
-      link.href = png;
-      link.download = "financial-architecture.png";
+      link.href = URL.createObjectURL(pdfBlob);
+      link.download = "financial-architecture.pdf";
       link.click();
     } else if (appState === 'selected') {
       setModalContent({
@@ -187,6 +215,7 @@ const FinancialArchitecture = () => {
       'GROUP CORE PLATFORMS LEFT': [],
       'GROUP CORE PLATFORMS RIGHT': []
     });
+    setPdfBlob(null);
     handleCloseModal();
   }
 
@@ -245,7 +274,7 @@ const FinancialArchitecture = () => {
     <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col" ref={targetRef}>
       <MyModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent.title || 'Veefin'}>
         {appState === 'selected' || appState === 'confirmed' ?
-          (<EmailFormModal selections={selections} handleReset={handleReset} />) :
+          (<EmailFormModal selections={selections} handleReset={handleReset} pdfBlob={pdfBlob} />) :
           (
             <p className="text-gray-300">
               {modalContent.content || 'Detailed information about the selected item will be displayed here.'}
