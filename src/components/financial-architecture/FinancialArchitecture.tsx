@@ -327,11 +327,11 @@ const FinancialArchitecture = () => {
                   <div
                     key={idx}
                     className={`flex items-center justify-center gap-3 px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] transition-all duration-500 ease-in-out ${isChannelSelected ? 'clicked' : 'bg-[#232228]'
-                      } ${!shouldShow ? 'opacity-0 scale-75 pointer-events-none' : 'opacity-100 scale-100'
+                      } ${!shouldShow ? 'opacity-0 hidden scale-75 pointer-events-none' : 'opacity-100 scale-100'
                       }`}
                     style={{
                       transform: shouldShow ? 'translateX(0)' : 'translateX(20px)',
-                      transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out, scale 0.5s ease-in-out'
+                      transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out, scale 0.5s ease-in-out, display 0.5s ease-in-out'
                     }}
                     onClick={() => (appState === 'picking' || appState === 'start') && toggleSelection('CHANNELS', channel)}
                   >
@@ -418,7 +418,10 @@ const FinancialArchitecture = () => {
                 {commonLayerItems.map((item, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('COMMON LAYER', item)}
-                    className={`flex items-center justify-center gap-3 text-center ${appState === 'start' ? `bg-[#111] border-white` : `bg-[#181818] border-transparent`} ${(appState === 'picking' && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING')) ? `bg-[#111] border-white` : ""} px-3 rounded-lg leading-none border-2 text-xs min-h-[40px] ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
+                    className={`flex items-center justify-center gap-3 text-center ${appState === 'start' ? `bg-[#111] border-white` : `bg-[#181818] border-transparent`} 
+                    ${(appState === 'picking' && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING')) ? `bg-[#111] border-white` : ""}
+                    ${(appState === 'selected' || appState === 'confirmed') && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING') && !isSelected('COMMON LAYER', item) ? `opacity-0 hidden` : ""} 
+                     px-3 rounded-lg leading-none border-2 text-xs min-h-[40px] ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
                       }`}>
                     {item}
                   </div>
