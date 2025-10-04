@@ -91,7 +91,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                                 className={`
         rounded-lg border-2 border-white flex items-center justify-center px-2 py-2
         text-[13px] text-bold text-white font-medium leading-none text-center
-        transition-all duration-300 ease-in-out
+        transition-all duration-900 ease-in-out
         ${shouldAnimateOut ? 'opacity-0 scale-75' : 'opacity-100 scale-100'}
         ${selected && (appState === "selected" || appState === "confirmed") ? 'animate-expand' : ''}
         ${(appState === "selected" || appState === "confirmed")
