@@ -308,7 +308,7 @@ const FinancialArchitecture = () => {
             COMMON<br />OPERATIONAL<br />CAPABILITIES
           </h3>
           {commonCapabilities.map((item, idx) => (
-            <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center`}>
+            <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center  transition-all duration-1000 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}>
               {item}
             </div>
           ))}
@@ -482,7 +482,7 @@ const FinancialArchitecture = () => {
               EXTERNAL<br />SYSTEMS
             </h3>
             {externalSystems.map((item, idx) => (
-              <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center`}>
+              <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center transition-all duration-1200 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}>
                 {item}
               </div>
             ))}
