@@ -209,19 +209,10 @@ const FinancialArchitecture = () => {
       return;
     }
 
-    // start picking state
-    if (category === 'CHANNELS') {
-      setSelections(prev => ({
-        ...prev,
-        [category]: [item] // Only one selection allowed
-      }));
-      return;
+    if( category === 'DIGITAL ENGAGEMENT HUB' || category === 'DATA LAYER' || category === 'GROUP CORE PLATFORMS'){
+      return; // non selectable items
     }
-
-    // now we know its not channels
-    if (selections['CHANNELS'].length === 0) {
-      return;
-    }
+  
     setSelections(prev => {
       const currentSelections = prev[category] || [];
       const isSelected = currentSelections.includes(item);
