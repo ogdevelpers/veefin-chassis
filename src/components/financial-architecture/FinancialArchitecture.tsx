@@ -316,34 +316,32 @@ const FinancialArchitecture = () => {
         <div className="max-w-[1440px] space-y-3 h-[100vh] min-h-[100%] overflow-y-hidden">
           {/* Channels */}
           <div className="bg-[#111] p-4 rounded-xl flex items-center justify-between space-x-4">
-  <h3 className="text-sm font-semibold text-[#9FE779]">CHANNELS</h3>
-  <div className="flex-1 grid grid-cols-6 gap-2">
-    {channels.map((channel, idx) => {
-      const isChannelSelected = isSelected('CHANNELS', channel);
-      const shouldShow = (appState === 'picking' || appState === 'start') || 
-                        ((appState === 'selected' || appState === 'confirmed') && isChannelSelected);
-      
-      return (
-        <div
-          key={idx}
-          className={`flex items-center justify-center gap-3 px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] transition-all duration-500 ease-in-out ${
-            isChannelSelected ? 'clicked' : 'bg-[#232228]'
-          } ${
-            !shouldShow ? 'opacity-0 scale-75 pointer-events-none' : 'opacity-100 scale-100'
-          }`}
-          style={{
-            transform: shouldShow ? 'translateX(0)' : 'translateX(20px)',
-            transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out, scale 0.5s ease-in-out'
-          }}
-          onClick={() => (appState === 'picking' || appState === 'start') && toggleSelection('CHANNELS', channel)}
-        >
-          <img src={channelIcons(channel)} alt={channel} className="w-6 h-6" />
-          {channel}
-        </div>
-      );
-    })}
-  </div>
-</div>
+            <h3 className="text-sm font-semibold text-[#9FE779]">CHANNELS</h3>
+            <div className="flex-1 grid grid-cols-6 gap-2">
+              {channels.map((channel, idx) => {
+                const isChannelSelected = isSelected('CHANNELS', channel);
+                const shouldShow = (appState === 'picking' || appState === 'start') ||
+                  ((appState === 'selected' || appState === 'confirmed') && isChannelSelected);
+
+                return (
+                  <div
+                    key={idx}
+                    className={`flex items-center justify-center gap-3 px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] transition-all duration-500 ease-in-out ${isChannelSelected ? 'clicked' : 'bg-[#232228]'
+                      } ${!shouldShow ? 'opacity-0 scale-75 pointer-events-none' : 'opacity-100 scale-100'
+                      }`}
+                    style={{
+                      transform: shouldShow ? 'translateX(0)' : 'translateX(20px)',
+                      transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out, scale 0.5s ease-in-out'
+                    }}
+                    onClick={() => (appState === 'picking' || appState === 'start') && toggleSelection('CHANNELS', channel)}
+                  >
+                    <img src={channelIcons(channel)} alt={channel} className="w-6 h-6" />
+                    {channel}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
 
           {/* Digital Engagement Hub */}
           <div className="bg-[#111] p-4 rounded-xl flex items-center justify-between space-x-4">
