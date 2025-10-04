@@ -209,14 +209,14 @@ const FinancialArchitecture = () => {
       return;
     }
 
-    if( category === 'DIGITAL ENGAGEMENT HUB' || category === 'DATA LAYER' || category === 'GROUP CORE PLATFORMS'){
+    if (category === 'DIGITAL ENGAGEMENT HUB' || category === 'DATA LAYER' || category === 'GROUP CORE PLATFORMS') {
       return; // non selectable items
     }
 
-    if( category === "COMMON LAYER" && !(item === "FEES" || item === "CUSTOMERS" || item === "REPORTING" || item === "POSTING")){
+    if (category === "COMMON LAYER" && !(item === "FEES" || item === "CUSTOMERS" || item === "REPORTING" || item === "POSTING")) {
       return; // non selectable items in common layer
     }
-  
+
     setSelections(prev => {
       const currentSelections = prev[category] || [];
       const isSelected = currentSelections.includes(item);
@@ -265,8 +265,11 @@ const FinancialArchitecture = () => {
         <div className="max-w-[330px] w-[330px] flex justify-start">
           {
             (appState === 'selected' || appState === 'confirmed') && (
-              <button className="bg-[#27A689] ml-4 gap-2.5 rotate-0 opacity-100 py-3 px-[30px] h-[64px] min-h-[64px] rounded-lg mr-4 "
-                onClick={handleBackButtonClick}>
+              <button
+                className="bg-[#27A689] ml-4 gap-2.5 py-3 px-[30px] h-[64px] min-h-[64px] rounded-lg mr-4 
+                 animate-fadeIn" // Custom animation is now applied
+                onClick={handleBackButtonClick}
+              >
                 <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase">
                   <img src="/assets/back.svg" alt="Go Back" className="inline-block mr-2" /> Go Back
                 </span>
@@ -411,7 +414,7 @@ const FinancialArchitecture = () => {
                 {commonLayerItems.map((item, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('COMMON LAYER', item)}
-                    className={`flex items-center justify-center gap-3 text-center ${appState === 'start' ? `bg-[#111] border-white` : `bg-[#181818] border-transparent`} ${(appState==='picking' && (item==='FEES' || item==='CUSTOMERS' || item==='REPORTING' || item==='POSTING')) ? `bg-[#111] border-white` : ""} px-3 rounded-lg leading-none border-2 text-xs min-h-[40px] ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
+                    className={`flex items-center justify-center gap-3 text-center ${appState === 'start' ? `bg-[#111] border-white` : `bg-[#181818] border-transparent`} ${(appState === 'picking' && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING')) ? `bg-[#111] border-white` : ""} px-3 rounded-lg leading-none border-2 text-xs min-h-[40px] ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
                       }`}>
                     {item}
                   </div>

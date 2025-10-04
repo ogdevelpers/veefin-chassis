@@ -161,3 +161,18 @@ body{
   mask-composite: exclude;
   pointer-events: none;
 }
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px); /* Optional: makes it slide up slightly */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards; /* 0.4s duration, remains visible (forwards) */
+}
