@@ -223,6 +223,15 @@ const FinancialArchitecture = () => {
     setAppState('picking');
   }
 
+  const openSidebar = (item: string) => {
+    const content: string = sidebarContentMapper?.[item]?.content || sidebarContentMapper["default"].content;
+    setSidebarContent({
+      title: item,
+      content: content
+    });
+    setIsSidebarOpen(true);
+  }
+
   const toggleSelection = (category: string, item: string) => {
     if (appState === 'start') {
       // Open modal with details
@@ -335,7 +344,9 @@ const FinancialArchitecture = () => {
             COMMON<br />OPERATIONAL<br />CAPABILITIES
           </h3>
           {commonCapabilities.map((item, idx) => (
-            <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center  transition-all duration-1000 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}>
+            <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center  transition-all duration-1000 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}
+              onClick={() => openSidebar( item)}
+            >
               {item}
             </div>
           ))}
@@ -517,7 +528,9 @@ const FinancialArchitecture = () => {
               EXTERNAL<br />SYSTEMS
             </h3>
             {externalSystems.map((item, idx) => (
-              <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center transition-all duration-1200 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}>
+              <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center transition-all duration-1200 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}
+              onClick={() => openSidebar(item)}
+              >
                 {item}
               </div>
             ))}

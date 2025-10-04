@@ -52,18 +52,81 @@ export default function Sidebar({ title, content, isOpen, onClose }: SidebarProp
         </div>
         
         {/* Content */}
-        <div className="p-7 overflow-y-auto h-[calc(100%-104px)] flex flex-col gap-7 text-white">
-           {typeof content === 'string' ? (
-             content.split('\n\n').map((paragraph: string, index: number) => (
-                <p key={index} className="text-[18px] leading-relaxed text-gray-300">
-                    {paragraph}
-                </p>
-             ))
-           ) : (
-             content
-           )}
-        </div>
+          <div className="p-7 overflow-y-auto h-[calc(100%-104px)] flex flex-col gap-7 text-white">
+            {typeof content === 'string' ? parseContent(content) : content}
+          </div>
       </div>
     </>
   );
 }
+
+
+
+const parseContent = (content: string) => {
+  const lines = content.split('\n');
+  const elements: any[] = [];
+  let currentParagraph: string[] = [];
+  let key = 0;
+
+  const flushParagraph = () => {
+    if (currentParagraph.length > 0) {
+      const text = currentParagraph.join(' ').trim();
+      if (text) {
+        elements.push(
+          <p key={key++} className="text-[18px] leading-relaxed text-gray-300">
+            {text}
+          </p>
+        );
+      }
+      currentParagraph = [];
+    }
+  };
+
+  lines.forEach((line) => {
+    const trimmed = line.trim();
+
+    // Skip empty lines
+    if (!trimmed) {
+      flushParagraph();
+      return;
+    }
+
+    // Check for bullet points (• or -)
+    if (trimmed.startsWith('•') || trimmed.match(/^-\s/)) {
+      flushParagraph();
+      const bulletText = trimmed.replace(/^[•-]\s*/, '');
+      elements.push(
+        <li key={key++} className="text-[18px] leading-relaxed text-gray-300 ml-6">
+          {bulletText}
+        </li>
+      );
+      return;
+    }
+
+    // Check for headings (lines ending with colon or ALL CAPS followed by colon)
+    const headingMatch = trimmed.match(/^([A-Z][^:]+):(.*)$/);
+    if (headingMatch) {
+      flushParagraph();
+      const [, headingText, restText] = headingMatch;
+      
+      elements.push(
+        <h3 key={key++} className="text-[20px] font-semibold text-white mt-4 mb-2">
+          {headingText}
+        </h3>
+      );
+      
+      if (restText.trim()) {
+        currentParagraph.push(restText.trim());
+      }
+      return;
+    }
+
+    // Regular text - accumulate into paragraph
+    currentParagraph.push(trimmed);
+  });
+
+  // Flush any remaining paragraph
+  flushParagraph();
+
+  return elements;
+};
