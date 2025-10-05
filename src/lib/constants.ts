@@ -28,15 +28,22 @@ Would you like me to also sketch a simple flow diagram of how Import LC transact
         Brief Description: Unified authentication gateway enabling users to access all Veefin
 modules—Trade Finance, SCF, Cash Management—with one set of credentials, eliminating
 password fatigue and reducing helpdesk overhead.
-Core Features & Bank Significance: • Seamless integration with bank's existing identity
-providers (Active Directory, LDAP, OAuth2/OIDC) • Reduces onboarding friction for relationship
-managers accessing multiple product workflows • Centralized session management preventing
+Core Features & Bank Significance: 
+• Seamless integration with bank's existing identity
+providers (Active Directory, LDAP, OAuth2/OIDC) 
+• Reduces onboarding friction for relationship
+managers accessing multiple product workflows 
+• Centralized session management preventing
 unauthorized access across distributed microservices
-AI-Powered Capabilities: • Behavioral biometrics analyzing login patterns to detect account
-compromise attempts • Adaptive authentication adjusting security requirements based on risk
+AI-Powered Capabilities: 
+• Behavioral biometrics analyzing login patterns to detect account
+compromise attempts 
+• Adaptive authentication adjusting security requirements based on risk
 scores (location, device, time)
-Business Impact: • Reduce IT support costs by 40% through elimination of password reset
-requests • Ensure compliance with PCI DSS and SOX through centralized access audit trails
+Business Impact: 
+• Reduce IT support costs by 40% through elimination of password reset
+requests 
+• Ensure compliance with PCI DSS and SOX through centralized access audit trails
         `
     },
     "MULTI-LINGUAL": {

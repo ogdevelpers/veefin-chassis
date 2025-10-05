@@ -356,7 +356,7 @@ const FinancialArchitecture = () => {
 
                 // Classes for animation and position
                 const animationClasses = isHiding
-                  ? 'opacity-0 scale-75 pointer-events-none duration-500' // Punchy and quick disappear
+                  ? 'opacity-0 scale-75 pointer-events-none duration-500 hidden transition-discrete' // Punchy and quick disappear
                   : 'opacity-100 scale-100 duration-700'; // Longer duration allows the movement animation to look smoother
 
                 // The 'translate' class is crucial for forcing the browser to animate the position change smoothly
@@ -414,8 +414,7 @@ const FinancialArchitecture = () => {
             <div className={`w-full flex justify-center gap-5`}>
 
               {/* Trade Finance */}
-              {
-                (((appState === 'selected' || appState === 'confirmed') && selections['TRADE FINANCE'].length > 0) || (appState === 'picking' || appState === 'start')) &&
+              
                 <ProductSection
                   title="TRADE FINANCE"
                   subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
@@ -424,11 +423,10 @@ const FinancialArchitecture = () => {
                   onItemClick={item => toggleSelection('TRADE FINANCE', item)}
                   appState={appState}
                   color="blue"
-                />}
+                />
 
               {/* Cash Management */}
-              {
-                (((appState === 'selected' || appState === 'confirmed') && selections['CASH MANAGEMENT SYSTEMS'].length > 0) || (appState === 'picking' || appState === 'start')) &&
+              
                 <ProductSection
                   title="CASH MANAGEMENT SYSTEMS"
                   subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
@@ -438,10 +436,9 @@ const FinancialArchitecture = () => {
                   appState={appState}
                   color="brown"
                 />
-              }
+              
               {/* Supply Chain Finance */}
-              {
-                (((appState === 'selected' || appState === 'confirmed') && selections['SUPPLY CHAIN FINANCE'].length > 0) || (appState === 'picking' || appState === 'start')) &&
+              
                 <ProductSection
                   title="SUPPLY CHAIN FINANCE"
                   subheading="PRODUCT FACTORY"
@@ -451,7 +448,7 @@ const FinancialArchitecture = () => {
                   appState={appState}
                   color="green"
                 />
-              }
+              
             </div>
 
             {/* Common Layer */}
@@ -463,7 +460,7 @@ const FinancialArchitecture = () => {
                     onClick={() => toggleSelection('COMMON LAYER', item)}
                     className={`flex items-center justify-center gap-3 text-center ${appState === 'start' ? `bg-[#111] border-white` : `bg-[#181818] border-transparent`} 
                     ${(appState === 'picking' && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING')) ? `bg-[#111] border-white` : ""}
-                    ${(appState === 'selected' || appState === 'confirmed') && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING') && !isSelected('COMMON LAYER', item) ? `opacity-0 hidden` : ""} 
+                    ${(appState === 'selected' || appState === 'confirmed') && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING') && !isSelected('COMMON LAYER', item) ? `opacity-0 scale-75 pointer-events-none duration-500 hidden transition-discrete` : ""} 
                      px-3 rounded-lg leading-none border-2 text-xs min-h-[40px] ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
                       }`}>
                     {item}
