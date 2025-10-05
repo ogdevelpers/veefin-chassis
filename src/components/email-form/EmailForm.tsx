@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState } from "react"; 
+import Spinner from "../Spinner";
 
 const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{selections: Record<string, string[]>, handleReset: ()=>void, pngBlob: Blob | null, onEmailSuccess: (email: string, imageId: string, imageUrl: string) => void}) => {
   const [name, setName] = useState<string>('');
   const [company, setCompany] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [phone,setPhone] = useState<string>('');
+  const [status, setStatus]= useState<"default"|"loading" | "success" | "error">("default");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +32,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{se
     };
 
     try {
+      setStatus("loading");
         const response = await fetch('/api/send-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -50,12 +53,14 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{se
                 setEmail('');
                 handleReset();
             }
+        setStatus("success")
         } else {
             alert('Failed to send email. Please try again.');
             console.log('Failed response:', await response.text());
-        }
-    } catch (error) {
-        console.error('Error sending email:', error);
+          }
+        } catch (error) {
+          console.error('Error sending email:', error);
+          setStatus("error");
         alert('An error occurred while sending the email. Please try again later.');
     } 
   };
@@ -65,7 +70,8 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{se
  
   return (
        <div className="mx-auto"> 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+      { status === 'default' &&
+      (<form onSubmit={handleSubmit} className="flex flex-col gap-6">
         {/* First Row: Name and Company */}
         <div className="grid grid-cols-2 gap-6">
           <div className="flex flex-col gap-2">
@@ -139,7 +145,8 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{se
         >
           Email Architecture
         </button>
-      </form>
+      </form>)}
+      { status === 'loading' && <Spinner/>}
     </div>
   );
 };
