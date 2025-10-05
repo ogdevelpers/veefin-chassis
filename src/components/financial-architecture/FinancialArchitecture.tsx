@@ -126,14 +126,10 @@ const FinancialArchitecture = () => {
 
   const [selections, setSelections] = useState<Record<string, string[]>>({
     'CHANNELS': [],
-    'DIGITAL ENGAGEMENT HUB': [],
     'TRADE FINANCE': [],
     'CASH MANAGEMENT SYSTEMS': [],
     'SUPPLY CHAIN FINANCE': [],
     'COMMON LAYER': [],
-    'DATA LAYER': [],
-    'GROUP CORE PLATFORMS LEFT': [],
-    'GROUP CORE PLATFORMS RIGHT': []
   });
 
 
@@ -173,14 +169,10 @@ const FinancialArchitecture = () => {
       setAppState('start');
       setSelections({
         'CHANNELS': [],
-        'DIGITAL ENGAGEMENT HUB': [],
         'TRADE FINANCE': [],
         'CASH MANAGEMENT SYSTEMS': [],
         'SUPPLY CHAIN FINANCE': [],
         'COMMON LAYER': [],
-        'DATA LAYER': [],
-        'GROUP CORE PLATFORMS LEFT': [],
-        'GROUP CORE PLATFORMS RIGHT': []
       });
     }
   }
@@ -190,14 +182,10 @@ const FinancialArchitecture = () => {
     setAppState('start');
     setSelections({
       'CHANNELS': [],
-      'DIGITAL ENGAGEMENT HUB': [],
       'TRADE FINANCE': [],
       'CASH MANAGEMENT SYSTEMS': [],
       'SUPPLY CHAIN FINANCE': [],
       'COMMON LAYER': [],
-      'DATA LAYER': [],
-      'GROUP CORE PLATFORMS LEFT': [],
-      'GROUP CORE PLATFORMS RIGHT': []
     });
     setPngBlob(null);
     setShowThankYou(false);
