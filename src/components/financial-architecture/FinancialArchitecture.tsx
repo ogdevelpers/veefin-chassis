@@ -463,7 +463,7 @@ const FinancialArchitecture = () => {
                     onClick={() => toggleSelection('COMMON LAYER', item)}
                     className={`flex items-center justify-center gap-3 text-center ${appState === 'start' ? `bg-[#111] border-white` : `bg-[#181818] border-transparent`} 
                     ${(appState === 'picking' && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING')) ? `bg-[#111] border-white` : ""}
-                    ${(appState === 'selected' || appState === 'confirmed') && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING') && !isSelected('COMMON LAYER', item) ? `opacity-0 hidden` : ""} 
+                    ${(appState === 'selected' || appState === 'confirmed') && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING') && !isSelected('COMMON LAYER', item) ? `opacity-0 scale-75 pointer-events-none duration-500 hidden transition-discrete` : ""} 
                      px-3 rounded-lg leading-none border-2 text-xs min-h-[40px] ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
                       }`}>
                     {item}
