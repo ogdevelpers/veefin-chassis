@@ -113,7 +113,8 @@ export async function POST(request: NextRequest) {
 					image_url: imageUrl,
 					selections: body.selections,
 					companyname: body.companyname,
-					username: body.username
+					username: body.username,
+					phone: body.phone
 				})
 				.eq('id', existingUser.id)
 				.select()
