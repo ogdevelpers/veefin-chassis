@@ -4,7 +4,7 @@ const MyModal = ({ isOpen, onClose, title='Veefin', children }: { isOpen: boolea
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="relative w-full max-w-lg p-6 mx-auto rounded-lg shadow-lg bg-[#111] dark:bg-[#111] overflow-y-auto">
+      <div className="relative w-full max-w-[75vw] p-6 mx-auto rounded-lg shadow-lg bg-[#111] dark:bg-[#111] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -29,7 +29,7 @@ const MyModal = ({ isOpen, onClose, title='Veefin', children }: { isOpen: boolea
 
         {/* Heading */}
         <h2
-          className="text-2xl font-bold mb-4"
+          className="text-2xl font-bold mb-4 color-[#27A689]"
           style={{
             background: "linear-gradient(0deg, #9FE779, #9FE779), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))",
             WebkitBackgroundClip: "text",
