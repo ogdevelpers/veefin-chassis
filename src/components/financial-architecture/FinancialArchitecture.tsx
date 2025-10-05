@@ -356,7 +356,7 @@ const FinancialArchitecture = () => {
 
                 // Classes for animation and position
                 const animationClasses = isHiding
-                  ? 'opacity-0 scale-75 pointer-events-none duration-500' // Punchy and quick disappear
+                  ? 'opacity-0 scale-75 pointer-events-none duration-500 hidden transition-discrete' // Punchy and quick disappear
                   : 'opacity-100 scale-100 duration-700'; // Longer duration allows the movement animation to look smoother
 
                 // The 'translate' class is crucial for forcing the browser to animate the position change smoothly
