@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const EmailFormModal  = ({selections, handleReset, pdfBlob }:{selections: Record<string, string[]>, handleReset: ()=>void, pdfBlob: Blob | null}) => {
+const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{selections: Record<string, string[]>, handleReset: ()=>void, pngBlob: Blob | null, onEmailSuccess: (email: string, imageId: string, imageUrl: string) => void}) => {
   const [name, setName] = useState<string>('');
   const [company, setCompany] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -9,13 +9,13 @@ const EmailFormModal  = ({selections, handleReset, pdfBlob }:{selections: Record
     e.preventDefault();
     console.log('Form Submitted:', { name, company, email, selections });
     
-    // Convert PDF blob to base64 for sending
-    let pdfBase64 = null;
-    if (pdfBlob) {
-      pdfBase64 = await new Promise<string>((resolve) => {
+    // Convert PNG blob to base64 for sending
+    let pngBase64 = null;
+    if (pngBlob) {
+      pngBase64 = await new Promise<string>((resolve) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result as string);
-        reader.readAsDataURL(pdfBlob);
+        reader.readAsDataURL(pngBlob);
       });
     }
 
@@ -24,7 +24,7 @@ const EmailFormModal  = ({selections, handleReset, pdfBlob }:{selections: Record
         companyname: company,
         email,
         selections,
-        pdfData: pdfBase64
+        pngData: pngBase64
     };
 
     try {
@@ -36,11 +36,18 @@ const EmailFormModal  = ({selections, handleReset, pdfBlob }:{selections: Record
     
         console.log('Response:', response);
         if (response.ok) {
-            alert('Email sent successfully!');
-            setName('');
-            setCompany('');
-            setEmail('');
-            handleReset();
+            const result = await response.json();
+            console.log('Email result:', result);
+            if (result.success && result.data.imageId) {
+                // Show thank you page even if imageUrl is null (upload failed)
+                onEmailSuccess(email, result.data.imageId, result.data.imageUrl || '');
+            } else {
+                alert('Email sent successfully!');
+                setName('');
+                setCompany('');
+                setEmail('');
+                handleReset();
+            }
         } else {
             alert('Failed to send email. Please try again.');
             console.log('Failed response:', await response.text());

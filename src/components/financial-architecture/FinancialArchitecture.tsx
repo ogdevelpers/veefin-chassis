@@ -7,7 +7,7 @@ import MyModal from "../modal/modal";
 import EmailFormModal from "../email-form/EmailForm";
 import { toPng } from 'html-to-image';
 import Sidebar from "../sidebar/sidebar";
-import jsPDF from 'jspdf';
+import ThankYouPage from "../thank-you/ThankYouPage";
 
 
 
@@ -115,7 +115,9 @@ const FinancialArchitecture = () => {
   const [modalContent, setModalContent] = useState<{ title: string; content: string }>({ title: '', content: '' });
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sidebarContent, setSidebarContent] = useState<{ title: string; content: string }>({ title: '', content: '' });
-  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
+  const [pngBlob, setPngBlob] = useState<Blob | null>(null);
+  const [showThankYou, setShowThankYou] = useState(false);
+  const [thankYouData, setThankYouData] = useState<{ email: string; imageId: string; imageUrl: string } | null>(null);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -142,42 +144,24 @@ const FinancialArchitecture = () => {
     else if (appState === 'picking') {
       setAppState('selected');
 
+      // Generate high-quality PNG
       const png = await toPng(targetRef.current as HTMLElement, {
         backgroundColor: "#232228",
-        width: 1920,
-        height: 1080,
+        width: 2560, // Higher resolution for better quality
+        height: 1440, // Maintain 16:9 aspect ratio
+        pixelRatio: 2, // Higher pixel ratio for crisp images
+        quality: 1.0, // Maximum quality
+        cacheBust: true, // Ensure fresh rendering
+        style: {
+          transform: 'scale(1)',
+          transformOrigin: 'top left'
+        }
       });
 
-      // Create PDF from PNG
-      const pdf = new jsPDF({
-        orientation: 'landscape',
-        unit: 'mm',
-        format: 'a4'
-      });
-
-      // Convert PNG to base64
-      const imgData = png;
-
-      // Calculate dimensions to fit the image in A4 landscape
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pdfWidth;
-      const imgHeight = (1080 * pdfWidth) / 1920; // Maintain aspect ratio
-
-      // Center the image vertically if it's smaller than page height
-      const yOffset = imgHeight < pdfHeight ? (pdfHeight - imgHeight) / 2 : 0;
-
-      pdf.addImage(imgData, 'PNG', 0, yOffset, imgWidth, imgHeight);
-
-      // Generate PDF blob
-      const pdfBlob = pdf.output('blob');
-      setPdfBlob(pdfBlob);
-
-      // Download the PDF
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(pdfBlob);
-      link.download = "financial-architecture.pdf";
-      link.click();
+      // Convert PNG data URL to blob
+      const response = await fetch(png);
+      const pngBlob = await response.blob();
+      setPngBlob(pngBlob);
     } else if (appState === 'selected') {
       setModalContent({
         title: 'Please Enter Your Details',
@@ -215,12 +199,26 @@ const FinancialArchitecture = () => {
       'GROUP CORE PLATFORMS LEFT': [],
       'GROUP CORE PLATFORMS RIGHT': []
     });
-    setPdfBlob(null);
+    setPngBlob(null);
+    setShowThankYou(false);
+    setThankYouData(null);
     handleCloseModal();
   }
 
   const handleBackButtonClick = () => {
     setAppState('picking');
+  }
+
+  const handleEmailSuccess = (email: string, imageId: string, imageUrl: string) => {
+    setThankYouData({ email, imageId, imageUrl });
+    setShowThankYou(true);
+    setIsModalOpen(false);
+  }
+
+  const handleBackToArchitecture = () => {
+    setShowThankYou(false);
+    setThankYouData(null);
+    handleReset();
   }
 
   const openSidebar = (item: string) => {
@@ -283,7 +281,7 @@ const FinancialArchitecture = () => {
     <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col" ref={targetRef}>
       <MyModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent.title || 'Veefin'}>
         {appState === 'selected' || appState === 'confirmed' ?
-          (<EmailFormModal selections={selections} handleReset={handleReset} pdfBlob={pdfBlob} />) :
+          (<EmailFormModal selections={selections} handleReset={handleReset} pngBlob={pngBlob} onEmailSuccess={handleEmailSuccess} />) :
           (
             <p className="text-gray-300">
               {modalContent.content || 'Detailed information about the selected item will be displayed here.'}
@@ -556,6 +554,15 @@ const FinancialArchitecture = () => {
 
       </div>
 
+      {/* Thank You Page */}
+      {showThankYou && thankYouData && (
+        <ThankYouPage
+          email={thankYouData.email}
+          imageId={thankYouData.imageId}
+          imageUrl={thankYouData.imageUrl}
+          onBackToArchitecture={handleBackToArchitecture}
+        />
+      )}
 
     </div>
   );

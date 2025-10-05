@@ -25,36 +25,62 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		// Check if user already exists
-		const { data: existingUser, error: checkError } = await supabase
-			.from('veefin_users')
-			.select('id, email')
-			.eq('email', body.email)
-			.single();
+		// Note: User existence check moved to after image upload
 
 
 		// send email
 		await sendEmail({
 		  email: body.email,
 		  companyname: body.companyname,
-		  pdfData: (body as any).pdfData,
+		  pngData: (body as any).pngData,
 		  name: body.username,
 		  message: (body as any).message
 		});
-		if (checkError && checkError.code !== 'PGRST116') {
-			// PGRST116 is "not found" error, which is expected
-			console.error('Error checking existing user:', checkError);
-			return NextResponse.json(
-				{ error: 'Database error while checking user' },
-				{ status: 500 }
-			);
-		}
 
-		if (existingUser) {
-			return NextResponse.json(
-				{ error: 'User with this email already exists' },
-				{ status: 409 }
-			);
+		// Upload image to Supabase Storage if provided
+		let imageUrl = null;
+		if ((body as any).pngData) {
+			try {
+				console.log('Starting image upload to Supabase Storage...');
+				
+				// Convert base64 to buffer
+				const base64Data = (body as any).pngData.split(',')[1];
+				const buffer = Buffer.from(base64Data, 'base64');
+				console.log('Buffer size:', buffer.length);
+				
+				// Generate unique filename
+				const timestamp = Date.now();
+				const filename = `architecture_${timestamp}.png`;
+				console.log('Uploading file:', filename);
+				
+				// Upload to Supabase Storage
+				const { data: uploadData, error: uploadError } = await supabase.storage
+					.from('architecture-images')
+					.upload(filename, buffer, {
+						contentType: 'image/png',
+						upsert: false
+					});
+
+				if (uploadError) {
+					console.error('Error uploading image:', uploadError);
+					// Continue without image URL if upload fails
+				} else {
+					console.log('Image uploaded successfully:', uploadData);
+					
+					// Get public URL
+					const { data: urlData } = supabase.storage
+						.from('architecture-images')
+						.getPublicUrl(filename);
+					
+					imageUrl = urlData.publicUrl;
+					console.log('Image URL:', imageUrl);
+				}
+			} catch (error) {
+				console.error('Error processing image upload:', error);
+				// Continue without image URL if upload fails
+			}
+		} else {
+			console.log('No PNG data provided for upload');
 		}
 
 		// Prepare user data for insertion
@@ -63,32 +89,64 @@ export async function POST(request: NextRequest) {
 			email: body.email,
 			companyname: body.companyname,
 			selections: body.selections,
+			image_url: imageUrl,
 			created_at: new Date().toISOString(),
 		};
 
-		// Insert user into veefin_users table
-		const { data: insertedUser, error: insertError } = await supabase
+		// Check if user already exists and update or insert
+		console.log('Checking for existing user...');
+		const { data: existingUser, error: checkError } = await supabase
 			.from('veefin_users')
-			.insert([userData])
-			.select()
+			.select('id, email')
+			.eq('email', body.email)
 			.single();
 
+		let insertedUser;
+		let insertError;
+
+		if (existingUser) {
+			// Update existing user with image URL
+			console.log('Updating existing user with image URL...');
+			const { data: updatedUser, error: updateError } = await supabase
+				.from('veefin_users')
+				.update({ 
+					image_url: imageUrl,
+					selections: body.selections,
+					companyname: body.companyname,
+					username: body.username
+				})
+				.eq('id', existingUser.id)
+				.select()
+				.single();
+			
+			insertedUser = updatedUser;
+			insertError = updateError;
+		} else {
+			// Insert new user
+			console.log('Inserting new user data:', userData);
+			const { data: newUser, error: newUserError } = await supabase
+				.from('veefin_users')
+				.insert([userData])
+				.select()
+				.single();
+			
+			insertedUser = newUser;
+			insertError = newUserError;
+		}
+
 		if (insertError) {
-			console.error('Error inserting user:', insertError);
-			if (insertError.code === '23505') {
-				return NextResponse.json(
-					{ error: 'User with this email already exists' },
-					{ status: 409 }
-				);
-			}
+			console.error('Error with user operation:', insertError);
 			return NextResponse.json(
-				{ error: 'Failed to register user' },
+				{ error: 'Failed to save user data: ' + insertError.message },
 				{ status: 500 }
 			);
 		}
 
-		// Return success response with user data
-		return NextResponse.json({
+		// Image data is already stored in the user record
+		const imageId = insertedUser.id;
+
+		// Return success response with user data and image URL
+		const responseData = {
 			success: true,
 			data: {
 				message: 'Successfully registered user',
@@ -99,9 +157,14 @@ export async function POST(request: NextRequest) {
 					companyname: insertedUser.companyname,
 					selections: insertedUser.selections,
 					createdAt: insertedUser.created_at,
-				}
+				},
+				imageId: imageId,
+				imageUrl: imageUrl
 			}
-		});
+		};
+		
+		console.log('Returning response:', responseData);
+		return NextResponse.json(responseData);
 
 	} catch (error) {
 		console.error('API error:', error);

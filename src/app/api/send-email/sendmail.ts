@@ -7,12 +7,12 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * Send an email using Resend API
- * @param params Object containing email, companyname, pdfData, name, message
+ * @param params Object containing email, companyname, pngData, name, message
  */
-export async function sendEmail({ email, companyname, pdfData, name, message }: {
+export async function sendEmail({ email, companyname, pngData, name, message }: {
   email: string;
   companyname?: string;
-  pdfData?: string;
+  pngData?: string;
   name: string;
   message?: string;
 }) {
@@ -42,7 +42,7 @@ export async function sendEmail({ email, companyname, pdfData, name, message }: 
             <p><strong>Email:</strong> ${email}</p>
             ${companyname ? `<p><strong>Company:</strong> ${companyname}</p>` : ''}
             ${message ? `<p><strong>Message:</strong> ${message}</p>` : ''}
-            ${pdfData ? `<p><strong>PDF Attachment:</strong> Financial Architecture PDF is attached to this email.</p>` : ''}
+            ${pngData ? `<p><strong>Image Attachment:</strong> Financial Architecture image is attached to this email.</p>` : ''}
             <br>
             <p>This message was sent from the Veefin Chassis application.</p>
           </div>
@@ -52,12 +52,12 @@ export async function sendEmail({ email, companyname, pdfData, name, message }: 
 
     // Prepare attachments
     const attachments = [];
-    if (pdfData) {
+    if (pngData) {
       // Convert base64 data URL to buffer
-      const base64Data = pdfData.split(',')[1];
+      const base64Data = pngData.split(',')[1];
       const buffer = Buffer.from(base64Data, 'base64');
       attachments.push({
-        filename: 'financial-architecture.pdf',
+        filename: 'financial-architecture.png',
         content: buffer,
       });
     }
@@ -67,7 +67,7 @@ export async function sendEmail({ email, companyname, pdfData, name, message }: 
       to: ['developers506@gmail.com'],
       subject: `Veefin Architecture Submission from ${name}`,
       html: emailHtml,
-      text: `Name: ${name}\nEmail: ${email}\nCompany: ${companyname || ''}\nMessage: ${message || ''}\nPDF: ${pdfData ? 'Attached' : 'Not provided'}`,
+      text: `Name: ${name}\nEmail: ${email}\nCompany: ${companyname || ''}\nMessage: ${message || ''}\nImage: ${pngData ? 'Attached' : 'Not provided'}`,
       attachments: attachments,
     });
 
