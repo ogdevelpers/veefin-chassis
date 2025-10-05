@@ -327,7 +327,7 @@ const FinancialArchitecture = () => {
       ${appState === 'start' ? 'w-[320px]' : 'w-[150px]'}`}
             onClick={handleButtonClick}
             style={{
-              transition: 'width 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+              transition: 'width 1s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
           >
             <span className="font-arial font-bold text-base leading-none tracking-[-0.25px] uppercase whitespace-nowrap">
@@ -369,9 +369,8 @@ const FinancialArchitecture = () => {
                     className={`flex items-center justify-center gap-3 px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] transition-all duration-500 ease-in-out ${isChannelSelected ? 'clicked' : 'bg-[#232228]'
                       } ${!shouldShow ? 'opacity-0 hidden scale-75 pointer-events-none' : 'opacity-100 scale-100'
                       }`}
-                    style={{
-                      transform: shouldShow ? 'translateX(0)' : 'translateX(20px)',
-                      transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out, scale 0.5s ease-in-out, display 0.5s ease-in-out'
+                    style={{ 
+                      animation: shouldShow ? 'fadeOutChannel' : 'slideInChannel'
                     }}
                     onClick={() => (appState === 'picking' || appState === 'start') && toggleSelection('CHANNELS', channel)}
                   >
