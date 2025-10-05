@@ -55,8 +55,8 @@ const ThankYouPage: React.FC<ThankYouPageProps> = ({
   }, [imageUrl, imageId]);
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm bg-opacity-90 flex items-center justify-center z-50">
-      <div className="bg-[#232228] rounded-lg p-8 max-w-md w-full mx-4 relative">
+    <div className=" fixed inset-0 bg-black/50 backdrop-blur-sm bg-opacity-90 flex items-center justify-center z-50">
+      <div className="bg-[#232228] rounded-lg p-8 max-w-[50vw] w-full mx-4 relative">
         {/* Close button */}
         <button
           onClick={onBackToArchitecture}
@@ -89,7 +89,7 @@ const ThankYouPage: React.FC<ThankYouPageProps> = ({
             </p>
             {qrCodeUrl && (
               <div className="flex justify-center">
-                <img src={qrCodeUrl} alt="QR Code" className="w-32 h-32" />
+                <img src={qrCodeUrl} alt="QR Code" className="w-100 h-100" />
               </div>
             )}
             <p className="text-gray-500 text-xs mt-2">
