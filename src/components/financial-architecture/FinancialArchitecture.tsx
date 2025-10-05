@@ -145,7 +145,7 @@ const FinancialArchitecture = () => {
       const png = await toPng(targetRef.current as HTMLElement, {
         backgroundColor: "#232228",
         width: 1920,
-        height:1080,
+        height: 1080,
       });
 
       // Create PDF from PNG
@@ -157,18 +157,18 @@ const FinancialArchitecture = () => {
 
       // Convert PNG to base64
       const imgData = png;
-      
+
       // Calculate dimensions to fit the image in A4 landscape
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgWidth = pdfWidth;
       const imgHeight = (1080 * pdfWidth) / 1920; // Maintain aspect ratio
-      
+
       // Center the image vertically if it's smaller than page height
       const yOffset = imgHeight < pdfHeight ? (pdfHeight - imgHeight) / 2 : 0;
-      
+
       pdf.addImage(imgData, 'PNG', 0, yOffset, imgWidth, imgHeight);
-      
+
       // Generate PDF blob
       const pdfBlob = pdf.output('blob');
       setPdfBlob(pdfBlob);
@@ -345,7 +345,7 @@ const FinancialArchitecture = () => {
           </h3>
           {commonCapabilities.map((item, idx) => (
             <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center  transition-all duration-1000 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}
-              onClick={() => openSidebar( item)}
+              onClick={() => openSidebar(item)}
             >
               {item}
             </div>
@@ -359,44 +359,44 @@ const FinancialArchitecture = () => {
             <h3 className="text-sm font-semibold text-[#9FE779]">CHANNELS</h3>
             <div className="flex-1 grid grid-cols-6 gap-2 transition-all duration-700 ease-in-out">
               {channels.map((channel, idx) => {
-  const isChannelSelected = isSelected('CHANNELS', channel);
-  const isFinalState = (appState === 'selected' || appState === 'confirmed');
-  
-  // If in the final state, and not selected, we hide it.
-  const isHiding = isFinalState && !isChannelSelected;
+                const isChannelSelected = isSelected('CHANNELS', channel);
+                const isFinalState = (appState === 'selected' || appState === 'confirmed');
 
-  // The 'clicked' or 'bg-[#232228]' class.
-  const baseClasses = isChannelSelected ? 'clicked' : 'bg-[#232228]';
-  
-  // Classes for animation and position
-  const animationClasses = isHiding
-    ? 'opacity-0 scale-75 pointer-events-none duration-500' // Punchy and quick disappear
-    : 'opacity-100 scale-100 duration-700'; // Longer duration allows the movement animation to look smoother
+                // If in the final state, and not selected, we hide it.
+                const isHiding = isFinalState && !isChannelSelected;
 
-  // The 'translate' class is crucial for forcing the browser to animate the position change smoothly
-  // when its neighbors disappear.
-  const positionClasses = isFinalState && isChannelSelected 
-    ? 'justify-self-start' // Adjusts its position/span in the new (smaller) grid
-    : 'col-span-1';
+                // The 'clicked' or 'bg-[#232228]' class.
+                const baseClasses = isChannelSelected ? 'clicked' : 'bg-[#232228]';
 
-  return (
-    <div
-      key={idx}
-      // Apply transition-all on every item
-      className={`
+                // Classes for animation and position
+                const animationClasses = isHiding
+                  ? 'opacity-0 scale-75 pointer-events-none duration-500' // Punchy and quick disappear
+                  : 'opacity-100 scale-100 duration-700'; // Longer duration allows the movement animation to look smoother
+
+                // The 'translate' class is crucial for forcing the browser to animate the position change smoothly
+                // when its neighbors disappear.
+                const positionClasses = isFinalState && isChannelSelected
+                  ? 'justify-self-start' // Adjusts its position/span in the new (smaller) grid
+                  : 'col-span-1';
+
+                return (
+                  <div
+                    key={idx}
+                    // Apply transition-all on every item
+                    className={`
         flex items-center justify-center gap-3 px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] 
         transition-all ease-in-out transform 
         ${baseClasses} 
         ${animationClasses} 
 
       `}
-      onClick={() => (appState === 'picking' || appState === 'start') && toggleSelection('CHANNELS', channel)}
-    >
-      <img src={channelIcons(channel)} alt={channel} className="w-6 h-6" />
-      {channel}
-    </div>
-  );
-})}
+                    onClick={() => (appState === 'picking' || appState === 'start') && toggleSelection('CHANNELS', channel)}
+                  >
+                    <img src={channelIcons(channel)} alt={channel} className="w-6 h-6" />
+                    {channel}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -546,7 +546,7 @@ const FinancialArchitecture = () => {
             </h3>
             {externalSystems.map((item, idx) => (
               <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center transition-all duration-1200 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}
-              onClick={() => openSidebar(item)}
+                onClick={() => openSidebar(item)}
               >
                 {item}
               </div>
