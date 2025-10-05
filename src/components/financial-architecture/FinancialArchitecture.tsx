@@ -143,8 +143,8 @@ const FinancialArchitecture = () => {
       // Generate high-quality PNG
       const png = await toPng(targetRef.current as HTMLElement, {
         backgroundColor: "#232228",
-        width: 2560, // Higher resolution for better quality
-        height: 1440, // Maintain 16:9 aspect ratio
+        width: 1920, // Higher resolution for better quality
+        height: 1080, // Maintain 16:9 aspect ratio
         pixelRatio: 2, // Higher pixel ratio for crisp images
         quality: 1.0, // Maximum quality
         cacheBust: true, // Ensure fresh rendering
