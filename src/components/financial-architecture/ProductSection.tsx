@@ -50,8 +50,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({
     const itemsToDisplay = appState === 'selected'
         ? itemsList.filter(item => isSelected(item))
         : itemsList;
-
-    console.log(`border-[${borderConfig[color]}]`)
+ 
 
     return (
         <>

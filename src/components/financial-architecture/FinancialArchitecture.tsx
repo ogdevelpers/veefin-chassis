@@ -140,6 +140,8 @@ const FinancialArchitecture = () => {
     else if (appState === 'picking') {
       setAppState('selected');
 
+    } else if (appState === 'selected') {
+
       // Generate high-quality PNG
       const png = await toPng(targetRef.current as HTMLElement, {
         backgroundColor: "#232228",
@@ -158,7 +160,7 @@ const FinancialArchitecture = () => {
       const response = await fetch(png);
       const pngBlob = await response.blob();
       setPngBlob(pngBlob);
-    } else if (appState === 'selected') {
+
       setModalContent({
         title: 'Please Enter Your Details',
         content: 'Please enter your details to receive the architecture via email.'
