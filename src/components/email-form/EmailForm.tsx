@@ -4,6 +4,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{se
   const [name, setName] = useState<string>('');
   const [company, setCompany] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [phone,setPhone] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +25,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{se
         companyname: company,
         email,
         selections,
+        phone,
         pngData: pngBase64
     };
 
@@ -94,6 +96,17 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{se
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className={inputClass}
+          />
+        </div>
+        {/* Phone */}
+        <div className='flex flex-col gap-2'>
+          <label htmlFor='phone' className={labelClass}>Phone</label>
+          <input
+            id='phone'
+            type='phone'
+            value={phone}
+            onChange={(e)=>setPhone(e.target.value)}
             className={inputClass}
           />
         </div>

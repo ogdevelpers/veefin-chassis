@@ -5,6 +5,8 @@ export type veefinSchema = {
     email: string;
     companyname: string;
     selections: Record<string, string[]>;
+    phone?:string;
+    imageUrl?: string;
 }
 
 export const sidebarContentMapper: { [key: string]: { title: string; content: string } } = {

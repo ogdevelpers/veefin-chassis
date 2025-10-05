@@ -102,7 +102,7 @@ body {
 .clicked {
   background: linear-gradient(0deg, #9FE779, #9FE779),
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  color: #111;
+  
   border-color: #9FE779;
   animation: punchIn 0.5s cubic-bezier(0.28, -0.15, 0.265, 2.55),
              colorFlash 0.4s ease-out,
@@ -118,7 +118,7 @@ body {
 .clicked-blue {
   background: linear-gradient(0deg, #6893FE, #6893FE),
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  color: #111;
+  
   border-color: #6893FE;
   animation: punchIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
              colorFlash 0.4s ease-out,
@@ -134,7 +134,7 @@ body {
 .clicked-brown {
   background: linear-gradient(0deg, #F68763, #F68763),
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  color: #111;
+  
   border-color: #F68763;
   animation: punchIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
              colorFlash 0.4s ease-out,
@@ -150,7 +150,7 @@ body {
 .clicked-green {
   background: linear-gradient(0deg, #20A889, #20A889),
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  color: #111;
+  
   border-color: #20A889;
   animation: punchIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
              colorFlash 0.4s ease-out,
