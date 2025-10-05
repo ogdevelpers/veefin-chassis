@@ -104,10 +104,19 @@ body {
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   
   border-color: #9FE779;
-  animation: punchIn 0.5s cubic-bezier(0.28, -0.15, 0.265, 2.55),
-             colorFlash 0.4s ease-out,
-             borderPulse 0.6s ease-out;
   transition: transform 0.2s ease-out;
+}
+
+.clicked:nth-child(3n+1) {
+  animation: slideInRight 0.5s cubic-bezier(0.28, 0, 0.265, 1);
+}
+
+.clicked:nth-child(3n+2) {
+  animation: slideInLeft 0.5s cubic-bezier(0.28, 0, 0.265, 1);
+}
+
+.clicked:nth-child(3n) {
+  animation: slideInTop 0.5s cubic-bezier(0.28, 0, 0.265, 1);
 }
 
 .clicked:hover {
@@ -120,10 +129,19 @@ body {
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   
   border-color: #6893FE;
-  animation: punchIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
-             colorFlash 0.4s ease-out,
-             borderPulse 0.6s ease-out;
   transition: transform 0.2s ease-out;
+}
+
+.clicked-blue:nth-child(3n+1) {
+  animation: slideInRight 0.5s cubic-bezier(0.28, 0, 0.265, 1);
+}
+
+.clicked-blue:nth-child(3n+2) {
+  animation: slideInLeft 0.5s cubic-bezier(0.28, 0, 0.265, 1);
+}
+
+.clicked-blue:nth-child(3n) {
+  animation: slideInTop 0.5s cubic-bezier(0.28, 0, 0.265, 1);
 }
 
 .clicked-blue:hover {
@@ -136,10 +154,19 @@ body {
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   
   border-color: #F68763;
-  animation: punchIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
-             colorFlash 0.4s ease-out,
-             borderPulse 0.6s ease-out;
   transition: transform 0.2s ease-out;
+}
+
+.clicked-brown:nth-child(3n+1) {
+  animation: slideInRight 0.5s cubic-bezier(0.28, 0, 0.265, 1);
+}
+
+.clicked-brown:nth-child(3n+2) {
+  animation: slideInLeft 0.5s cubic-bezier(0.28, 0, 0.265, 1);
+}
+
+.clicked-brown:nth-child(3n) {
+  animation: slideInTop 0.5s cubic-bezier(0.28, 0, 0.265, 1);
 }
 
 .clicked-brown:hover {
@@ -152,16 +179,52 @@ body {
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   
   border-color: #20A889;
-  animation: punchIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
-             colorFlash 0.4s ease-out,
-             borderPulse 0.6s ease-out;
   transition: transform 0.2s ease-out;
+}
+
+.clicked-green:nth-child(3n+1) {
+  animation: slideInRight 0.5s cubic-bezier(0.28, 0, 0.265, 1);
+}
+
+.clicked-green:nth-child(3n+2) {
+  animation: slideInLeft 0.5s cubic-bezier(0.28, 0, 0.265, 1);
+}
+
+.clicked-green:nth-child(3n) {
+  animation: slideInTop 0.5s cubic-bezier(0.28, 0, 0.265, 1);
 }
 
 .clicked-green:hover {
   transform: scale(1.02);
 }
 
+/* Animations for color sliding in from different directions */
+@keyframes slideInRight {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    clip-path: inset(0 0 0 100%);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes slideInTop {
+  0% {
+    clip-path: inset(100% 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
 body {
   overscroll-behavior: none;
   overflow: hidden;
