@@ -414,8 +414,7 @@ const FinancialArchitecture = () => {
             <div className={`w-full flex justify-center gap-5`}>
 
               {/* Trade Finance */}
-              {
-                (((appState === 'selected' || appState === 'confirmed') && selections['TRADE FINANCE'].length > 0) || (appState === 'picking' || appState === 'start')) &&
+              
                 <ProductSection
                   title="TRADE FINANCE"
                   subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
@@ -424,11 +423,10 @@ const FinancialArchitecture = () => {
                   onItemClick={item => toggleSelection('TRADE FINANCE', item)}
                   appState={appState}
                   color="blue"
-                />}
+                />
 
               {/* Cash Management */}
-              {
-                (((appState === 'selected' || appState === 'confirmed') && selections['CASH MANAGEMENT SYSTEMS'].length > 0) || (appState === 'picking' || appState === 'start')) &&
+              
                 <ProductSection
                   title="CASH MANAGEMENT SYSTEMS"
                   subheading="PRODUCT WORKFLOW & PROCESS ORCHESTRATION"
@@ -438,10 +436,9 @@ const FinancialArchitecture = () => {
                   appState={appState}
                   color="brown"
                 />
-              }
+              
               {/* Supply Chain Finance */}
-              {
-                (((appState === 'selected' || appState === 'confirmed') && selections['SUPPLY CHAIN FINANCE'].length > 0) || (appState === 'picking' || appState === 'start')) &&
+              
                 <ProductSection
                   title="SUPPLY CHAIN FINANCE"
                   subheading="PRODUCT FACTORY"
@@ -451,7 +448,7 @@ const FinancialArchitecture = () => {
                   appState={appState}
                   color="green"
                 />
-              }
+              
             </div>
 
             {/* Common Layer */}

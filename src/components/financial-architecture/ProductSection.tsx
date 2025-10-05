@@ -70,7 +70,10 @@ const ProductSection: React.FC<ProductSectionProps> = ({
                     animation: expand 0.4s ease-out;
                 }
             `}</style>
-            <div className={`bg-[#232228] rounded-lg p-4 gradient-${color} min-w-[450px] max-w-[460px] min-h-[312px]   ${(appState === 'selected' || appState === 'confirmed' || (appState === 'picking' && selectedItems.length > 0)) ? ` outline-4 ${borderConfig[color]}` : ''}`}>
+            <div className={`bg-[#232228] rounded-lg p-4 gradient-${color} min-w-[450px] max-w-[460px] min-h-[312px]   ${(appState === 'selected' || appState === 'confirmed' || (appState === 'picking' && selectedItems.length > 0)) ? ` outline-4 ${borderConfig[color]}` : ''}
+            
+            ${ ((appState=== 'selected' || appState ==='confirmed') && (itemsToDisplay.length === 0))? "opacity-0 scale-75 pointer-events-none duration-1000 hidden transition-discrete" : "" }
+            `}>
                 <h4 className="font-bold text-center mb-2 text-white">{title}</h4>
                 <p className="text-xs text-center mb-3 text-white">{subheading}</p>
                 <div
