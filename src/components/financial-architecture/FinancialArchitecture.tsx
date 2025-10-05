@@ -357,28 +357,46 @@ const FinancialArchitecture = () => {
           {/* Channels */}
           <div className="bg-[#111] p-4 rounded-xl flex items-center justify-between space-x-4">
             <h3 className="text-sm font-semibold text-[#9FE779]">CHANNELS</h3>
-            <div className="flex-1 grid grid-cols-6 gap-2">
+            <div className="flex-1 grid grid-cols-6 gap-2 transition-all duration-700 ease-in-out">
               {channels.map((channel, idx) => {
-                const isChannelSelected = isSelected('CHANNELS', channel);
-                const shouldShow = (appState === 'picking' || appState === 'start') ||
-                  ((appState === 'selected' || appState === 'confirmed') && isChannelSelected);
+  const isChannelSelected = isSelected('CHANNELS', channel);
+  const isFinalState = (appState === 'selected' || appState === 'confirmed');
+  
+  // If in the final state, and not selected, we hide it.
+  const isHiding = isFinalState && !isChannelSelected;
 
-                return (
-                  <div
-                    key={idx}
-                    className={`flex items-center justify-center gap-3 px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] transition-all duration-500 ease-in-out ${isChannelSelected ? 'clicked' : 'bg-[#232228]'
-                      } ${!shouldShow ? 'opacity-0 hidden scale-75 pointer-events-none' : 'opacity-100 scale-100'
-                      }`}
-                    style={{ 
-                      animation: shouldShow ? 'fadeOutChannel' : 'slideInChannel'
-                    }}
-                    onClick={() => (appState === 'picking' || appState === 'start') && toggleSelection('CHANNELS', channel)}
-                  >
-                    <img src={channelIcons(channel)} alt={channel} className="w-6 h-6" />
-                    {channel}
-                  </div>
-                );
-              })}
+  // The 'clicked' or 'bg-[#232228]' class.
+  const baseClasses = isChannelSelected ? 'clicked' : 'bg-[#232228]';
+  
+  // Classes for animation and position
+  const animationClasses = isHiding
+    ? 'opacity-0 scale-75 pointer-events-none duration-500' // Punchy and quick disappear
+    : 'opacity-100 scale-100 duration-700'; // Longer duration allows the movement animation to look smoother
+
+  // The 'translate' class is crucial for forcing the browser to animate the position change smoothly
+  // when its neighbors disappear.
+  const positionClasses = isFinalState && isChannelSelected 
+    ? 'justify-self-start' // Adjusts its position/span in the new (smaller) grid
+    : 'col-span-1';
+
+  return (
+    <div
+      key={idx}
+      // Apply transition-all on every item
+      className={`
+        flex items-center justify-center gap-3 px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] 
+        transition-all ease-in-out transform 
+        ${baseClasses} 
+        ${animationClasses} 
+
+      `}
+      onClick={() => (appState === 'picking' || appState === 'start') && toggleSelection('CHANNELS', channel)}
+    >
+      <img src={channelIcons(channel)} alt={channel} className="w-6 h-6" />
+      {channel}
+    </div>
+  );
+})}
             </div>
           </div>
 
