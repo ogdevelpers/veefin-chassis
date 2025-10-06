@@ -121,7 +121,10 @@ const FinancialArchitecture = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+  const handleCloseModal = () =>{
+     setIsModalOpen(false)
+      handleResetModal();
+    };
 
   const targetRef = useRef<HTMLDivElement | null>(null);
 
@@ -194,6 +197,20 @@ const FinancialArchitecture = () => {
     setShowThankYou(false);
     setThankYouData(null);
     handleCloseModal();
+  }
+
+  const handleResetModal = () =>{
+        setAppState('start');
+    setSelections({
+      'CHANNELS': [],
+      'TRADE FINANCE': [],
+      'CASH MANAGEMENT SYSTEMS': [],
+      'SUPPLY CHAIN FINANCE': [],
+      'COMMON LAYER': [],
+    });
+    setPngBlob(null);
+    setShowThankYou(false);
+    setThankYouData(null);
   }
 
   const handleBackButtonClick = () => {
