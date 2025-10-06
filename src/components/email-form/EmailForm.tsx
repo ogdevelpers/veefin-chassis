@@ -97,6 +97,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess, onLo
   const [name, setName] = useState<string>('');
   const [company, setCompany] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [emailError, setEmailError] = useState<string>('');
   const [phone,setPhone] = useState<string>('');
   const [status, setStatus]= useState<"default"|"loading" | "success" | "error">("default");
   const [showCountryDropdown, setShowCountryDropdown] = useState<boolean>(false);
@@ -105,6 +106,20 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess, onLo
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form Submitted:', { name, company, email, selections });
+    // Block common personal email providers
+    const isBlacklistedEmail = (value: string) => {
+      const domain = value.split('@')[1]?.toLowerCase() || '';
+      if (!domain) return false;
+      const blocked = ['gmail', 'yahoo', 'outlook', 'proton'];
+      return blocked.some((b) => domain.includes(b));
+    };
+
+    if (isBlacklistedEmail(email)) {
+      const msg = 'Please use a company email address (not Gmail/Yahoo/Outlook/Proton).';
+      setEmailError(msg);
+      alert(msg);
+      return;
+    }
     
     // Convert PNG blob to base64 for sending
     let pngBase64 = null;
@@ -251,14 +266,27 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess, onLo
             <label htmlFor="email" className={labelClass}>
               Email<span className="text-red-500">*</span>
             </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={inputClass}
-              required
-            />
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setEmail(v);
+                  // validate as user types
+                  const domain = v.split('@')[1]?.toLowerCase() || '';
+                  const blocked = ['gmail', 'yahoo', 'outlook', 'proton'];
+                  if (domain && blocked.some((b) => domain.includes(b))) {
+                    setEmailError('We do not accept personal email providers (Gmail, Yahoo, Outlook, Proton). Please use your company email.');
+                  } else {
+                    setEmailError('');
+                  }
+                }}
+                className={inputClass}
+                aria-invalid={!!emailError}
+                required
+              />
+              {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
           </div>
         </div>
 
