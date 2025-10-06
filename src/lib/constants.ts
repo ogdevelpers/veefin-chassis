@@ -25,61 +25,44 @@ Would you like me to also sketch a simple flow diagram of how Import LC transact
     "SSO": {
         title: "Single Sign-On (SSO)",
         content: `
-        Brief Description: Unified authentication gateway enabling users to access all Veefin
-modules—Trade Finance, SCF, Cash Management—with one set of credentials, eliminating
-password fatigue and reducing helpdesk overhead.
+        Brief Description: Unified authentication gateway enabling users to access all Veefin modules—Trade Finance, SCF, Cash Management—with one set of credentials, eliminating password fatigue and reducing helpdesk overhead.
 Core Features & Bank Significance: 
-• Seamless integration with bank's existing identity
-providers (Active Directory, LDAP, OAuth2/OIDC) 
-• Reduces onboarding friction for relationship
-managers accessing multiple product workflows 
-• Centralized session management preventing
-unauthorized access across distributed microservices
+• Seamless integration with bank's existing identity providers (Active Directory, LDAP, OAuth2/OIDC) 
+• Reduces onboarding friction for relationship managers accessing multiple product workflows 
+• Centralized session management preventing unauthorized access across distributed microservices
 AI-Powered Capabilities: 
-• Behavioral biometrics analyzing login patterns to detect account
-compromise attempts 
-• Adaptive authentication adjusting security requirements based on risk
-scores (location, device, time)
+• Behavioral biometrics analyzing login patterns to detect account compromise attempts 
+• Adaptive authentication adjusting security requirements based on risk scores (location, device, time)
 Business Impact: 
-• Reduce IT support costs by 40% through elimination of password reset
-requests 
+• Reduce IT support costs by 40% through elimination of password reset requests 
 • Ensure compliance with PCI DSS and SOX through centralized access audit trails
         `
     },
     "MULTI-LINGUAL": {
         title: "Multi-Lingual Support",
         content: `
-        Brief Description: Native support for 15+ languages enabling banks to deploy Veefin platforms
-across geographically diverse markets without custom development, accelerating regional
-expansion.
-Core Features & Bank Significance: • Dynamic UI translation covering Trade Finance
-documentation, SCF workflows, and payment instructions • Right-to-left (RTL) language support
-for Middle Eastern markets • Currency, date, and number format localization aligned with
-regional banking standards
-AI-Powered Capabilities: • NLP-based contextual translation ensuring financial terminology
-accuracy across languages • Auto-detection of user language preference from browser settings
-and transaction history
-Business Impact: • Accelerate market entry by 60% through out-of-the-box localization for new
-geographies • Improve user adoption rates in non-English markets through native language
-interfaces`
+        Brief Description: Native support for 15+ languages enabling banks to deploy Veefin platforms across geographically diverse markets without custom development, accelerating regional expansion.
+Core Features & Bank Significance: • Dynamic UI translation covering Trade Finance documentation, SCF workflows, and payment instructions • Right-to-left (RTL) language support for Middle Eastern markets • Currency, date, and number format localization aligned with regional banking standards
+AI-Powered Capabilities: • NLP-based contextual translation ensuring financial terminology accuracy across languages • Auto-detection of user language preference from browser settings and transaction history
+Business Impact: 
+• Accelerate market entry by 60% through out-of-the-box localization for new geographies 
+• Improve user adoption rates in non-English markets through native language interfaces
+`
     },
     "PURGING": {
         title: "Purging",
         content: `
-        THE CHALLENGE • Banks accumulate petabytes of transactional data over decades, inflating
-storage costs and degrading query performance • Manual data retention policies create
-compliance risks when sensitive customer data is retained beyond regulatory limits • Legacy
-purging scripts cause database locks during business hours, impacting transaction processing
-THE SOLUTION • Intelligent Data Lifecycle Management with configurable retention policies
-by data type (transactional logs: 7 years, audit trails: 10 years, temp tables: 90 days) •
-Non-Blocking Archival Engine executing incremental purges during off-peak hours without
-impacting live operations • Compliance-Driven Automation aligning with GDPR "right to be
-forgotten," RBI data localization, and Basel retention mandates
-AI-POWERED CAPABILITIES • Predictive Storage Optimization forecasting database growth
-patterns and recommending proactive archival schedules • Sensitive Data Discovery using ML
-classifiers to identify PII/PCI data requiring priority purging post-retention expiry
-BUSINESS IMPACT • Reduce cloud storage costs by 35% through automated archival of
-dormant transactional data • Ensure regulatory compliance with audit-ready proof of data
+        THE CHALLENGE:
+         • Banks accumulate petabytes of transactional data over decades, inflating storage costs and degrading query performance • Manual data retention policies create compliance risks when sensitive customer data is retained beyond regulatory limits 
+• Legacy purging scripts cause database locks during business hours, impacting transaction processing
+THE SOLUTION: 
+• Intelligent Data Lifecycle Management with configurable retention policies by data type (transactional logs: 7 years, audit trails: 10 years, temp tables: 90 days) • Non-Blocking Archival Engine executing incremental purges during off-peak hours without impacting live operations 
+• Compliance-Driven Automation aligning with GDPR "right to be forgotten," RBI data localization, and Basel retention mandates
+AI-POWERED CAPABILITIES: 
+• Predictive Storage Optimization forecasting database growth patterns and recommending proactive archival schedules • Sensitive Data Discovery using ML classifiers to identify PII/PCI data requiring priority purging post-retention expiry
+BUSINESS IMPACT:
+ • Reduce cloud storage costs by 35% through automated archival of dormant transactional data 
+ • Ensure regulatory compliance with audit-ready proof of data
 deletion adhering to retention policies`
     },
     "AUDIT": {
