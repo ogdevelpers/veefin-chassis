@@ -476,7 +476,7 @@ const FinancialArchitecture = () => {
             </div>
 
             {/* Common Layer */}
-            <div className="bg-[#232228] px-4 py-1 rounded-xl flex items-center justify-between space-x-4 mt-2">
+            <div className="bg-[#232228] px-4 py-3 rounded-xl flex items-center justify-between space-x-4 mt-2">
               <h4 className="text-sm font-semibold text-[#27A689] mb-4">COMMON LAYER</h4>
               <div className="flex-1 flex flex-no-wrap gap-3">
                 {commonLayerItems.map((item, idx) => (
