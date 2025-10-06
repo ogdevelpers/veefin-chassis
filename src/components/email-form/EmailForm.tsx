@@ -121,7 +121,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess, onLo
         companyname: company,
         email,
         selections,
-        phone,
+        phone:`${selectedCountry.dial}-${phone}`,
         pngData: pngBase64
     };
 
@@ -173,7 +173,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess, onLo
         <div className="grid grid-cols-2 gap-6">
           <div className="flex flex-col gap-2">
             <label htmlFor="name" className={labelClass}>
-              Your Name<span className="text-red-500">*</span>
+              Name<span className="text-red-500">*</span>
             </label>
             <input
               id="name"
@@ -186,7 +186,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess, onLo
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="company" className={labelClass}>
-              Company/Organization Name<span className="text-red-500">*</span>
+              Company Name<span className="text-red-500">*</span>
             </label>
             <input
               id="company"
@@ -240,7 +240,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess, onLo
                 id="phone"
                 type="tel"
                 value={phone}
-                onChange={(e) => setPhone(`${selectedCountry.dial}-${e.target.value}`)}
+                onChange={(e) => setPhone(e.target.value)}
                 className={inputClass}
                 placeholder="Enter mobile number"
                 required
