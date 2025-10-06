@@ -3,8 +3,8 @@ const MyModal = ({ isOpen, onClose, title='Veefin', hideTitle = false, children 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-lg">
-      <div className="relative w-full max-w-[75vw] p-6 mx-auto rounded-lg shadow-lg bg-[#111] dark:bg-[#111] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/20 backdrop-blur-lg">
+      <div className="relative w-full mt-40 max-w-[75vw] p-6 mx-auto rounded-lg shadow-lg bg-[#111] dark:bg-[#111] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
