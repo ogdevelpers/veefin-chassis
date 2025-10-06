@@ -273,7 +273,7 @@ const FinancialArchitecture = () => {
 
 
   return (
-    <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col backdrop-blur-sm" ref={targetRef}>
+    <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col" ref={targetRef}>
       <MyModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent.title || 'Veefin'} hideTitle={isLoading}>
         {appState === 'selected' || appState === 'confirmed' ?
           (<EmailFormModal selections={selections} handleReset={handleReset} pngBlob={pngBlob} onEmailSuccess={handleEmailSuccess} onLoadingChange={setIsLoading} />) :
@@ -333,11 +333,11 @@ const FinancialArchitecture = () => {
       <div className="grid grid-cols-[170px_1fr_211px] gap-3 min-h-0">
         {/* Left Sidebar - Common Capabilities */}
         <div className="min-w-[170px] max-w-[170px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl max-h-[100%]">
-          <h3 className="text-sm font-semibold text-[#27A689] mb-4 ">
+          <h3 className="text-sm font-bold text-[#27A689] mb-4 ">
             COMMON<br />OPERATIONAL<br />CAPABILITIES
           </h3>
           {commonCapabilities.map((item, idx) => (
-            <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center  transition-all duration-1000 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}
+            <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white font-bold` : `bg-[#181818] border-transparent text-[#A1A1A1]`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center  transition-all duration-1000 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}
               onClick={() => openSidebar(item)}
             >
               {item}
@@ -378,7 +378,7 @@ const FinancialArchitecture = () => {
                     // Apply transition-all on every item
                     className={`
         flex items-center justify-center gap-3 px-3 rounded-lg leading-none border-2 border-white text-xs leading-tight min-h-[40px] 
-        transition-all ease-in-out transform 
+        transition-all ease-in-out transform font-bold 
         ${baseClasses} 
         ${animationClasses} 
 
@@ -395,12 +395,12 @@ const FinancialArchitecture = () => {
 
           {/* Digital Engagement Hub */}
           <div className="bg-[#111] p-4 rounded-xl flex items-center justify-between space-x-4">
-            <h3 className="text-sm font-semibold text-[#27A689] ">
+            <h3 className="text-sm font-bold text-[#27A689] ">
               DIGITAL<br />ENGAGEMENT<br />HUB
             </h3>
             <div className="grid grid-cols-6 gap-2">
               {digitalEngagement.map((section, idx) => (
-                <div key={idx} className={`flex items-center justify-center text-center  px-3 leading-none rounded-lg border-2 ${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} text-xs min-h-[40px] ${isSelected('DIGITAL ENGAGEMENT HUB', section.title) ? 'clicked' : ''}
+                <div key={idx} className={`flex items-center justify-center text-center px-3 leading-none rounded-lg border-2 ${appState === 'start' ? `bg-[#232228] border-white font-bold` : `bg-[#181818] border-transparent text-[#A1A1A1]`} text-xs min-h-[40px] ${isSelected('DIGITAL ENGAGEMENT HUB', section.title) ? 'clicked' : ''}
                 transition-all duration-700 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] shadow-md  
                 `}
                   onClick={() => toggleSelection('DIGITAL ENGAGEMENT HUB', section.title)}
@@ -465,10 +465,10 @@ const FinancialArchitecture = () => {
                 {commonLayerItems.map((item, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('COMMON LAYER', item)}
-                    className={`flex items-center justify-center gap-3 text-center ${appState === 'start' ? `bg-[#111] border-white` : `bg-[#181818] border-transparent`} 
-                    ${(appState === 'picking' && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING')) ? `bg-[#111] border-white` : ""}
+                    className={`flex items-center justify-center gap-3 text-center font-bold ${appState === 'start' ? `bg-[#111] border-white font-bold` : `bg-[#181818] border-transparent text-[#A1A1A1]`} 
+                    ${(appState === 'picking' && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING')) ? `bg-[#111] border-white text-white` : ""}
                     ${(appState === 'selected' || appState === 'confirmed') && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING') && !isSelected('COMMON LAYER', item) ? `opacity-0 scale-75 pointer-events-none duration-500 hidden transition-discrete` : ""} 
-                     px-3 rounded-lg leading-none border-2 text-xs min-h-[40px] ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
+                     px-3 rounded-lg leading-none border-2 text-xs min-h-[40px] font-bold ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
                       }`}>
                     {item}
                   </div>
@@ -483,7 +483,7 @@ const FinancialArchitecture = () => {
                 {dataLayerItems.map((item, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('DATA LAYER', item)}
-                    className={`flex items-center justify-center  ${appState === 'start' ? `bg-[#111] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2 leading-none text-xs min-h-[40px] ${isSelected('DATA LAYER', item) ? 'clicked' : ''
+                    className={`flex items-center justify-center font-bold  ${appState === 'start' ? `bg-[#111] border-white font-bold` : `bg-[#181818] border-transparent text-[#A1A1A1]`} px-4 rounded-lg border-2 leading-none text-xs min-h-[40px] ${isSelected('DATA LAYER', item) ? 'clicked' : ''
                       }`}>
                     {item}
                   </div>
@@ -502,7 +502,7 @@ const FinancialArchitecture = () => {
                 {leftPlatforms.map((platform, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('GROUP CORE PLATFORMS', platform)}
-                    className={`flex items-center justify-center ${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-3 rounded-lg border-2 leading-none text-xs min-h-[40px] ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
+                    className={`flex items-center justify-center font-bold ${appState === 'start' ? `bg-[#232228] border-white font-bold` : `bg-[#181818] border-transparent text-[#A1A1A1]`} px-3 rounded-lg border-2 leading-none text-xs min-h-[40px] ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
                       }`}>
                     {platform}
                   </div>
@@ -515,7 +515,7 @@ const FinancialArchitecture = () => {
                 {rightPlatforms.map((platform, idx) => (
                   <div key={idx}
                     onClick={() => toggleSelection('GROUP CORE PLATFORMS', platform)}
-                    className={`flex items-center justify-center text-center ${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-3 rounded-lg border-2 leading-none text-xs min-h-[40px] ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
+                    className={`flex items-center justify-center text-center font-bold ${appState === 'start' ? `bg-[#232228] border-white font-bold` : `bg-[#181818] border-transparent text-[#A1A1A1]`} px-3 rounded-lg border-2 leading-none text-xs min-h-[40px] ${isSelected('GROUP CORE PLATFORMS', platform) ? 'clicked' : ''
                       }`}>
                     {platform}
                   </div>
@@ -535,7 +535,7 @@ const FinancialArchitecture = () => {
               EXTERNAL<br />SYSTEMS
             </h3>
             {externalSystems.map((item, idx) => (
-              <div key={idx} className={`${appState === 'start' ? `bg-[#232228] border-white` : `bg-[#181818] border-transparent`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center transition-all duration-1200 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}
+              <div key={idx} className={`font-bold ${appState === 'start' ? `bg-[#232228] border-white font-bold` : `bg-[#181818] border-transparent text-[#A1A1A1]`} px-4 rounded-lg border-2  text-xs min-h-[40px] flex items-center transition-all duration-1200 [transition-timing-function:cubic-bezier(0.4,2,0.3,1)]`}
                 onClick={() => openSidebar(item)}
               >
                 {item}
