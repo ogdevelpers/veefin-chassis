@@ -12,7 +12,7 @@ export default function Sidebar({ title, content, isOpen, onClose }: SidebarProp
       {/* Backdrop */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity"
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity bg-black/20 backdrop-blur-lg"
           onClick={onClose}
         />
       )}
@@ -31,7 +31,7 @@ export default function Sidebar({ title, content, isOpen, onClose }: SidebarProp
           <h2 
             className="text-3xl font-semibold uppercase tracking-wide flex-1 mr-4"
             style={{
-              background: 'linear-gradient(0deg, #9FE779, #9FE779), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))',
+              background: 'linear-gradient(0deg, #27A689, #27A689), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2))',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'

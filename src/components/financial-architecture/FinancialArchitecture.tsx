@@ -118,6 +118,7 @@ const FinancialArchitecture = () => {
   const [pngBlob, setPngBlob] = useState<Blob | null>(null);
   const [showThankYou, setShowThankYou] = useState(false);
   const [thankYouData, setThankYouData] = useState<{ email: string; imageId: string; imageUrl: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -212,6 +213,10 @@ const FinancialArchitecture = () => {
   }
 
   const openSidebar = (item: string) => {
+    // Only open sidebar in 'start' state
+    if (appState !== 'start') {
+      return;
+    }
     const content: string = sidebarContentMapper?.[item]?.content || sidebarContentMapper["default"].content;
     setSidebarContent({
       title: item,
@@ -268,10 +273,10 @@ const FinancialArchitecture = () => {
 
 
   return (
-    <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col" ref={targetRef}>
-      <MyModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent.title || 'Veefin'}>
+    <div className="min-h-screen max-h-screen  text-white p-6 flex flex-col backdrop-blur-sm" ref={targetRef}>
+      <MyModal isOpen={isModalOpen} onClose={handleCloseModal} title={modalContent.title || 'Veefin'} hideTitle={isLoading}>
         {appState === 'selected' || appState === 'confirmed' ?
-          (<EmailFormModal selections={selections} handleReset={handleReset} pngBlob={pngBlob} onEmailSuccess={handleEmailSuccess} />) :
+          (<EmailFormModal selections={selections} handleReset={handleReset} pngBlob={pngBlob} onEmailSuccess={handleEmailSuccess} onLoadingChange={setIsLoading} />) :
           (
             <p className="text-gray-300">
               {modalContent.content || 'Detailed information about the selected item will be displayed here.'}
@@ -328,7 +333,7 @@ const FinancialArchitecture = () => {
       <div className="grid grid-cols-[170px_1fr_211px] gap-3 min-h-0">
         {/* Left Sidebar - Common Capabilities */}
         <div className="min-w-[170px] max-w-[170px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl max-h-[100%]">
-          <h3 className="text-sm font-semibold text-[#9FE779] mb-4 ">
+          <h3 className="text-sm font-semibold text-[#27A689] mb-4 ">
             COMMON<br />OPERATIONAL<br />CAPABILITIES
           </h3>
           {commonCapabilities.map((item, idx) => (
@@ -344,7 +349,7 @@ const FinancialArchitecture = () => {
         <div className="max-w-[1440px] space-y-3 h-[100vh] min-h-[100%] overflow-y-hidden">
           {/* Channels */}
           <div className="bg-[#111] p-4 rounded-xl flex items-center justify-between space-x-4">
-            <h3 className="text-sm font-semibold text-[#9FE779]">CHANNELS</h3>
+            <h3 className="text-sm font-semibold text-[#27A689]">CHANNELS</h3>
             <div className="flex-1 grid grid-cols-6 gap-2 transition-all duration-700 ease-in-out">
               {channels.map((channel, idx) => {
                 const isChannelSelected = isSelected('CHANNELS', channel);
@@ -390,7 +395,7 @@ const FinancialArchitecture = () => {
 
           {/* Digital Engagement Hub */}
           <div className="bg-[#111] p-4 rounded-xl flex items-center justify-between space-x-4">
-            <h3 className="text-sm font-semibold text-[#9FE779] ">
+            <h3 className="text-sm font-semibold text-[#27A689] ">
               DIGITAL<br />ENGAGEMENT<br />HUB
             </h3>
             <div className="grid grid-cols-6 gap-2">
@@ -408,7 +413,7 @@ const FinancialArchitecture = () => {
 
           {/* APIs Section */}
           <div className="bg-[#111] rounded-lg p-4">
-            <h3 className="text-sm font-semibold text-[#9FE779] mb-5">APIs</h3>
+            <h3 className="text-sm font-semibold text-[#27A689] mb-5">APIs</h3>
             <div className="mb-6">
               <LineSvg title={"API Gateway"} />
             </div>
@@ -455,7 +460,7 @@ const FinancialArchitecture = () => {
 
             {/* Common Layer */}
             <div className="bg-[#232228] p-4 rounded-xl flex items-center justify-between space-x-4 mt-2">
-              <h4 className="text-sm font-semibold text-[#9FE779] mb-4">COMMON LAYER</h4>
+              <h4 className="text-sm font-semibold text-[#27A689] mb-4">COMMON LAYER</h4>
               <div className="flex-1 flex flex-no-wrap gap-3">
                 {commonLayerItems.map((item, idx) => (
                   <div key={idx}
@@ -473,7 +478,7 @@ const FinancialArchitecture = () => {
 
             {/* Data Layer */}
             <div className="bg-[#232228] p-4 rounded-xl flex items-center justify-between space-x-4 mt-2">
-              <h4 className="text-sm font-semibold text-[#9FE779] mb-4">DATA LAYER</h4>
+              <h4 className="text-sm font-semibold text-[#27A689] mb-4">DATA LAYER</h4>
               <div className="flex-1 flex gap-3">
                 {dataLayerItems.map((item, idx) => (
                   <div key={idx}
@@ -492,7 +497,7 @@ const FinancialArchitecture = () => {
           {/* Core Platforms */}
           <div className="grid grid-cols-2 gap-6">
             <div className="bg-[#111] p-4 rounded-xl ">
-              <h3 className="text-sm font-semibold text-[#9FE779] mb-4">GROUP CORE PLATFORMS</h3>
+              <h3 className="text-sm font-semibold text-[#27A689] mb-4">GROUP CORE PLATFORMS</h3>
               <div className="grid grid-cols-5 gap-2">
                 {leftPlatforms.map((platform, idx) => (
                   <div key={idx}
@@ -505,7 +510,7 @@ const FinancialArchitecture = () => {
               </div>
             </div>
             <div className="bg-[#111] p-4 rounded-xl ">
-              <h3 className="text-sm font-semibold text-[#9FE779] mb-4">GROUP CORE PLATFORMS</h3>
+              <h3 className="text-sm font-semibold text-[#27A689] mb-4">GROUP CORE PLATFORMS</h3>
               <div className="grid grid-cols-4 gap-2">
                 {rightPlatforms.map((platform, idx) => (
                   <div key={idx}
@@ -526,7 +531,7 @@ const FinancialArchitecture = () => {
             <LineSvg title={"System API"} tilt="khadaHai" />
           </div>
           <div className="min-w-[170px] max-w-[170px] space-y-2 bg-[#111] p-3 space-y-6 rounded-xl max-h-[100%]">
-            <h3 className="text-sm font-semibold text-[#9FE779] mb-4 ">
+            <h3 className="text-sm font-semibold text-[#27A689] mb-4 ">
               EXTERNAL<br />SYSTEMS
             </h3>
             {externalSystems.map((item, idx) => (

@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { veefinSchema } from "@/lib/constants";
 import { sendEmail } from './sendmail';
+import { generatePDF, generatePDFFilename } from '@/lib/pdf-generator';
 
 export async function POST(request: NextRequest) {
 	try {
@@ -28,59 +29,81 @@ export async function POST(request: NextRequest) {
 		// Note: User existence check moved to after image upload
 
 
-		// send email
-		await sendEmail({
-		  email: body.email,
-		  companyname: body.companyname,
-		  pngData: (body as any).pngData,
-		  name: body.username,
-		  message: (body as any).message
-		});
-
-		// Upload image to Supabase Storage if provided
-		let imageUrl = null;
+		// Generate PDF if image data provided
+		let pdfUrl = null;
+		let pdfBase64 = null;
+		let pdfFilename = null;
+		
 		if ((body as any).pngData) {
 			try {
-				console.log('Starting image upload to Supabase Storage...');
+				console.log('Generating PDF...');
+				
+				// Generate PDF with image and metadata
+				pdfBase64 = await generatePDF({
+					imageData: (body as any).pngData,
+					companyName: body.companyname,
+					userName: body.username,
+					email: body.email,
+					selections: body.selections,
+					phone: body.phone
+				});
+				
+				console.log('PDF generated successfully, base64 length:', pdfBase64.length);
 				
 				// Convert base64 to buffer
-				const base64Data = (body as any).pngData.split(',')[1];
-				const buffer = Buffer.from(base64Data, 'base64');
-				console.log('Buffer size:', buffer.length);
+				const pdfBuffer = Buffer.from(pdfBase64, 'base64');
+				console.log('PDF buffer size:', pdfBuffer.length);
 				
-				// Generate unique filename
-				const timestamp = Date.now();
-				const filename = `architecture_${timestamp}.png`;
-				console.log('Uploading file:', filename);
+				// Generate filename
+				pdfFilename = generatePDFFilename(body.companyname);
+				console.log('Uploading PDF:', pdfFilename);
 				
 				// Upload to Supabase Storage
 				const { data: uploadData, error: uploadError } = await supabase.storage
 					.from('architecture-images')
-					.upload(filename, buffer, {
-						contentType: 'image/png',
-						upsert: false
+					.upload(pdfFilename, pdfBuffer, {
+						contentType: 'application/pdf',
+						upsert: true // Allow overwriting if file exists
 					});
 
 				if (uploadError) {
-					console.error('Error uploading image:', uploadError);
-					// Continue without image URL if upload fails
+					console.error('Error uploading PDF:', uploadError);
+					// Continue without PDF URL if upload fails
 				} else {
-					console.log('Image uploaded successfully:', uploadData);
+					console.log('PDF uploaded successfully:', uploadData);
 					
 					// Get public URL
 					const { data: urlData } = supabase.storage
 						.from('architecture-images')
-						.getPublicUrl(filename);
+						.getPublicUrl(pdfFilename);
 					
-					imageUrl = urlData.publicUrl;
-					console.log('Image URL:', imageUrl);
+					pdfUrl = urlData.publicUrl;
+					console.log('PDF URL:', pdfUrl);
 				}
 			} catch (error) {
-				console.error('Error processing image upload:', error);
-				// Continue without image URL if upload fails
+				console.error('Error processing PDF generation:', error);
+				console.error('Error details:', error);
+				// Continue without PDF URL if generation fails
 			}
 		} else {
-			console.log('No PNG data provided for upload');
+			console.log('No PNG data provided for PDF generation');
+		}
+
+		// send email with PDF attachment
+		try {
+			await sendEmail({
+				email: body.email,
+				companyname: body.companyname,
+				pngData: (body as any).pngData,
+				pdfData: pdfBase64 || undefined, // Pass PDF data for attachment
+				pdfFilename: pdfFilename || undefined,
+				name: body.username,
+				message: (body as any).message
+			});
+			console.log('Email sent successfully with PDF attachment');
+		} catch (emailError) {
+			console.error('Error sending email:', emailError);
+			// Continue even if email fails
 		}
 
 		// Prepare user data for insertion
@@ -89,9 +112,12 @@ export async function POST(request: NextRequest) {
 			email: body.email,
 			companyname: body.companyname,
 			selections: body.selections,
-			image_url: imageUrl,
+			phone: body.phone,
+			image_url: pdfUrl, // PDF URL stored in image_url field
 			created_at: new Date().toISOString(),
 		};
+
+		console.log('User data with PDF URL:', { ...userData, image_url: pdfUrl });
 
 		// Check if user already exists and update or insert
 		console.log('Checking for existing user...');
@@ -105,12 +131,12 @@ export async function POST(request: NextRequest) {
 		let insertError;
 
 		if (existingUser) {
-			// Update existing user with image URL
-			console.log('Updating existing user with image URL...');
+			// Update existing user with PDF URL
+			console.log('Updating existing user with PDF URL:', pdfUrl);
 			const { data: updatedUser, error: updateError } = await supabase
 				.from('veefin_users')
 				.update({ 
-					image_url: imageUrl,
+					image_url: pdfUrl, // PDF URL stored in image_url field
 					selections: body.selections,
 					companyname: body.companyname,
 					username: body.username,
@@ -143,14 +169,14 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		// Image data is already stored in the user record
+		// PDF data is already stored in the user record
 		const imageId = insertedUser.id;
 
-		// Return success response with user data and image URL
+		// Return success response with user data and PDF URL
 		const responseData = {
 			success: true,
 			data: {
-				message: 'Successfully registered user',
+				message: 'Successfully generated PDF and registered user',
 				user: {
 					id: insertedUser.id,
 					username: insertedUser.username,
@@ -160,7 +186,8 @@ export async function POST(request: NextRequest) {
 					createdAt: insertedUser.created_at,
 				},
 				imageId: imageId,
-				imageUrl: imageUrl
+				imageUrl: pdfUrl, // PDF URL
+				pdfUrl: pdfUrl // Also include as pdfUrl for clarity
 			}
 		};
 		
@@ -181,4 +208,5 @@ export async function POST(request: NextRequest) {
 		);
 	}
 }
-export const runtime = 'edge';
+// Remove edge runtime to support Node.js Buffer and PDF generation
+// export const runtime = 'edge';

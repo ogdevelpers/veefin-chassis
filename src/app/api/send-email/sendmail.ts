@@ -7,12 +7,14 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
  * Send an email using Resend API
- * @param params Object containing email, companyname, pngData, name, message
+ * @param params Object containing email, companyname, pngData, pdfData, name, message
  */
-export async function sendEmail({ email, companyname, pngData, name, message }: {
+export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilename, name, message }: {
   email: string;
   companyname?: string;
   pngData?: string;
+  pdfData?: string;
+  pdfFilename?: string;
   name: string;
   message?: string;
 }) {
@@ -42,7 +44,9 @@ export async function sendEmail({ email, companyname, pngData, name, message }: 
             <p><strong>Email:</strong> ${email}</p>
             ${companyname ? `<p><strong>Company:</strong> ${companyname}</p>` : ''}
             ${message ? `<p><strong>Message:</strong> ${message}</p>` : ''}
-            ${pngData ? `<p><strong>Image Attachment:</strong> Financial Architecture image is attached to this email.</p>` : ''}
+            ${pdfData ? `<p><strong>PDF Attachment:</strong> A comprehensive PDF containing your financial architecture diagram and all platform components is attached to this email.</p>` : ''}
+            <br>
+            <p>Thank you for using Veefin Chassis. Your customized architecture document includes detailed information about all selected components.</p>
             <br>
             <p>This message was sent from the Veefin Chassis application.</p>
           </div>
@@ -52,23 +56,37 @@ export async function sendEmail({ email, companyname, pngData, name, message }: 
 
     // Prepare attachments
     const attachments = [];
-    if (pngData) {
+    
+    // Add PDF attachment if available
+    if (pdfData) {
+      // Convert base64 PDF to buffer
+      const pdfBuffer = Buffer.from(pdfData, 'base64');
+      attachments.push({
+        filename: pdfFilename || 'veefin-architecture.pdf',
+        content: pdfBuffer,
+        contentType: 'application/pdf',
+      });
+    }
+    
+    // Optionally add PNG as backup
+    if (pngData && !pdfData) {
       // Convert base64 data URL to buffer
       const base64Data = pngData.split(',')[1];
       const buffer = Buffer.from(base64Data, 'base64');
       attachments.push({
         filename: 'financial-architecture.png',
         content: buffer,
+        contentType: 'image/png',
       });
     }
 
     const { data, error } = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>',
+      from: 'Veefin Chassis <onboarding@resend.dev>',
       to: ['developers506@gmail.com'],
-      subject: `Veefin Architecture Submission from ${name}`,
+      subject: `Veefin Architecture Document - ${companyname || name}`,
       html: emailHtml,
-      text: `Name: ${name}\nEmail: ${email}\nCompany: ${companyname || ''}\nMessage: ${message || ''}\nImage: ${pngData ? 'Attached' : 'Not provided'}`,
-      attachments: attachments,
+      text: `Name: ${name}\nEmail: ${email}\nCompany: ${companyname || ''}\nMessage: ${message || ''}\nPDF: ${pdfData ? 'Attached' : 'Not available'}`,
+      attachments: attachments.length > 0 ? attachments : undefined,
     });
 
     if (error) {

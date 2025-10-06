@@ -1,7 +1,7 @@
 import { useState } from "react"; 
 import Spinner from "../Spinner";
 
-const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{selections: Record<string, string[]>, handleReset: ()=>void, pngBlob: Blob | null, onEmailSuccess: (email: string, imageId: string, imageUrl: string) => void}) => {
+const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess, onLoadingChange }:{selections: Record<string, string[]>, handleReset: ()=>void, pngBlob: Blob | null, onEmailSuccess: (email: string, imageId: string, imageUrl: string) => void, onLoadingChange?: (loading: boolean) => void}) => {
   const [name, setName] = useState<string>('');
   const [company, setCompany] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -33,6 +33,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{se
 
     try {
       setStatus("loading");
+      onLoadingChange?.(true);
         const response = await fetch('/api/send-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -53,7 +54,8 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{se
                 setEmail('');
                 handleReset();
             }
-        setStatus("success")
+        setStatus("success");
+        onLoadingChange?.(false);
         } else {
             alert('Failed to send email. Please try again.');
             console.log('Failed response:', await response.text());
@@ -61,6 +63,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{se
         } catch (error) {
           console.error('Error sending email:', error);
           setStatus("error");
+          onLoadingChange?.(false);
         alert('An error occurred while sending the email. Please try again later.');
     } 
   };
@@ -146,7 +149,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess }:{se
           Email Architecture
         </button>
       </form>)}
-      { status === 'loading' && <Spinner/>}
+      { status === 'loading' && <Spinner size={50} message="Sending Email..." />}
     </div>
   );
 };

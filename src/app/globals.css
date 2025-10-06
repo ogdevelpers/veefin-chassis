@@ -100,10 +100,10 @@ body {
 
 /* Base Clicked State */
 .clicked {
-  background: linear-gradient(0deg, #9FE779, #9FE779),
+  background: linear-gradient(0deg, #27A689, #27A689),
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
   
-  border-color: #9FE779;
+  border-color: #27A689;
   transition: transform 0.2s ease-out;
 }
 

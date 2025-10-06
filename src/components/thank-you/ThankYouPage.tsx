@@ -55,7 +55,7 @@ const ThankYouPage: React.FC<ThankYouPageProps> = ({
   }, [imageUrl, imageId]);
 
   return (
-    <div className=" fixed inset-0 bg-black/50 backdrop-blur-sm bg-opacity-90 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-lg flex items-center justify-center z-50">
       <div className="bg-[#232228] rounded-lg p-8 max-w-[50vw] w-full mx-4 relative">
         {/* Close button */}
         <button
@@ -72,31 +72,42 @@ const ThankYouPage: React.FC<ThankYouPageProps> = ({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-[#27A689] mb-2">EMAIL SENT SUCCESSFULLY</h2>
+          <h2 className="text-2xl font-bold text-[#27A689] mb-2">PDF GENERATED SUCCESSFULLY</h2>
         </div>
 
         {/* Message */}
         <div className="text-center mb-6">
           <p className="text-white text-lg mb-4">
-            A PNG containing all the selected details has been emailed to{" "}
+            A comprehensive PDF with your architecture and all platform components has been generated and emailed to{" "}
             <span className="text-[#27A689] font-semibold">{email}</span>
           </p>
           
           {/* QR Code Section */}
           <div className="bg-white rounded-lg p-4 mb-4">
             <p className="text-gray-700 text-sm mb-3 font-medium">
-              Scan this QR code to view your architecture:
+              Scan this QR code to download your PDF:
             </p>
             {qrCodeUrl && (
               <div className="flex justify-center">
-                <img src={qrCodeUrl} alt="QR Code" className="w-100 h-100" />
+                <img src={qrCodeUrl} alt="QR Code for PDF" className="w-32 h-32" />
               </div>
             )}
             <p className="text-gray-500 text-xs mt-2">
-              Or visit: <span className="font-mono text-xs break-all">
-                {imageUrl || `${window.location.origin}/api/image/${imageId}`}
-              </span>
+              Or download directly:{" "}
+              <a 
+                href={imageUrl || `${window.location.origin}/api/pdf/${imageId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#27A689] hover:underline font-mono text-xs break-all"
+              >
+                Download PDF
+              </a>
             </p>
+            {imageUrl && (
+              <p className="text-gray-400 text-xs mt-1">
+                {imageUrl}
+              </p>
+            )}
           </div>
         </div>
 
