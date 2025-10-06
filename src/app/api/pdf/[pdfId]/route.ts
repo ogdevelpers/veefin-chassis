@@ -3,11 +3,11 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { pdfId: string } }
+  { params }: { params: Promise<{ pdfId: string }> }
 ) {
   try {
     const supabase = await createClient();
-    const { pdfId } = params;
+    const { pdfId } = await params;
 
     // Fetch the PDF URL from database
     const { data: pdfData, error } = await supabase

@@ -3,11 +3,11 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { imageId: string } }
+  { params }: { params: Promise<{ imageId: string }> }
 ) {
   try {
     const supabase = await createClient();
-    const { imageId } = params;
+    const { imageId } = await params;
 
     // Fetch the image URL from database
     const { data: imageData, error } = await supabase
