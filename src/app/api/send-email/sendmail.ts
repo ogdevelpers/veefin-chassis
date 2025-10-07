@@ -55,15 +55,24 @@ export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilen
 }) {
   try {  
     console.log('selections', JSON.stringify(selections));
-    // Create SMTP transporter
+    
+    // Validate environment variables
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+      throw new Error('SMTP credentials not configured. Please set SMTP_USER and SMTP_PASS environment variables.');
+    }
+    
+    // Create SMTP transporter with port 587 (more compatible with cloud platforms)
     const transporter = nodemailer.createTransport({
-      host: 'email-smtp.us-east-1.amazonaws.com',
-      port: 465,
-      secure: true, // true for 465, false for other ports
+      host: process.env.SMTP_HOST || 'email-smtp.us-east-1.amazonaws.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: false, // false for port 587, uses STARTTLS
       auth: {
-        user: 'AKIA3RMNUKG7ENRKY77Z',
-        pass: 'BHK3Mx7+vsUPTMeklZBfMbyWZ1NylrRQeAaUQdszFhe7',
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
       },
+      connectionTimeout: 20000, // 20 seconds
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
     });
 
     // Construct the HTML string directly

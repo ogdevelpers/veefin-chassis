@@ -7,24 +7,23 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 Create a `.env.local` file in the root directory with the following SMTP configuration:
 
 ```env
-# SMTP Configuration for Email Sending
-SMTP_HOST=smtp.example.com
+# SMTP Configuration for Email Sending (AWS SES)
+SMTP_HOST=email-smtp.us-east-1.amazonaws.com
 SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=your-email@example.com
-SMTP_PASSWORD=your-password
-SMTP_FROM="Veefin Chassis <your-email@example.com>"
-SMTP_TO=developers506@gmail.com
+SMTP_USER=your-aws-ses-smtp-username
+SMTP_PASS=your-aws-ses-smtp-password
 ```
 
 **SMTP Configuration Details:**
-- `SMTP_HOST`: Your SMTP server hostname (e.g., smtp.gmail.com, smtp.sendgrid.net)
-- `SMTP_PORT`: SMTP port (587 for TLS, 465 for SSL, 25 for unencrypted)
-- `SMTP_SECURE`: Set to `true` for port 465, `false` for other ports
-- `SMTP_USER`: Your SMTP username (usually your email address)
-- `SMTP_PASSWORD`: Your SMTP password or app-specific password
-- `SMTP_FROM`: The "From" address that appears in sent emails
-- `SMTP_TO`: The recipient email address for submissions
+- `SMTP_HOST`: Your SMTP server hostname (default: AWS SES `email-smtp.us-east-1.amazonaws.com`)
+- `SMTP_PORT`: SMTP port (587 recommended for Railway/cloud deployments, uses STARTTLS)
+- `SMTP_USER`: Your AWS SES SMTP username (IAM credentials)
+- `SMTP_PASS`: Your AWS SES SMTP password
+
+**Important for Railway Deployment:**
+- Railway blocks port 465 and 25 for security reasons
+- **Always use port 587** with STARTTLS for cloud deployments
+- Make sure to add these environment variables in your Railway project settings
 
 ### Running the Development Server
 
