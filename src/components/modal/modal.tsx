@@ -5,7 +5,7 @@ const MyModal = ({ isOpen, onClose, title='Veefin', hideTitle = false, children 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/20 backdrop-blur-lg">
       <div className="relative w-full mt-40 max-w-[75vw] p-6 mx-auto rounded-lg shadow-lg bg-[#111] dark:bg-[#111] overflow-y-auto">
-        {/* Close Button */}
+        {/* Close Button
         <button
           onClick={onClose}
           className="absolute text-gray-400 top-3 right-3 hover:text-white"
@@ -25,7 +25,17 @@ const MyModal = ({ isOpen, onClose, title='Veefin', hideTitle = false, children 
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
-        </button>
+        </button> */}
+
+        {/* Close Button */}
+        <button
+            onClick={onClose}
+            className="flex items-center justify-center w-10 h-10 rounded-full transition-transform hover:scale-110 flex-shrink-0 absolute text-white-700 top-3 right-3 hover:text-white"
+            style={{ backgroundColor: '#27A689' }}
+            aria-label="Close sidebar"
+          >
+            X
+          </button>
 
         {/* Heading */}
         {!hideTitle && (

@@ -57,13 +57,16 @@ const ThankYouPage: React.FC<ThankYouPageProps> = ({
   return (
     <div className="fixed inset-0 bg-black/20 backdrop-blur-lg flex items-center justify-center z-50">
       <div className="bg-[#232228] rounded-lg p-8 max-w-[50vw] w-full mx-4 relative">
-        {/* Close button */}
+
+        {/* Close Button */}
         <button
-          onClick={onBackToArchitecture}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl"
-        >
-          ×
-        </button>
+            onClick={onBackToArchitecture}
+            className="flex items-center justify-center w-10 h-10 rounded-full transition-transform hover:scale-110 flex-shrink-0 absolute text-white-700 top-3 right-3 hover:text-white"
+            style={{ backgroundColor: '#27A689' }}
+            aria-label="Close sidebar"
+          >
+            X
+          </button>
 
         {/* Success Icon */}
         <div className="text-center mb-6">
