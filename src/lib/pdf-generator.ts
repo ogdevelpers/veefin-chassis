@@ -165,6 +165,62 @@ export async function generatePDF(data: PDFData): Promise<string> {
       yPosition -= 50; // Skip image space if embedding fails
     }
     
+    // Add selected components section first (right after image)
+    yPosition -= 20;
+    page.drawText('Your Selected Components', {
+      x: margin,
+      y: yPosition,
+      size: 16,
+      font: headingFont,
+      color: rgb(0.15, 0.65, 0.53),
+    });
+    
+    yPosition -= 25;
+    
+    // Add selected components
+    pdfContent.sections.selectedComponents.items.forEach(({ category, items }) => {
+      if (items.length > 0) {
+        if (yPosition < 80) {
+          const newPage = pdfDoc.addPage([595.28, 841.89]);
+          yPosition = 841.89 - 50;
+        }
+        
+        // Category heading
+        pdfDoc.getPages()[pdfDoc.getPageCount() - 1].drawText(`${category}:`, {
+          x: margin,
+          y: yPosition,
+          size: 12,
+          font: headingFont,
+          color: rgb(0.3, 0.3, 0.3),
+        });
+        
+        yPosition -= 15;
+        
+        // Items
+        const itemsText = items.join(', ');
+        const lines = wrapText(itemsText, bodyFont, 10, contentWidth - 20);
+        
+        lines.forEach(line => {
+          if (yPosition < 80) {
+            const newPage = pdfDoc.addPage([595.28, 841.89]);
+            yPosition = 841.89 - 50;
+          }
+          
+          pdfDoc.getPages()[pdfDoc.getPageCount() - 1].drawText(line, {
+            x: margin + 20,
+            y: yPosition,
+            size: 10,
+            font: bodyFont,
+            color: rgb(0.5, 0.5, 0.5),
+          });
+          
+          yPosition -= 12;
+        });
+        
+        yPosition -= 10;
+      }
+    });
+    
     // Add platform overview section
     yPosition -= 20;
     page.drawText('Platform Overview', {
@@ -237,8 +293,8 @@ export async function generatePDF(data: PDFData): Promise<string> {
         
         yPosition -= 18;
         
-        // Component description (truncated for better formatting)
-        const description = formatTextForPDF(component.description, 200);
+        // Component description (full content)
+        const description = formatTextForPDF(component.description, 2000);
         const lines = wrapText(description, bodyFont, 10, contentWidth - 40);
         
         lines.forEach(line => {
@@ -259,65 +315,105 @@ export async function generatePDF(data: PDFData): Promise<string> {
         });
         
         yPosition -= 10;
-      });
-      
-      yPosition -= 15;
-    });
-    
-    // Add selected components summary
-    yPosition -= 20;
-    page.drawText(pdfContent.sections.selectedComponents.title, {
-      x: margin,
-      y: yPosition,
-      size: 14,
-      font: headingFont,
-      color: rgb(0.15, 0.65, 0.53),
-    });
-    
-    yPosition -= 20;
-    
-    // Add selected components
-    pdfContent.sections.selectedComponents.items.forEach(({ category, items }) => {
-      if (items.length > 0) {
-        if (yPosition < 80) {
-          const newPage = pdfDoc.addPage([595.28, 841.89]);
-          yPosition = 841.89 - 50;
-        }
         
-        // Category heading
-        pdfDoc.getPages()[pdfDoc.getPageCount() - 1].drawText(`${category}:`, {
-          x: margin,
-          y: yPosition,
-          size: 12,
-          font: headingFont,
-          color: rgb(0.3, 0.3, 0.3),
-        });
-        
-        yPosition -= 15;
-        
-        // Items
-        const itemsText = items.join(', ');
-        const lines = wrapText(itemsText, bodyFont, 10, contentWidth - 20);
-        
-        lines.forEach(line => {
-          if (yPosition < 80) {
+        // Add features if available
+        if (component.features && component.features.length > 0) {
+          if (yPosition < 100) {
             const newPage = pdfDoc.addPage([595.28, 841.89]);
             yPosition = 841.89 - 50;
           }
           
-          pdfDoc.getPages()[pdfDoc.getPageCount() - 1].drawText(line, {
-            x: margin + 20,
+          pdfDoc.getPages()[pdfDoc.getPageCount() - 1].drawText('Key Features:', {
+            x: margin + 40,
             y: yPosition,
             size: 10,
-            font: bodyFont,
-            color: rgb(0.5, 0.5, 0.5),
+            font: headingFont,
+            color: rgb(0.2, 0.2, 0.2),
           });
           
-          yPosition -= 12;
-        });
+          yPosition -= 15;
+          
+          component.features.forEach(feature => {
+            if (yPosition < 80) {
+              const newPage = pdfDoc.addPage([595.28, 841.89]);
+              yPosition = 841.89 - 50;
+            }
+            
+            const featureText = formatTextForPDF(feature, 1000);
+            const featureLines = wrapText(featureText, bodyFont, 9, contentWidth - 60);
+            
+            featureLines.forEach(line => {
+              if (yPosition < 80) {
+                const newPage = pdfDoc.addPage([595.28, 841.89]);
+                yPosition = 841.89 - 50;
+              }
+              
+              pdfDoc.getPages()[pdfDoc.getPageCount() - 1].drawText(`• ${line}`, {
+                x: margin + 60,
+                y: yPosition,
+                size: 9,
+                font: bodyFont,
+                color: rgb(0.5, 0.5, 0.5),
+              });
+              
+              yPosition -= 11;
+            });
+          });
+          
+          yPosition -= 8;
+        }
         
-        yPosition -= 10;
-      }
+        // Add benefits if available
+        if (component.benefits && component.benefits.length > 0) {
+          if (yPosition < 100) {
+            const newPage = pdfDoc.addPage([595.28, 841.89]);
+            yPosition = 841.89 - 50;
+          }
+          
+          pdfDoc.getPages()[pdfDoc.getPageCount() - 1].drawText('Business Benefits:', {
+            x: margin + 40,
+            y: yPosition,
+            size: 10,
+            font: headingFont,
+            color: rgb(0.2, 0.2, 0.2),
+          });
+          
+          yPosition -= 15;
+          
+          component.benefits.forEach(benefit => {
+            if (yPosition < 80) {
+              const newPage = pdfDoc.addPage([595.28, 841.89]);
+              yPosition = 841.89 - 50;
+            }
+            
+            const benefitText = formatTextForPDF(benefit, 1000);
+            const benefitLines = wrapText(benefitText, bodyFont, 9, contentWidth - 60);
+            
+            benefitLines.forEach(line => {
+              if (yPosition < 80) {
+                const newPage = pdfDoc.addPage([595.28, 841.89]);
+                yPosition = 841.89 - 50;
+              }
+              
+              pdfDoc.getPages()[pdfDoc.getPageCount() - 1].drawText(`• ${line}`, {
+                x: margin + 60,
+                y: yPosition,
+                size: 9,
+                font: bodyFont,
+                color: rgb(0.5, 0.5, 0.5),
+              });
+              
+              yPosition -= 11;
+            });
+          });
+          
+          yPosition -= 8;
+        }
+        
+        yPosition -= 15;
+      });
+      
+      yPosition -= 15;
     });
     
     // Add footer

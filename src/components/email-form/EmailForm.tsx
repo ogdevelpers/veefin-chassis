@@ -208,6 +208,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess, onLo
             <div className="flex gap-2">
               <div className="relative">
                 <button
+                style={{width: '100px', height: '65px'}}
                   type="button"
                   onClick={() => setShowCountryDropdown(!showCountryDropdown)}
                   className="z-69 flex items-center gap-2 px-3 py-3 bg-[#232228] rounded-lg border-none cursor-pointer hover:bg-[#2a292f] transition-colors"
@@ -249,7 +250,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess, onLo
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="email" className={labelClass}>
-              Email<span className="text-red-500">*</span>
+              Company Email<span className="text-red-500">*</span>
             </label>
             <input
               id="email"
@@ -267,7 +268,7 @@ const EmailFormModal  = ({selections, handleReset, pngBlob, onEmailSuccess, onLo
           type="submit"
           className="w-full max-w-[400px] mx-auto py-4 px-6 mt-4 bg-[#27A689] text-white font-bold text-lg uppercase rounded-lg hover:opacity-90 transition-opacity"
         >
-          Email Architecture
+          Receive Customise Architecture
         </button>
       </form>)}
       { status === 'loading' && <Spinner size={50} message="Sending Email..." />}

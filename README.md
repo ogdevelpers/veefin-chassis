@@ -2,6 +2,32 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Environment Variables
+
+Create a `.env.local` file in the root directory with the following SMTP configuration:
+
+```env
+# SMTP Configuration for Email Sending
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-email@example.com
+SMTP_PASSWORD=your-password
+SMTP_FROM="Veefin Chassis <your-email@example.com>"
+SMTP_TO=developers506@gmail.com
+```
+
+**SMTP Configuration Details:**
+- `SMTP_HOST`: Your SMTP server hostname (e.g., smtp.gmail.com, smtp.sendgrid.net)
+- `SMTP_PORT`: SMTP port (587 for TLS, 465 for SSL, 25 for unencrypted)
+- `SMTP_SECURE`: Set to `true` for port 465, `false` for other ports
+- `SMTP_USER`: Your SMTP username (usually your email address)
+- `SMTP_PASSWORD`: Your SMTP password or app-specific password
+- `SMTP_FROM`: The "From" address that appears in sent emails
+- `SMTP_TO`: The recipient email address for submissions
+
+### Running the Development Server
+
 First, run the development server:
 
 ```bash

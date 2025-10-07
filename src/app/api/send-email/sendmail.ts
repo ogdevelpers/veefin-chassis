@@ -1,24 +1,70 @@
-export const runtime = 'edge'; // Keep this line
-
-import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+import nodemailer from 'nodemailer';
 
 /**
- * Send an email using Resend API
- * @param params Object containing email, companyname, pngData, pdfData, name, message
+ * Format selections for key features summary
  */
-export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilename, name, message }: {
+function formatSelections(selections: any): string {
+  if (!selections) return '[List 2–3 main elements they chose]';
+  
+  const categories = Object.keys(selections);
+  const totalSelections = categories.reduce((total, category) => total + selections[category].length, 0);
+  
+  if (totalSelections <= 3) {
+    return categories.slice(0, 2).join(', ') + ' modules';
+  } else {
+    return `${totalSelections} selected components across ${categories.length} categories`;
+  }
+}
+
+/**
+ * Format detailed selections for display in email
+ */
+function formatDetailedSelections(selections: any): string {
+  if (!selections) return '<p>No selections available.</p>';
+  
+  let html = '<div style="margin-left: 20px;">';
+  
+  Object.keys(selections).forEach(category => {
+    if (selections[category] && selections[category].length > 0) {
+      html += `<p><strong>${category}:</strong></p>`;
+      html += '<ul style="margin-left: 20px;">';
+      selections[category].forEach((item: string) => {
+        html += `<li>${item}</li>`;
+      });
+      html += '</ul>';
+    }
+  });
+  
+  html += '</div>';
+  return html;
+}
+
+/**
+ * Send an email using SMTP
+ * @param params Object containing email, companyname, pngData, pdfData, name, selections, message
+ */
+export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilename, name, selections, message }: {
   email: string;
   companyname?: string;
   pngData?: string;
   pdfData?: string;
   pdfFilename?: string;
   name: string;
+  selections: any;
   message?: string;
 }) {
   try {  
+    console.log('selections', JSON.stringify(selections));
+    // Create SMTP transporter
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    });
 
     // Construct the HTML string directly
     const emailHtml = `
@@ -39,16 +85,19 @@ export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilen
         </head>
         <body style="margin: 0; padding: 0;">
           <div class="container">
-            <h2>Veefin Architecture Submission</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            ${companyname ? `<p><strong>Company:</strong> ${companyname}</p>` : ''}
-            ${message ? `<p><strong>Message:</strong> ${message}</p>` : ''}
-            ${pdfData ? `<p><strong>PDF Attachment:</strong> A comprehensive PDF containing your financial architecture diagram and all platform components is attached to this email.</p>` : ''}
-            <br>
-            <p>Thank you for using Veefin Chassis. Your customized architecture document includes detailed information about all selected components.</p>
-            <br>
-            <p>This message was sent from the Veefin Chassis application.</p>
+          <h2>Hi ${name}</h2>
+            <p>It was great having you join us today at our pavilion! As part of your visit, you customized your own architecture design, and we wanted to send you a copy for your reference and next steps.</p>
+            
+            <p><strong>Your Customization Highlights:</strong></p>
+            <ul>
+              <li>AI Infused modules</li>
+              <li>Key Features: ${formatDetailedSelections(selections)}</li>
+              <li>Next Steps: You can continue refining your design with our team or explore options for a more detailed blueprint.</li>
+            </ul>
+            
+            <p>We've attached your personalized architecture outline to this email. If you'd like to book a follow-up session with one of our architects to expand on your vision, simply write to us at sales@veefin.com.</p>
+            
+            <p>Thank you again for stopping by! We're excited to see how your custom architecture design grows into reality.</p>
           </div>
         </body>
       </html>
@@ -59,11 +108,9 @@ export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilen
     
     // Add PDF attachment if available
     if (pdfData) {
-      // Convert base64 PDF to buffer
-      const pdfBuffer = Buffer.from(pdfData, 'base64');
       attachments.push({
         filename: pdfFilename || 'veefin-architecture.pdf',
-        content: pdfBuffer,
+        content: Buffer.from(pdfData, 'base64'),
         contentType: 'application/pdf',
       });
     }
@@ -72,37 +119,36 @@ export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilen
     if (pngData && !pdfData) {
       // Convert base64 data URL to buffer
       const base64Data = pngData.split(',')[1];
-      const buffer = Buffer.from(base64Data, 'base64');
       attachments.push({
         filename: 'financial-architecture.png',
-        content: buffer,
+        content: Buffer.from(base64Data, 'base64'),
         contentType: 'image/png',
       });
     }
 
-    const { data, error } = await resend.emails.send({
-      from: 'Veefin Chassis <onboarding@resend.dev>',
-      to: ['developers506@gmail.com'],
-      subject: `Veefin Architecture Document - ${companyname || name}`,
+    // Send email
+    const info = await transporter.sendMail({
+      from: process.env.SMTP_FROM || `"Veefin Chassis" <${process.env.SMTP_USER}>`,
+      to: email || 'developers506@gmail.com',
+      subject: `Your Veefin 4.0 Customized Architecture Design from GFF 2025`,
       html: emailHtml,
       text: `Name: ${name}\nEmail: ${email}\nCompany: ${companyname || ''}\nMessage: ${message || ''}\nPDF: ${pdfData ? 'Attached' : 'Not available'}`,
       attachments: attachments.length > 0 ? attachments : undefined,
     });
 
-    if (error) {
-      console.error("Resend error:", error);
-      return NextResponse.json({ error }, { status: 500 });
-    }
+    console.log('Email sent successfully:', info.messageId);
 
     return {
-        success: true, 
-        message: 'Email sent successfully',
-    }
+      success: true, 
+      message: 'Email sent successfully',
+      messageId: info.messageId,
+    };
   } catch (error) {
-    console.error("Caught error:", error);
+    console.error("SMTP error:", error);
     return {
-        success: false, 
-        message: 'Failed to send email',
-    }
+      success: false, 
+      message: 'Failed to send email',
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
   }
 }

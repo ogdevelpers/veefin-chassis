@@ -1,4 +1,4 @@
-export const runtime = 'edge';
+// Removed edge runtime to support Node.js features (SMTP with nodemailer, Buffer, PDF generation)
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { veefinSchema } from "@/lib/constants";
@@ -99,6 +99,7 @@ export async function POST(request: NextRequest) {
 				pdfData: pdfBase64 || undefined, // Pass PDF data for attachment
 				pdfFilename: pdfFilename || undefined,
 				name: body.username,
+				selections: body.selections,
 				message: (body as any).message
 			});
 			console.log('Email sent successfully with PDF attachment');
@@ -209,5 +210,3 @@ export async function POST(request: NextRequest) {
 		);
 	}
 }
-// Remove edge runtime to support Node.js Buffer and PDF generation
-// export const runtime = 'edge';

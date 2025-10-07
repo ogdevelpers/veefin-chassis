@@ -92,8 +92,8 @@ export function processSidebarContent(sidebarContent: Record<string, { title: st
       title: data.title,
       description: cleanContent,
       category,
-      features: features.slice(0, 3), // Limit to 3 features
-      benefits: benefits.slice(0, 2), // Limit to 2 benefits
+      features: features.slice(0, 10), // Limit to 10 features
+      benefits: benefits.slice(0, 8), // Limit to 8 benefits
     });
   });
   

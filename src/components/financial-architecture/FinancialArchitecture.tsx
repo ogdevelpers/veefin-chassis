@@ -485,6 +485,7 @@ const FinancialArchitecture = () => {
                     className={`flex items-center justify-center gap-3 text-center font-bold ${appState === 'start' ? `bg-[#111] border-white font-bold` : `bg-[#181818] border-transparent text-[#A1A1A1]`} 
                     ${(appState === 'picking' && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING')) ? `bg-[#111] border-white text-white` : ""}
                     ${(appState === 'selected' || appState === 'confirmed') && (item === 'FEES' || item === 'CUSTOMERS' || item === 'REPORTING' || item === 'POSTING') && !isSelected('COMMON LAYER', item) ? `opacity-0 scale-75 pointer-events-none duration-500 hidden transition-discrete` : ""} 
+                    ${isSelected('COMMON LAYER', item) ? 'text-white' : ''}
                      px-3 rounded-lg leading-none border-2 text-xs min-h-[40px] font-bold ${isSelected('COMMON LAYER', item) ? 'clicked' : ''
                       }`}>
                     {item}
