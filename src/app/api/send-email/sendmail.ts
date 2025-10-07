@@ -57,12 +57,12 @@ export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilen
     console.log('selections', JSON.stringify(selections));
     // Create SMTP transporter
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+      host: 'email-smtp.us-east-1.amazonaws.com',
+      port: 465,
+      secure: true, // true for 465, false for other ports
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD,
+        user: 'AKIA3RMNUKG7ENRKY77Z',
+        pass: 'BHK3Mx7+vsUPTMeklZBfMbyWZ1NylrRQeAaUQdszFhe7',
       },
     });
 
@@ -128,7 +128,7 @@ export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilen
 
     // Send email
     const info = await transporter.sendMail({
-      from: process.env.SMTP_FROM || `"Veefin Chassis" <${process.env.SMTP_USER}>`,
+      from: 'noreply@veefin.in',
       to: email || 'developers506@gmail.com',
       subject: `Your Veefin 4.0 Customized Architecture Design from GFF 2025`,
       html: emailHtml,
