@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import LineSvg from "../line-svg/LineSvg";
 import ProductSection from "./ProductSection";
 import { AppState, sidebarContentMapper } from "@/lib/constants";
@@ -110,6 +111,7 @@ const externalSystems = [
 const channels = ['WEB', 'MOBILE', 'API', 'H2H', 'CHATBOT', 'BRANCHES'];
 
 const FinancialArchitecture = () => {
+  const router = useRouter();
   const [appState, setAppState] = useState<AppState>('start');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState<{ title: string; content: string }>({ title: '', content: '' });
@@ -227,6 +229,7 @@ const FinancialArchitecture = () => {
     setShowThankYou(false);
     setThankYouData(null);
     handleReset();
+    router.push('/');
   }
 
   const openSidebar = (item: string) => {
