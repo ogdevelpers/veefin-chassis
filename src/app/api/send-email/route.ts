@@ -1,5 +1,5 @@
-// Removed edge runtime to support Node.js features (SMTP with nodemailer, Buffer, PDF generation)
-export const runtime = 'edge';
+// Using Node.js runtime to support Node.js features (SMTP with nodemailer, Buffer, PDF generation)
+// export const runtime = 'edge'; // Commented out to use Node.js runtime
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { veefinSchema } from "@/lib/constants";
