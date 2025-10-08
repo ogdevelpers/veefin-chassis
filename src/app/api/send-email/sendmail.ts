@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 
 /**
  * Format selections for key features summary
@@ -43,7 +44,16 @@ function formatDetailedSelections(selections: any): string {
  * Send an email using SMTP
  * @param params Object containing email, companyname, pngData, pdfData, name, selections, message
  */
-export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilename, name, selections, message }: {
+export async function sendEmail({
+  email,
+  companyname,
+  pngData,
+  pdfData,
+  pdfFilename,
+  name,
+  selections,
+  message,
+}: {
   email: string;
   companyname?: string;
   pngData?: string;
@@ -53,29 +63,26 @@ export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilen
   selections: any;
   message?: string;
 }) {
-  try {  
-    console.log('selections', JSON.stringify(selections));
-    
+  try {
+    console.log("selections", JSON.stringify(selections));
+
     // Validate environment variables
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-      throw new Error('SMTP credentials not configured. Please set SMTP_USER and SMTP_PASS environment variables.');
+    if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
+      throw new Error(
+        "AWS credentials not configured. Please set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY."
+      );
     }
-    
-    // Create SMTP transporter with port 587 (more compatible with cloud platforms)
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'email-smtp.us-east-1.amazonaws.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: true, // false for port 587, uses STARTTLS
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+
+    // Create SES client
+    const ses = new SESv2Client({
+      region: process.env.AWS_REGION?.trim() || "us-east-1",
+      credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID!.trim(),
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!.trim(),
       },
-      connectionTimeout: 20000, // 20 seconds
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
     });
 
-    // Construct the HTML string directly
+    // Construct HTML email
     const emailHtml = `
       <!DOCTYPE html>
       <html>
@@ -89,23 +96,19 @@ export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilen
             h2 { color: #27A689; }
             p { margin-bottom: 10px; }
             strong { color: #555; }
-            .pdf-link { margin-top: 20px; display: block; }
           </style>
         </head>
-        <body style="margin: 0; padding: 0;">
+        <body>
           <div class="container">
-          <h2>Hi ${name}</h2>
+            <h2>Hi ${name}</h2>
             <p>It was great having you join us today at our pavilion! As part of your visit, you customized your own architecture design, and we wanted to send you a copy for your reference and next steps.</p>
-            
             <p><strong>Your Customization Highlights:</strong></p>
             <ul>
               <li>AI Infused modules</li>
               <li>Key Features: ${formatDetailedSelections(selections)}</li>
               <li>Next Steps: You can continue refining your design with our team or explore options for a more detailed blueprint.</li>
             </ul>
-            
             <p>We've attached your personalized architecture outline to this email. If you'd like to book a follow-up session with one of our architects to expand on your vision, simply write to us at sales@veefin.com.</p>
-            
             <p>Thank you again for stopping by! We're excited to see how your custom architecture design grows into reality.</p>
           </div>
         </body>
@@ -113,51 +116,77 @@ export async function sendEmail({ email, companyname, pngData, pdfData, pdfFilen
     `;
 
     // Prepare attachments
-    const attachments = [];
-    
-    // Add PDF attachment if available
+    const attachments: any[] = [];
+
     if (pdfData) {
       attachments.push({
-        filename: pdfFilename || 'veefin-architecture.pdf',
+        filename: pdfFilename || "veefin-architecture.pdf",
         content: Buffer.from(pdfData, 'base64'),
-        contentType: 'application/pdf',
+        contentType: "application/pdf",
       });
-    }
-    
-    // Optionally add PNG as backup
-    if (pngData && !pdfData) {
-      // Convert base64 data URL to buffer
-      const base64Data = pngData.split(',')[1];
+    } else if (pngData) {
       attachments.push({
-        filename: 'financial-architecture.png',
-        content: Buffer.from(base64Data, 'base64'),
-        contentType: 'image/png',
+        filename: "financial-architecture.png",
+        content: Buffer.from(pngData.split(",")[1], 'base64'),
+        contentType: "image/png",
       });
     }
 
-    // Send email
-    const info = await transporter.sendMail({
-      from: 'noreply@veefin.in',
-      to: email || 'developers506@gmail.com',
-      subject: `Your Veefin 4.0 Customized Architecture Design from GFF 2025`,
-      html: emailHtml,
-      text: `Name: ${name}\nEmail: ${email}\nCompany: ${companyname || ''}\nMessage: ${message || ''}\nPDF: ${pdfData ? 'Attached' : 'Not available'}`,
-      attachments: attachments.length > 0 ? attachments : undefined,
+    // Construct MIME message
+    const boundary = "----=_Part_" + Date.now();
+    const lines = [
+      `From: Veefin <noreply@veefin.in>`,
+      `To: ${email}`,
+      `Subject: Your Veefin 4.0 Customized Architecture Design from GFF 2025`,
+      `MIME-Version: 1.0`,
+      `Content-Type: multipart/mixed; boundary="${boundary}"`,
+      ``,
+      `--${boundary}`,
+      `Content-Type: text/html; charset=UTF-8`,
+      `Content-Transfer-Encoding: 7bit`,
+      ``,
+      emailHtml,
+      ``
+    ];
+
+    // Add attachments
+    for (const att of attachments) {
+      lines.push(`--${boundary}`);
+      lines.push(`Content-Type: ${att.contentType}; name="${att.filename}"`);
+      lines.push(`Content-Disposition: attachment; filename="${att.filename}"`);
+      lines.push(`Content-Transfer-Encoding: base64`);
+      lines.push(``);
+      lines.push(att.content.toString('base64'));
+      lines.push(``);
+    }
+
+    lines.push(`--${boundary}--`);
+
+    const rawMessage = lines.join('\r\n');
+
+    // Send via SES
+    const command = new SendEmailCommand({
+      FromEmailAddress: "noreply@veefin.in",
+      Destination: { ToAddresses: [email] },
+      Content: { Raw: { Data: Buffer.from(rawMessage) } },
     });
 
-    console.log('Email sent successfully:', info.messageId);
+    const response = await ses.send(command);
+
+    console.log("Email sent successfully:", response.MessageId);
 
     return {
-      success: true, 
-      message: 'Email sent successfully',
-      messageId: info.messageId,
+      success: true,
+      message: "Email sent successfully",
+      messageId: response.MessageId,
     };
-  } catch (error) {
-    console.error("SMTP error:", error);
+  } catch (error: any) {
+    console.error("SES API error:", error);
     return {
-      success: false, 
-      message: 'Failed to send email',
-      error: error instanceof Error ? error.message : 'Unknown error',
+      success: false,
+      message: "Failed to send email",
+      error: error.message || "Unknown error",
     };
   }
 }
+
