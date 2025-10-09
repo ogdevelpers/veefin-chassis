@@ -234,25 +234,25 @@ export async function generatePDF(data: PDFData): Promise<string> {
     yPosition -= 25;
     
     // Add overview description
-    const overviewLines = wrapText(pdfContent.sections.header.description, bodyFont, 11, contentWidth);
-    overviewLines.forEach(line => {
-      if (yPosition < 80) {
-        const newPage = pdfDoc.addPage([595.28, 841.89]);
-        yPosition = 841.89 - 50;
-      }
+    // const overviewLines = wrapText(pdfContent.sections.header.description, bodyFont, 11, contentWidth);
+    // overviewLines.forEach(line => {
+    //   if (yPosition < 80) {
+    //     const newPage = pdfDoc.addPage([595.28, 841.89]);
+    //     yPosition = 841.89 - 50;
+    //   }
       
-      page.drawText(line, {
-        x: margin,
-        y: yPosition,
-        size: 11,
-        font: bodyFont,
-        color: rgb(0.3, 0.3, 0.3),
-      });
+    //   page.drawText(line, {
+    //     x: margin,
+    //     y: yPosition,
+    //     size: 11,
+    //     font: bodyFont,
+    //     color: rgb(0.3, 0.3, 0.3),
+    //   });
       
-      yPosition -= 14;
-    });
+    //   yPosition -= 14;
+    // });
     
-    yPosition -= 20;
+    // yPosition -= 20;
     
     // Add components by category
     const groupedComponents = groupComponentsByCategory(pdfContent.sections.components);
@@ -525,6 +525,6 @@ export async function compressPDF(pdfBase64: string): Promise<string> {
 /**
  * Generate filename for PDF - using unique filename generator
  */
-export function generatePDFFilename(companyName: string): string {
-  return generateUniquePDFFilename(companyName);
+export function generatePDFFilename(companyName: string, name?: string): string {
+  return generateUniquePDFFilename(companyName, name);
 }

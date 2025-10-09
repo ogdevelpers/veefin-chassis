@@ -56,9 +56,9 @@ export async function POST(request: NextRequest) {
 				const pdfBuffer = Buffer.from(pdfBase64, 'base64');
 				console.log('PDF buffer size:', pdfBuffer.length);
 				
-				// Generate filename
-				pdfFilename = generatePDFFilename(body.companyname);
-				console.log('Uploading PDF:', pdfFilename);
+			// Generate filename
+			pdfFilename = generatePDFFilename(body.companyname, body.username);
+			console.log('Uploading PDF:', pdfFilename);
 				
 				// Upload to Supabase Storage
 				const { data: uploadData, error: uploadError } = await supabase.storage

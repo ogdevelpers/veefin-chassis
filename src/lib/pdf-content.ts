@@ -13,7 +13,7 @@ export interface PDFContentStructure {
   sections: {
     header: {
       title: string;
-      description: string;
+      // description: string;
     };
     components: ComponentSection[];
     selectedComponents: {
@@ -132,7 +132,6 @@ export function createPDFContent(
     sections: {
       header: {
         title: 'Veefin Financial Architecture Platform',
-        description: `Comprehensive financial technology platform designed for ${companyName}. This document outlines all available components, features, and capabilities.`
       },
       components,
       selectedComponents: {
@@ -150,10 +149,11 @@ export function createPDFContent(
 /**
  * Generate unique filename for PDF
  */
-export function generateUniquePDFFilename(companyName: string): string {
+export function generateUniquePDFFilename(companyName: string, name?: string): string {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const companySlug = companyName.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
-  return `veefin_architecture_${companySlug}_${timestamp}.pdf`;
+  const nameSlug = name ? `_${name.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase()}` : '';
+  return `veefin_architecture_${companySlug}${nameSlug}_${timestamp}.pdf`;
 }
 
 /**
